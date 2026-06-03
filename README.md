@@ -13,6 +13,9 @@
     - [Trace Theorem](#trace-theorem)
     - [Gagliardo-Nirenberg Inequality](#gagliardo-nirenberg-inequality)
 
+>[!CAUTION]
+> This document is by no means meant to be a rigorous script. It should merely serve as an overview.
+
 ## Introduction
 
 An ordinary differential equation involves
@@ -168,6 +171,8 @@ The derivatives control the slopes of the function. By bounding the $L^p$ norm o
 
 >[!NOTE]
 > A main application of this inequality is the ability to *embed Sobolev functions* in higher order $L^q$ spaces.
+
+
 
 
 
