@@ -1,4 +1,17 @@
 # PDE notes - conceptual overview
+- [PDE notes - conceptual overview](#pde-notes---conceptual-overview)
+  - [Introduction](#introduction)
+    - [Laplacian](#laplacian)
+    - [Boundary Conditions](#boundary-conditions)
+    - [Heat Equation](#heat-equation)
+  - [Schwartz Space and Distributions](#schwartz-space-and-distributions)
+    - [Test Functions vs. Schwartz Space](#test-functions-vs-schwartz-space)
+    - [Distributions (Generalized Functions)](#distributions-generalized-functions)
+    - [The Distributional Derivative](#the-distributional-derivative)
+    - [Weak Derivative](#weak-derivative)
+  - [Weak Solutions and Sobolev-Spaces](#weak-solutions-and-sobolev-spaces)
+    - [Trace Theorem](#trace-theorem)
+    - [Gagliardo-Nirenberg Inequality](#gagliardo-nirenberg-inequality)
 
 ## Introduction
 
@@ -46,7 +59,6 @@ If a point is hotter than its surroundings, meaning $\Delta u(p) < 0$, then heat
 
 ## Schwartz Space and Distributions
 
-### The Core Problem
 Classical derivatives require point-by-point differentiability. If a function has a sharp corner or a jump discontinuity, its classical derivative fails to exist at that point. To solve PDEs with realistic, rough behaviors, we must stop evaluating functions point-by-point and instead study how they behave *on average* when **integrated against smooth test functions**.
 
 ### Test Functions vs. Schwartz Space
@@ -84,6 +96,8 @@ Because $\phi$ belongs to $C_c^\infty$ or $\mathcal{S}$, its derivative $D^\alph
 ### Weak Derivative
 > [!NOTE]
 > A function is **weakly differentiable** if it is distributionally differentiable and its **distributional derivative** is **integrable**.
+
+
 
 
 
