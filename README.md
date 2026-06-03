@@ -67,7 +67,7 @@ $$\langle T_u, \phi \rangle = \int_{\Omega} u(x)\phi(x) \, dx.$$
 > Now lets say $u$ is *not* differentiable but some function **$v$ satisfies** 
 > 
 > $$\int v\phi = -\int u\phi'.$$ 
-> 
+>
 > Then we say that $v$ is a **distributional derivative** of $u$.
 
 
