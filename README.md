@@ -61,7 +61,9 @@ Instead of looking at a rough function $u$ directly, we view it as a **Distribut
 $$\langle T_u, \phi \rangle = \int_{\Omega} u(x)\phi(x) \, dx.$$
 
 ### The Distributional Derivative
-> **Idea**: **Define derivatives via Integration by parts**.
+
+>[!TIP]
+> **Idea**: **We define derivatives via Integration by parts**.
 > For differentiable $u$, we integrate $u' \phi$ by parts. 
 > Because a test function $\phi$ has compact support, the boundary term vanishes and we are left with $\int u'\phi = -\int u \phi'.$ 
 > Now lets say $u$ is *not* differentiable but some function **$v$ satisfies** 
@@ -78,11 +80,13 @@ $$\langle D^\alpha T, \phi \rangle = (-1)^{|\alpha|} \langle T, D^\alpha \phi \r
 Because $\phi$ belongs to $C_c^\infty$ or $\mathcal{S}$, its derivative $D^\alpha\phi$ is guaranteed to exist and be perfectly smooth. So we are now able to **"differentiate rough functions."**
 
 ### Weak Derivative
-A function is **weakly differentiable** if it is distributionally differentiable and its **distributional derivative** is **integrable**.
+> [!NOTE]
+> A function is **weakly differentiable** if it is distributionally differentiable and its **distributional derivative** is **integrable**.
 
 ## Weak Solutions and Sobolev-Spaces
 ### Trace Theorem
-> The *Trace Theorem* solves the problem that we cannot evaluate an equivalence class of functions on the boundary of a domain in a well-defined manner.
+>[!NOTE]
+> The **Trace Theorem** **solves** the problem of not being able to **evaluate** an equivalence class of functions **on** the **boundary** of a domain in a well-defined manner.
 
 Since smooth functions are dense in the Sobolev Space, we can approximate a Sobolev function by smooth functions. 
 The $L^p$-norm of these functions on the boundary is bounded by the Sobolev-Norm. Therefore the sequence of smooth functions, restricted to boundary (the restriction for smooth functions is well-defined), is a Cauchy-Sequence which has a limit in the Banach-Space $L^p$ on the boundary. We define $T^u$ to be that limit. 
@@ -90,6 +94,6 @@ The $L^p$-norm of these functions on the boundary is bounded by the Sobolev-Norm
 ### Gagliardo Nirenberg
 The derivatives control the slopes of the function. By bounding the $L^p$ norm of the gradient, we structurally restrict how fast the function can grow or spike.
 Because the function's slopes are constrained, it cannot form severe, localized singularities, which mathematically guarantees that the function belongs to a higher, more controlled integrability space.
-
+>[!NOTE]
 > A main application of this inequality is the ability to *embed Sobolev functions* in higher order $L^q$ spaces.
 
