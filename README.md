@@ -6,9 +6,9 @@
     - [Heat Equation](#heat-equation)
   - [Schwartz Space and Distributions](#schwartz-space-and-distributions)
     - [Test Functions vs. Schwartz Space](#test-functions-vs-schwartz-space)
-    - [Distributions (Generalized Functions)](#distributions-generalized-functions)
+    - [Distributions](#distributions)
     - [The Distributional Derivative](#the-distributional-derivative)
-    - [Weak Derivative](#weak-derivative)
+    - [Weak Derivatives](#weak-derivatives)
   - [Weak Solutions and Sobolev-Spaces](#weak-solutions-and-sobolev-spaces)
     - [Trace Theorem](#trace-theorem)
     - [Gagliardo-Nirenberg Inequality](#gagliardo-nirenberg-inequality)
@@ -66,15 +66,26 @@ To make integration by parts perfectly rigorous, we need "nice" test functions $
 **Space of Test Functions $C_c^\infty(\Omega)$** consists of **smooth** (infinitely differentiable) functions with **compact support**. 
 
 >[!TIP]
-> Remember that compact support means that **boundary terms** **vanish**, i.e. $\int_{\partial\Omega}\phi = 0$.
+> Remember that compact support means that **boundary terms vanish during integration by parts**. 
+> Because the support of $\phi$ is fully contained within $\Omega$, the function $\phi$ (and all its derivatives) are identically zero on and near the boundary $\partial\Omega$. Thus, all boundary evaluations drop out completely.
 
 The **Schwartz Space** $\mathcal{S}$ consists of **rapidly decreasing functions** that decay to zero faster than any polynomial can grow. They have "**almost compact support**". A standard example is the Gaussian bell curve $e^{-x^2}$. Boundary term vanish here also.
 
-### Distributions (Generalized Functions)
+### Distributions
 In physical reality we often find possible "rough" solutions to PDEs that are actually not differentiable in the classical sense.
-Instead of looking at a rough function $u$ directly, we view it as a **Distribution** $T_u$. A distribution is a continuous, linear functional that acts on a smooth test function $\phi$ and outputs a single real number via integration:
+Instead of looking at a rough function $u$ directly, we view it as a **Distribution** $T_u$. A distribution is a continuous, linear functional that acts on a smooth test function $\phi$ and outputs a single real number.
 
-$$\langle T_u, \phi \rangle = \int_{\Omega} u(x)\phi(x) \, dx.$$
+>[!NOTE]
+> For a **locally** **integrable** function $u$ the ***associated distribution*** is the linear functional
+> $$T_u\colon \phi\mapsto\int u\phi,$$
+> where $\phi$ is &ndash; as always &ndash; a test function.
+
+There are distributions which are *not* locally integrable. The most famous example is the **Dirac-Delta Distribution**. It evaluates a test function at a single point:
+$$\delta\colon \phi\mapsto \phi(0).$$
+
+>[!NOTE]
+> The Dirac-Delta Distribution represents a **point mass** or an **instantaneous** impulse. It is concentrated at a **single point**.
+> 
 
 ### The Distributional Derivative
 >[!TIP]
@@ -85,17 +96,53 @@ $$\langle T_u, \phi \rangle = \int_{\Omega} u(x)\phi(x) \, dx.$$
 > 
 > $$\int v\phi = -\int u\phi'.$$ 
 >
-> Then we say that $v$ is a **distributional derivative** of $u$.
+> Then we say that $v$ is a **distributional derivative** of $u$. 
 
-We define the derivative of a distribution $T$ according to the above idea using the symmetry of integration by parts:
 
-$$\langle D^\alpha T, \phi \rangle = (-1)^{|\alpha|} \langle T, D^\alpha \phi \rangle.$$
+We define the $\alpha$-th derivative $D^{\alpha}T$ of a distribution $T$ by
 
-Because $\phi$ belongs to $C_c^\infty$ or $\mathcal{S}$, its derivative $D^\alpha\phi$ is guaranteed to exist and be perfectly smooth. So we are now able to **"differentiate rough functions."**
+$$D^\alpha T\colon\phi\mapsto (-1)^{|\alpha|} T(D^\alpha \phi)$$
 
-### Weak Derivative
+Because $\phi$ belongs to $C_c^\infty$ or $\mathcal{S}$, its derivative $D^\alpha\phi$ is guaranteed to exist. We are now able to **"differentiate rough functions."**
+
+>[!IMPORTANT]
+> In one dimension the definition becomes
+> $$T'\colon\phi\mapsto - T\phi'.$$
+> When $T=T_u$ is an associated distribution to a classically differentiable function $u$, the formula above becomes *exactly* the integration by parts equation we discussed above and $T_u' = T_{u'}$, i.e. the derivative of the associated distribution is exactly the distribution associated with the derivative: 
+> $$T_u'\phi = - T_u \phi' = - \int u \phi' = \int u' \phi = T_{u'}\phi.$$
+
+Let's try to find a distributional derivative of the Dirac-Delta. We just follow the definition:
+$$\delta'\phi = -\delta\phi' = -\phi'(0).$$
+
+
+### Weak Derivatives
 > [!NOTE]
 > A function is **weakly differentiable** if it is distributionally differentiable and its **distributional derivative** is **integrable**.
+
+Let's try to find a weak derivative of the absolute value function $u\colon x\mapsto \vert x |$. In order to do that we need to find a fitting candidate first. The obvious one would be the Signum Function
+
+$$v\colon x\mapsto\begin{cases}
+  -1 &x < 0 \\
+  +1 &x > 0.
+\end{cases}$$
+
+(Note that it does not matter if we do not define it at zero since $\{0\}$ is a set of measure zero)
+
+Let's see if it fits the definition:
+
+$$T_v\phi = \int v\phi
+= \int_{-\infty}^0 v\phi + \int_0^{\infty} v\phi 
+= \int_{-\infty}^0 -\phi + \int_0^{\infty} \phi. $$
+
+Integrating $x\phi$ by parts,this is equal to
+
+$$-[x\phi]_{-\infty}^{0} + \int_{-\infty}^0 x\phi' + [x\phi]_0^{\infty} - \int_0^{\infty} x \phi'.$$
+
+The boundary terms vanish because test functions tend to zero as $x\rightarrow\infty$ and $\phi(0)$ gets multiplied with zero. For negative $x$ we have $x= -\vert x\vert$. Therefore, the equation concludes to
+$$T_v\phi = - \int_{-\infty}^0 |x|\phi' - \int_0^{\infty} |x|\phi' = - \int |x|\phi' = - T_u \phi'.$$
+
+By definition this means that $T_v = T_u'.$
+ 
 
 
 
