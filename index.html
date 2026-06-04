@@ -22,7 +22,7 @@
       box-sizing: border-box;
       max-width: 980px;
       margin: 0 auto;
-      padding: 45px;
+      padding: clamp(16px, 5vw, 60px);
       color: #c9d1d9;
     }
 
@@ -32,6 +32,15 @@
       margin: 16px 0;
       border-left: 6px solid;
       border-radius: 4px;
+      color: #c9d1d9;
+      /* Lighter text for better contrast */
+    }
+
+    /* Ensure headers within callouts aren't glaringly bright */
+    .callout strong {
+      color: #e2e2ec !important;
+      /* margin-right: 4px; */
+      font-weight: 700;
     }
 
     .callout-note {
@@ -55,7 +64,7 @@
     }
 
     .callout-warning {
-      border-left-color: rgb(255, 94, 0);
+      border-left-color: rgb(255, 51, 0);
       background-color: rgb(63, 41, 0);
     }
 
@@ -88,11 +97,11 @@
         // Clean up the text by removing the markers so they don't appear in the UI
         const cleanQuote = quote.replace(/\[!(NOTE|TIP|CAUTION|IMPORTANT|WARNING)\]/g, '');
 
-        if (quote.includes('[!NOTE]')) return `<div class="callout callout-note"><strong>Note</strong>${cleanQuote}</div>`;
-        if (quote.includes('[!TIP]')) return `<div class="callout callout-tip"><strong>Tip</strong>${cleanQuote}</div>`;
-        if (quote.includes('[!CAUTION]')) return `<div class="callout callout-caution"><strong>Caution</strong>${cleanQuote}</div>`;
-        if (quote.includes('[!IMPORTANT]')) return `<div class="callout callout-important"><strong>Note</strong>${cleanQuote}</div>`;
-        if (quote.includes('[!WARNING]')) return `<div class="callout callout-warning"><strong>Note</strong>${cleanQuote}</div>`;
+        if (quote.includes('[!NOTE]')) return `<div class="callout callout-note">${cleanQuote}</div>`;
+        if (quote.includes('[!TIP]')) return `<div class="callout callout-tip">${cleanQuote}</div>`;
+        if (quote.includes('[!IMPORTANT]')) return `<div class="callout callout-important">${cleanQuote}</div>`;
+        if (quote.includes('[!WARNING]')) return `<div class="callout callout-warning">${cleanQuote}</div>`;
+        if (quote.includes('[!CAUTION]')) return `<div class="callout callout-caution">${cleanQuote}</div>`;
 
         return `<blockquote>${quote}</blockquote>`;
       }
