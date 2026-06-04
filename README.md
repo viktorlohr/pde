@@ -5,10 +5,12 @@
     - [Boundary Conditions](#boundary-conditions)
     - [Heat Equation](#heat-equation)
   - [Schwartz Space and Distributions](#schwartz-space-and-distributions)
-    - [Test Functions vs. Schwartz Space](#test-functions-vs-schwartz-space)
+    - [Test Functions and Schwartz Space](#test-functions-and-schwartz-space)
     - [Distributions](#distributions)
+    - [Tempered Distributions](#tempered-distributions)
     - [The Distributional Derivative](#the-distributional-derivative)
     - [Weak Derivatives](#weak-derivatives)
+    - [Other Operations on Distributions](#other-operations-on-distributions)
   - [Weak Solutions and Sobolev-Spaces](#weak-solutions-and-sobolev-spaces)
     - [Trace Theorem](#trace-theorem)
     - [Gagliardo-Nirenberg Inequality](#gagliardo-nirenberg-inequality)
@@ -34,12 +36,12 @@ the derivatives contained in it. We will focus
 >[!NOTE]
 > The **Laplace Operator** $\Delta$ is defined as the sum over all **unmixed second partial derivatives** of a function. 
 
-The Laplacian is the **divergence of** the **gradient**. It **measures how much** the **value** of a function at   a specific point **deviates from** the **avarage** value of its immediate **neighbours**.
+The Laplacian is the **divergence of** the **gradient**. It **measures how much** the **value** of a function at   a specific point **deviates from** the **average** value of its immediate **neighbours**.
 
 >[!NOTE]
-> A function $u$ statisfying the **Laplace Equation** $\Delta u = 0$ is called **harmonic**.
+> A function $u$ satisfying the **Laplace Equation** $\Delta u = 0$ is called **harmonic**.
 
-Intuitively, the **Laplacian behaves like** the **second order derivative** in one dimension. If a point is **higher** than its neighbours, then the Laplacian will be **negative** (right curvature) and vice versa.
+Intuitively, the **Laplacian behaves like** the **second order derivative** in one dimension. If a point is **higher** than its neighbours, then the Laplacian will be **negative** (downward curvature) and vice versa.
 
 >[!NOTE]
 > An equation of the form $\Delta u = f$ is called **Poisson Equation.**
@@ -51,7 +53,7 @@ Two of the most important boundary conditions are
 >[!NOTE]
 > - **Dirichlet** Boundary Conditions: Our **solution** shall **coincide** **with** a **function** **on the boundary** of the domain $\Omega$, so 
   $u(x) = g(x)$ on the boundary $\partial\Omega$.
-> - **Neumann** Boundary Conditions: We **fix** the **normal outer derivative** (the slope pointing out of the domain) 
+> - **Neumann** Boundary Conditions: We **fix** the **normal outward derivative** (the slope pointing out of the domain) 
   $\frac{\partial u}{\partial\nu} = g(x)$ for all $x\in\partial\Omega.$ 
 
 ### Heat Equation
@@ -64,7 +66,7 @@ If a point is hotter than its surroundings, meaning $\Delta u(p) < 0$, then heat
 
 Classical derivatives require point-by-point differentiability. If a function has a sharp corner or a jump discontinuity, its classical derivative fails to exist at that point. To solve PDEs with realistic, rough behaviors, we must stop evaluating functions point-by-point and instead study how they behave *on average* when **integrated against smooth test functions**.
 
-### Test Functions vs. Schwartz Space
+### Test Functions and Schwartz Space
 To make integration by parts perfectly rigorous, we need "nice" test functions $\phi.$ The 
 **Space of Test Functions $C_c^\infty(\Omega)$** consists of **smooth** (infinitely differentiable) functions with **compact support**. 
 
@@ -76,10 +78,16 @@ The **Schwartz Space** $\mathcal{S}$ consists of **rapidly decreasing functions*
 
 ### Distributions
 In physical reality we often find possible "rough" solutions to PDEs that are actually not differentiable in the classical sense.
-Instead of looking at a rough function $u$ directly, we view it as a **Distribution** $T_u$. A distribution is a continuous, linear functional that acts on a smooth test function $\phi$ and outputs a single real number.
+Instead of looking at a rough function $u$ directly, we view it as a **Distribution** $T_u$. A **distribution** is a continuous, linear **functional** that **acts on** a smooth **test function** $\phi$ and outputs a single real number.
+
+### Tempered Distributions
+The dual space of the Schwartz space $\mathcal{S}$ is denoted by $\mathcal{S}'$. An element of this dual space is called a **tempered distribution**.
 
 >[!NOTE]
-> For a **locally** **integrable** function $u$ the ***associated distribution*** is the linear functional
+> Because $\mathcal{S}$ contains functions that do not have compact support, $\mathcal{S}'$ is a *smaller* (more restrictive) space of distributions than the general space $\mathcal{D}'(\mathbb{R}^n)$ (which is the dual of $C_c^\infty$).
+
+>[!NOTE]
+> For a **locally** **integrable** function $u$, the ***associated distribution*** is the linear functional
 > $$T_u\colon \phi\mapsto\int u\phi,$$
 > where $\phi$ is &ndash; as always &ndash; a test function.
 
@@ -121,7 +129,7 @@ So the distributional derivative of the Dirac-Delta is a linear functional that 
 
 ### Weak Derivatives
 > [!NOTE]
-> A function is **weakly differentiable** if it is distributionally differentiable and its **distributional derivative** is **integrable**.
+> A function is **weakly differentiable** if it is distributionally differentiable and its **distributional derivative** is associated with a locally **integrable** function.
 
 Let's try to find a weak derivative of the absolute value function $u\colon x\mapsto \vert x |$. In order to do that we need to find a fitting candidate first. The obvious one would be the Signum Function
 
@@ -145,7 +153,18 @@ $$-[x\phi]_{-\infty}^{0} + \int_{-\infty}^0 x\phi' + [x\phi]_0^{\infty} - \int_0
 The boundary terms vanish because test functions tend to zero as $x\rightarrow\infty$, and $\phi(0)$ gets multiplied with zero. For negative $x$ we have $x= -\vert x\vert$. Therefore, the equation concludes to
 $$T_v\phi = - \int_{-\infty}^0 |x|\phi' - \int_0^{\infty} |x|\phi' = - \int |x|\phi' = - T_u \phi'.$$
 
-By definition this means that $T_v = T_u'.$
+By definition this means that $T_v = T_u'.$ 
+
+### Other Operations on Distributions
+One can check that 
+- $(\psi T)\phi := T(\psi\cdot \phi)$ and
+- $(\psi*T)\phi := T(\psi(-\_)*\phi)$
+
+are well-defined. Remember that "$*$" is *convolution* 
+$f*g := \int f(y)(\_-y)dy.$ 
+
+>[!WARNING]
+> For *distributions* $T$ and $S$, operations like $T\cdot S$ or $T*S$ are ***not*** well-defined!
  
 
 
