@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VS Code Markdown Preview</title>
+
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/microsoft/vscode@main/extensions/markdown-language-features/media/markdown.css">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/microsoft/vscode@main/extensions/markdown-language-features/media/highlight.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+  <style>
+    /* Exact VS Code Dark Theme Colors & Base Defaults */
+    body {
+      background-color: #1e1e1e;
+      color: #d4d4d4;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      padding: 20px 30px;
+      margin: 0;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* Simulating the VS Code Markdown preview container defaults */
+    .vscode-body {
+      padding: 0;
+      line-height: 1.6;
+      word-wrap: break-word;
+    }
+
+    /* Match VS Code's link colors */
+    a {
+      color: #3794ff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Code block styling defaults for VS Code */
+    pre {
+      background-color: #2d2d2d;
+      border-radius: 3px;
+      padding: 16px;
+      overflow: auto;
+    }
+
+    code {
+      font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+      font-size: 14px;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 2px 4px;
+      border-radius: 3px;
+    }
+
+    pre code {
+      background-color: transparent;
+      padding: 0;
+    }
+  </style>
+</head>
+
+<body class="vscode-body vscode-dark">
+
+  <div id="content">Loading preview...</div>
+
+  <script>
+    // Target file: Change 'README.md' if you want to load a different file
+    const markdownFile = 'pde_notes.md';
+
+    // Fetch and render the markdown file
+    fetch(markdownFile)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text();
+      })
+      .then(markdownText => {
+        // Set options for marked.js to match standard flavors
+        marked.setOptions({
+          gfm: true, // GitHub Flavored Markdown
+          breaks: true
+        });
+
+        // Inject the converted HTML into our page
+        document.getElementById('content').innerHTML = marked.parse(markdownText);
+      })
+      .catch(error => {
+        document.getElementById('content').innerHTML = `<p style="color: #f48771;">Error loading markdown: ${error.message}</p>`;
+      });
+  </script>
+</body>
+
+</html>

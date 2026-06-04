@@ -109,10 +109,8 @@ $$\delta\colon \phi\mapsto \phi(0).$$
 > **Idea**: **We define derivatives via Integration by parts**.
 > For differentiable $u$, we integrate $u' \phi$ by parts. 
 > Because a test function $\phi$ has compact support, the boundary term vanishes and we are left with $\int u'\phi = -\int u \phi'.$ 
-> Now lets say $u$ is *not* differentiable but some function **$v$ satisfies** 
-> 
+> Now lets say $u$ is *not* differentiable but some function **$v$ satisfies**
 > $$\int v\phi = -\int u\phi'.$$ 
->
 > Then we say that $v$ is a **distributional derivative** of $u$. 
 
 
@@ -164,7 +162,7 @@ By definition this means that $T_v = T_u'.$
 ### Other Operations on Distributions
 One can check that 
 - $(\psi T)\phi := T(\psi\cdot \phi)$ and
-- $(\psi\ast T)\phi := T(\psi(-\_)\ast \phi)$
+- $(\psi\ast T)\phi := T(\psi(-\_ ) \ast \phi)$
 
 are well-defined. Remember that "$\ast$" is *convolution* 
 $f\ast g := \int f(y)(\_-y)dy.$ 
@@ -182,7 +180,9 @@ The **Fourier Transform** **maps** a function **from** the **spatial** domain **
 > This allows us to "get rid of" differentials and replace them with nice multiplication.
 
 For a function $f \in \mathcal{S}$, the **Fourier Transform** $\mathcal{F}f$ (or $\hat{f}$) and its **Inverse Fourier Transform** $\overline{\mathcal{F}}\hat{f}$ are defined as:
-$$\mathcal{F}f(p) = \frac{1}{(2\pi)^{\frac{n}{2}}}\int_{\mathbb{R}^n} e^{-ipx}f(x)\,d^nx, \quad \overline{\mathcal{F}}\hat{f}(x) = \frac{1}{(2\pi)^{\frac{n}{2}}}\int_{\mathbb{R}^n} e^{+ipx}\hat{f}(p)\,d^np.$$
+$$\mathcal{F}f(p) = \frac{1}{(2\pi)^{\frac{n}{2}}}\int_{\mathbb{R}^n} e^{-ipx}f(x)\,d^nx,$$
+
+$$\quad \overline{\mathcal{F}}\hat{f}(x) = \frac{1}{(2\pi)^{\frac{n}{2}}}\int_{\mathbb{R}^n} e^{+ipx}\hat{f}(p)\,d^np.$$
 
 >[!NOTE]
 > Notice the $-i$ vs. the $+i$ in the exponents. Also, in higher dimensions $px$ is  scalar multiplication of *vectors* $p$ and $x$.
@@ -215,7 +215,7 @@ To solve Laplace Equations on bounded domains, we **calculate** the response to 
 ### The Fundamental Solution
 
 > [!NOTE]
-> A **Fundamental Solution** of the Laplace operator is a locally integrable function $\Phi \colon \mathbb{R}^n \setminus \{0\} \to \mathbb{R}$ that satisfies the equation 
+> A **Fundamental Solution** of the Laplace Equation is a locally integrable function $\Phi \colon \mathbb{R}^n \setminus \{0\} \to \mathbb{R}$ that satisfies the equation 
 > $$-\Delta \Phi = \delta.$$
 > in the sense of distributions. This means that for every test function $\phi$, we have:
 > $$T_\Phi(-\Delta\phi) = \int_{\mathbb{R}^n} \Phi (-\Delta \phi) = \phi(0).$$
