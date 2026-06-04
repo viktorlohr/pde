@@ -1,3 +1,4 @@
+/* Core Page Styles */
 body {
   background-color: #0d1117;
   color: #c9d1d9;
@@ -11,7 +12,7 @@ body {
   color: #c9d1d9;
 }
 
-/* Custom Accordion */
+/* Custom Accordion (Sections) */
 .custom-section {
   margin-top: 20px;
   border-bottom: 1px solid #30363d;
@@ -24,6 +25,7 @@ body {
   background: #161b22;
   cursor: pointer;
   border-radius: 6px;
+  border: 1px solid #30363d;
 }
 
 .custom-header:hover {
@@ -44,6 +46,47 @@ body {
   transform: rotate(180deg);
 }
 
+/* GitHub-Style Callouts (Post-Processed) */
+.callout {
+  padding: 16px;
+  margin: 16px 0;
+  border-left: 5px solid;
+  border-radius: 6px;
+  color: #e6edf3 !important;
+}
+
+/* We use !important to override github-markdown-css defaults */
+.callout-note {
+  border-left-color: #1f6feb !important;
+  background: #161b22 !important;
+}
+
+.callout-tip {
+  border-left-color: #238636 !important;
+  background: #161b22 !important;
+}
+
+.callout-warning {
+  border-left-color: #d29922 !important;
+  background: #262117 !important;
+}
+
+.callout-important {
+  border-left-color: #a371f7 !important;
+  background: #201a2a !important;
+}
+
+.callout-caution {
+  border-left-color: #f85149 !important;
+  background: #291a1a !important;
+}
+
+/* Ensure internal elements remain readable */
+.callout strong {
+  color: #ffffff !important;
+}
+
+/* Navigation Button */
 .nav-btn {
   position: fixed;
   top: 20px;
@@ -54,4 +97,52 @@ body {
   border: none;
   border-radius: 12px;
   cursor: pointer;
+  color: #0d1117;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.nav-btn:hover {
+  background-color: #79b8ff;
+
+  /* Enable horizontal scrolling for display math equations */
+  .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px 0;
+    /* Ensure it doesn't break the layout */
+    max-width: 100%;
+  }
+}
+
+/* Force horizontal scrolling for display math */
+.katex-display {
+  display: block !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  white-space: nowrap !important;
+  /* Prevents math from wrapping */
+  padding: 10px 0 !important;
+  margin: 1em 0 !important;
+  max-width: 100% !important;
+  scrollbar-width: thin;
+  /* For Firefox */
+}
+
+/* Chrome/Safari Scrollbar Styling */
+.katex-display::-webkit-scrollbar {
+  height: 8px !important;
+}
+
+.katex-display::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.katex-display::-webkit-scrollbar-thumb {
+  background: #30363d !important;
+  border-radius: 4px !important;
+}
+
+.katex-display::-webkit-scrollbar-thumb:hover {
+  background: #58a6ff !important;
 }
