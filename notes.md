@@ -152,7 +152,7 @@ $$T_v\phi = \int v\phi
 
 Integrating $x\phi$ by parts, this is equal to
 
-$$-[x\phi]_{-\infty}^{0} + \int_{-\infty}^0 x\phi' + [x\phi]_0^{\infty} - \int_0^{\infty} x \phi'.$$
+$$ -[ x\phi ]_{-\infty}^{0} + [x\phi ]_{0}^{\infty} + \int_{-\infty}^{0} x\phi' - \int_{0}^{\infty} x\phi' $$
 
 The boundary terms vanish because test functions tend to zero as $x\rightarrow\infty$, and $\phi(0)$ gets multiplied with zero. For negative $x$ we have $x= -\vert x\vert$. Therefore, the equation concludes to
 $$T_v\phi = - \int_{-\infty}^0 |x|\phi' - \int_0^{\infty} |x|\phi' = - \int |x|\phi' = - T_u \phi'.$$
@@ -162,10 +162,10 @@ By definition this means that $T_v = T_u'.$
 ### Other Operations on Distributions
 One can check that 
 - $(\psi T)\phi := T(\psi\cdot \phi)$ and
-- $(\psi\ast T)\phi := T(\psi(-\_ ) \ast \phi)$
+- $(\psi\ast T)\phi := T(\psi(-\\_ ) \ast \phi)$
 
 are well-defined. Remember that "$\ast$" is *convolution* 
-$f\ast g := \int f(y)(\_-y)dy.$ 
+$f\ast g := \int f(y)(\\_-y)dy.$ 
 
 >[!WARNING]
 > For *distributions* $T$ and $S$, operations like $T\cdot S$ or $T\ast S$ are ***not*** well-defined!
@@ -185,7 +185,7 @@ $$\mathcal{F}f(p) = \frac{1}{(2\pi)^{\frac{n}{2}}}\int_{\mathbb{R}^n} e^{-ipx}f(
 $$\quad \overline{\mathcal{F}}\hat{f}(x) = \frac{1}{(2\pi)^{\frac{n}{2}}}\int_{\mathbb{R}^n} e^{+ipx}\hat{f}(p)\,d^np.$$
 
 >[!NOTE]
-> Notice the $-i$ vs. the $+i$ in the exponents. Also, in higher dimensions $px$ is  scalar multiplication of *vectors* $p$ and $x$.
+> Notice the $-i$ vs. the $+i$ in the exponents. Also, in higher dimensions $px$ is  scalar multiplication of *vectors* $p$ and $x.$
 
 The Fourier transform is a **continuous, linear bijection** **on** the **Schwartz Space** $\mathcal{S}$. This means shifting to frequency space preserves the "nice" decay and smoothness properties of our test functions.
 

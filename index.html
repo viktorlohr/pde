@@ -11,11 +11,13 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.8/dist/purify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5.0.0/lib/index.umd.js"></script>
   <style>
     /* Dark Mode Defaults */
     body {
       background-color: #0d1117;
       color: #c9d1d9;
+      font-size: 2rem !important;
     }
 
     .markdown-body {
@@ -88,38 +90,61 @@
 </head>
 
 <body class="markdown-body">
+  <div id="toc"></div>
   <div id="content">Loading notes...</div>
 
   <script>
-    // 1. Define the renderer
+    // 1. Define the custom tokenizer to "protect" math blocks
+    const mathExtension = {
+      name: 'math',
+      level: 'block',
+      start(src) { return src.indexOf('$$'); },
+      tokenizer(src) {
+        const match = /^\$\$[\s\S]*?\$\$/.exec(src);
+        if (match) {
+          return {
+            type: 'math',
+            raw: match[0],
+            text: match[0].trim()
+          };
+        }
+      },
+      renderer(token) {
+        // Return the raw text, which we will render later via KaTeX
+        return token.raw;
+      }
+    };
+
+    // 2. Register the extension
+    marked.use({ extensions: [mathExtension] });
+
+    // 3. Setup Blockquote renderer
     const renderer = {
       blockquote(quote) {
-        // Clean up the text by removing the markers so they don't appear in the UI
         const cleanQuote = quote.replace(/\[!(NOTE|TIP|CAUTION|IMPORTANT|WARNING)\]/g, '');
-
         if (quote.includes('[!NOTE]')) return `<div class="callout callout-note">${cleanQuote}</div>`;
         if (quote.includes('[!TIP]')) return `<div class="callout callout-tip">${cleanQuote}</div>`;
         if (quote.includes('[!IMPORTANT]')) return `<div class="callout callout-important">${cleanQuote}</div>`;
         if (quote.includes('[!WARNING]')) return `<div class="callout callout-warning">${cleanQuote}</div>`;
         if (quote.includes('[!CAUTION]')) return `<div class="callout callout-caution">${cleanQuote}</div>`;
-
         return `<blockquote>${quote}</blockquote>`;
       }
     };
-
-    // 2. Apply renderer to marked
     marked.use({ renderer });
 
-    // 3. Fetch and render
+    // 4. Fetch and render
     fetch('notes.md')
       .then(response => response.text())
       .then(markdownSource => {
         const contentDiv = document.getElementById('content');
 
-        // Parse and sanitize
-        contentDiv.innerHTML = DOMPurify.sanitize(marked.parse(markdownSource));
+        // Parse to HTML
+        const html = marked.parse(markdownSource);
 
-        // Trigger KaTeX
+        // Sanitize and inject
+        contentDiv.innerHTML = DOMPurify.sanitize(html);
+
+        // Trigger KaTeX to render all math blocks now that they are in the DOM
         renderMathInElement(contentDiv, {
           delimiters: [
             { left: '$$', right: '$$', display: true },
@@ -129,10 +154,10 @@
         });
       })
       .catch(err => {
+        console.error(err);
         document.getElementById('content').innerText = "Error loading notes.md.";
       });
   </script>
-
 </body>
 
 </html>
