@@ -5,160 +5,43 @@ body {
 }
 
 .markdown-body {
-  box-sizing: border-box;
   max-width: 980px;
   margin: 0 auto;
-  padding: clamp(16px, 5vw, 60px);
+  padding: 60px;
   color: #c9d1d9;
 }
 
-.markdown-body a {
-  color: #58a6ff;
-}
-
-/* Callout Styles */
-.callout {
-  padding: 16px;
-  margin: 16px 0;
-  border-left: 6px solid;
-  border-radius: 4px;
-  color: #c9d1d9;
-}
-
-.callout strong {
-  color: #ffffff !important;
-}
-
-.callout-note {
-  border-left-color: #58a6ff;
-  background: rgba(88, 166, 255, 0.1);
-}
-
-.callout-tip {
-  border-left-color: #3fb950;
-  background: rgba(63, 185, 80, 0.1);
-}
-
-.callout-caution {
-  border-left-color: #f85149;
-  background: rgba(248, 81, 73, 0.1);
-}
-
-.callout-important {
-  border-left-color: purple;
-  background: rgb(43, 0, 43);
-}
-
-.callout-warning {
-  border-left-color: rgb(255, 51, 0);
-  background: rgb(63, 41, 0);
-}
-
-/* Accordion Styles */
-details {
-  overflow: hidden;
+/* Custom Accordion */
+.custom-section {
   margin-top: 20px;
+  border-bottom: 1px solid #30363d;
 }
 
-details>div {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease, opacity 0.3s ease;
-}
-
-details[open]>div {
-  max-height: 20000px;
-  opacity: 1;
-}
-
-/* 1. Remove overflow from details so the summary can 'break out' of the parent boundary */
-details {
-  margin-top: 20px;
-  overflow: visible;
-}
-
-/* Accordion Headers - Standard (No longer sticky) */
-summary {
-  cursor: pointer;
-  list-style: none;
-  padding: 15px 40px 15px 15px;
+.custom-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
   background: #161b22;
+  cursor: pointer;
   border-radius: 6px;
-  border-bottom: 2px solid #30363d;
-  transition: background 0.2s;
-  margin-top: 20px;
 }
 
-
-
-
-/* 3. The content wrapper needs the overflow hidden to allow for the animation */
-details>div {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  /* HIDDEN moved here */
-  transition: max-height 0.3s ease, opacity 0.3s ease;
-}
-
-summary:hover {
+.custom-header:hover {
   background: #21262d;
 }
 
-.summary-arrow {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 0.8em;
-  color: #58a6ff;
-  pointer-events: none;
+.content-wrapper {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.arrow {
   transition: transform 0.3s;
 }
 
-details[open] .summary-arrow {
+.custom-section.active .arrow {
   transform: rotate(180deg);
-}
-
-/* 3. The content wrapper needs the overflow hidden to allow for the animation */
-details>div {
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  /* HIDDEN moved here */
-  transition: max-height 0.3s ease, opacity 0.3s ease;
-}
-
-/* Ensure the body and markdown-body don't block sticky */
-body,
-.markdown-body {
-  overflow: visible !important;
-}
-
-/* Sticky Accordion Headers */
-details summary {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background-color: #0d1117;
-  border-bottom: 2px solid #30363d;
-  padding: 15px 40px 15px 15px;
-  /* Slightly larger for easier clicking */
-  margin-top: 20px;
-}
-
-/* Visual cue that it's sticky */
-details[open] summary {
-  background-color: #161b22;
-  border-bottom: 2px solid #58a6ff;
-}
-
-/* Remove any 'sticky' rules */
-details {
-  margin-top: 20px;
-  overflow: hidden;
-  /* Back to original behavior */
 }
 
 .nav-btn {
@@ -168,14 +51,7 @@ details {
   z-index: 1000;
   padding: 10px 20px;
   background-color: #58a6ff;
-  color: #0d1117;
   border: none;
   border-radius: 12px;
-  font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.nav-btn:hover {
-  background-color: #79b8ff;
 }
