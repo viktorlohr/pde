@@ -108,11 +108,12 @@ Because $\phi$ belongs to $C_c^\infty$ or $\mathcal{S}$, its derivative $D^\alph
 >[!IMPORTANT]
 > In one dimension the definition becomes
 > $$T'\colon\phi\mapsto - T\phi'.$$
-> When $T=T_u$ is an associated distribution to a classically differentiable function $u$, the formula above becomes *exactly* the integration by parts equation we discussed above and $T_u' = T_{u'}$, i.e. the derivative of the associated distribution is exactly the distribution associated with the derivative: 
+> When $T=T_u$ is an associated distribution to a classically differentiable function $u$, the formula becomes *exactly* the integration by parts equation we discussed above and $T_u' = T_{u'}$, i.e. the derivative of the associated distribution is exactly the distribution associated with the derivative: 
 > $$T_u'\phi = - T_u \phi' = - \int u \phi' = \int u' \phi = T_{u'}\phi.$$
 
 Let's try to find a distributional derivative of the Dirac-Delta. We just follow the definition:
 $$\delta'\phi = -\delta\phi' = -\phi'(0).$$
+So the distributional derivative of the Dirac-Delta is a linear functional that evaluates a test function's *derivative* at a point and negates it.
 
 
 ### Weak Derivatives
@@ -134,11 +135,11 @@ $$T_v\phi = \int v\phi
 = \int_{-\infty}^0 v\phi + \int_0^{\infty} v\phi 
 = \int_{-\infty}^0 -\phi + \int_0^{\infty} \phi. $$
 
-Integrating $x\phi$ by parts,this is equal to
+Integrating $x\phi$ by parts, this is equal to
 
 $$-[x\phi]_{-\infty}^{0} + \int_{-\infty}^0 x\phi' + [x\phi]_0^{\infty} - \int_0^{\infty} x \phi'.$$
 
-The boundary terms vanish because test functions tend to zero as $x\rightarrow\infty$ and $\phi(0)$ gets multiplied with zero. For negative $x$ we have $x= -\vert x\vert$. Therefore, the equation concludes to
+The boundary terms vanish because test functions tend to zero as $x\rightarrow\infty$, and $\phi(0)$ gets multiplied with zero. For negative $x$ we have $x= -\vert x\vert$. Therefore, the equation concludes to
 $$T_v\phi = - \int_{-\infty}^0 |x|\phi' - \int_0^{\infty} |x|\phi' = - \int |x|\phi' = - T_u \phi'.$$
 
 By definition this means that $T_v = T_u'.$
@@ -161,7 +162,7 @@ Since smooth functions are dense in the Sobolev Space, we can approximate a Sobo
 One can show that the $L^p$-norm of these functions on the boundary is bounded by the Sobolev-Norm. Therefore the sequence of smooth functions, restricted to the boundary (restriction is well-defined for smooth functions), is a Cauchy-Sequence which has a limit in the Banach-Space $L^p$ on the boundary. We define $T^u$ to be that limit.
 
 >[!TIP]
-> We used the densitiy of smooth functions to find a well-defined restriction on the boundary.
+> We used the densitiy of smooth functions in Sobolev Spaces to find a well-defined restriction on the boundary.
 
 ### Gagliardo-Nirenberg Inequality
 The derivatives control the slopes of the function. By bounding the $L^p$ norm of the gradient, we restrict how fast the function can grow or spike. This makes it "more integrable", i.e. an element of even higher order $L^q$ space.
