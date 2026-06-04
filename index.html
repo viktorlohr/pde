@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>VS Code Markdown Preview</title>
+  <title>PDE Notes - VS Code Preview</title>
 
   <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/gh/microsoft/vscode@main/extensions/markdown-language-features/media/markdown.css">
@@ -12,29 +12,67 @@
     href="https://cdn.jsdelivr.net/gh/microsoft/vscode@main/extensions/markdown-language-features/media/highlight.css">
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$']],
+        displayMath: [['$$', '$$']],
+        processEscapes: true
+      },
+      options: {
+        processHtmlClass: 'tex2jax_process'
+      }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <style>
-    /* Exact VS Code Dark Theme Colors & Base Defaults */
+    /* Strict VS Code Code Dark Workspace Color Palette */
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       background-color: #1e1e1e;
       color: #d4d4d4;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      padding: 20px 30px;
-      margin: 0;
-      max-width: 1000px;
+      padding: 30px 45px;
       margin: 0 auto;
-    }
-
-    /* Simulating the VS Code Markdown preview container defaults */
-    .vscode-body {
-      padding: 0;
+      max-width: 900px;
       line-height: 1.6;
-      word-wrap: break-word;
     }
 
-    /* Match VS Code's link colors */
+    /* Core VS Code Typography Overrides */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: #f0f0f0;
+      font-weight: 600;
+      margin-top: 24px;
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: 2em;
+      border-bottom: 1px solid #30363d;
+      padding-bottom: 0.3em;
+    }
+
+    h2 {
+      font-size: 1.5em;
+      border-bottom: 1px solid #30363d;
+      padding-bottom: 0.3em;
+    }
+
+    h3 {
+      font-size: 1.25em;
+    }
+
     a {
-      color: #3794ff;
+      color: #58a6ff;
       text-decoration: none;
     }
 
@@ -42,57 +80,237 @@
       text-decoration: underline;
     }
 
-    /* Code block styling defaults for VS Code */
+    hr {
+      height: 0.25em;
+      background-color: #30363d;
+      border: 0;
+      margin: 24px 0;
+    }
+
+    /* Code Blocks & Inlines */
     pre {
       background-color: #2d2d2d;
-      border-radius: 3px;
+      border: 1px solid #30363d;
+      border-radius: 6px;
       padding: 16px;
       overflow: auto;
     }
 
     code {
       font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
-      font-size: 14px;
-      background-color: rgba(255, 255, 255, 0.1);
-      padding: 2px 4px;
-      border-radius: 3px;
+      font-size: 85%;
+      background-color: rgba(110, 118, 129, 0.4);
+      padding: 0.2em 0.4em;
+      border-radius: 6px;
     }
 
     pre code {
       background-color: transparent;
       padding: 0;
+      font-size: 14px;
+    }
+
+    /* Structural Block Elements */
+    blockquote {
+      border-left: 0.25em solid #30363d;
+      color: #8b949e;
+      padding: 0 1em;
+      margin: 0 0 16px 0;
+    }
+
+    ul,
+    ol {
+      padding-left: 2em;
+      margin-bottom: 16px;
+    }
+
+    li {
+      margin-top: 0.25em;
+    }
+
+    /* GitHub/VS Code Styled Callout Alerts */
+    .markdown-alert {
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      border-left: 4px solid;
+      border-radius: 0 6px 6px 0;
+    }
+
+    .markdown-alert-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      margin-top: 0;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .markdown-alert p {
+      margin: 0;
+      color: #d4d4d4;
+    }
+
+    .markdown-alert svg {
+      fill: currentColor;
+    }
+
+    /* Native Alert Variant Color Schemes */
+    .markdown-alert-note {
+      border-left-color: #2f81f7;
+      background-color: rgba(56, 139, 253, 0.1);
+    }
+
+    .markdown-alert-note .markdown-alert-title {
+      color: #2f81f7;
+    }
+
+    .markdown-alert-tip {
+      border-left-color: #3fb950;
+      background-color: rgba(63, 185, 80, 0.1);
+    }
+
+    .markdown-alert-tip .markdown-alert-title {
+      color: #3fb950;
+    }
+
+    .markdown-alert-important {
+      border-left-color: #a371f7;
+      background-color: rgba(163, 113, 247, 0.1);
+    }
+
+    .markdown-alert-important .markdown-alert-title {
+      color: #a371f7;
+    }
+
+    .markdown-alert-warning {
+      border-left-color: #d29922;
+      background-color: rgba(210, 153, 34, 0.1);
+    }
+
+    .markdown-alert-warning .markdown-alert-title {
+      color: #d29922;
+    }
+
+    .markdown-alert-caution {
+      border-left-color: #f85149;
+      background-color: rgba(248, 81, 73, 0.1);
+    }
+
+    .markdown-alert-caution .markdown-alert-title {
+      color: #f85149;
     }
   </style>
 </head>
 
-<body class="vscode-body vscode-dark">
+<body class="vscode-body vscode-dark tex2jax_process">
 
   <div id="content">Loading preview...</div>
 
   <script>
-    // Target file: Change 'README.md' if you want to load a different file
-    const markdownFile = 'PDE_notes.md';
+    const markdownFile = 'pde_notes.md';
 
-    // Fetch and render the markdown file
+    // SVG Layout definitions matching official GitHub Callout Graphics
+    const icons = {
+      NOTE: `<svg viewBox="0 0 16 16" width="16" height="16"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-5a.75.75 0 0 0-.75.75v4.5a.75.75 0 0 0 1.5 0v-4.5A.75.75 0 0 0 8 3ZM8 10a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"></path></svg>`,
+      TIP: `<svg viewBox="0 0 16 16" width="16" height="16"><path d="M8 0a5.5 5.5 0 0 1 4.5 8.646c-.342.474-.5.875-.5 1.354V11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1c0-.479-.158-.88-.5-1.354A5.5 5.5 0 0 1 8 0Z"></path></svg>`,
+      IMPORTANT: `<svg viewBox="0 0 16 16" width="16" height="16"><path d="M0 1.75C0 .783.783 0 1.75 0h12.5C15.217 0 16 .783 16 1.75v12.5a1.75 1.75 0 0 1-1.75 1.75H1.75A1.75 1.75 0 0 1 0 14.25ZM9 4a1 1 0 1 0-2 0v5a1 1 0 1 0 2 0Zm-1 7a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"></path></svg>`,
+      WARNING: `<svg viewBox="0 0 16 16" width="16" height="16"><path d="M6.457 1.047a1.75 1.75 0 0 1 3.086 0l6.084 10.945A1.75 1.75 0 0 1 14.085 14.5H1.914a1.75 1.75 0 0 1-1.542-2.508L6.457 1.047ZM8 4a.75.75 0 0 0-.75.75v3.5a.75.75 0 0 0 1.5 0v-3.5A.75.75 0 0 0 8 4Zm0 7a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"></path></svg>`,
+      CAUTION: `<svg viewBox="0 0 16 16" width="16" height="16"><path d="M4.47 .22A.75.75 0 0 1 5 0h6a.75.75 0 0 1 .53.22l4.25 4.25c.141.14.22.331.22.53v6a.75.75 0 0 1-.22.53l-4.25 4.25A.75.75 0 0 1 11 16H5a.75.75 0 0 1-.53-.22L.22 11.53A.75.75 0 0 1 0 11V5a.75.75 0 0 1 .22-.53L4.47 1.22ZM9 4a1 1 0 1 0-2 0v5a1 1 0 1 0 2 0Zm-1 7a1 1 0 1 0 0 2 1 1 0 0 0 0-2Z"></path></svg>`
+    };
+
+    // Define custom layout configurations for heading ids to preserve TOC functionality
+    const renderer = new marked.Renderer();
+    renderer.heading = function (text, level, raw) {
+      const slug = raw.toLowerCase()
+        .replace(/[^a-z0-9\s\-]/g, '') // Remove odd punctuation while keeping spaces and hyphens
+        .trim()
+        .replace(/\s+/g, '-');         // Match markdown transformations for header spacing
+      return `<h${level} id="${slug}">${text}</h${level}>`;
+    };
+    marked.use({ renderer });
+
     fetch(markdownFile)
       .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
+        if (!response.ok) throw new Error('File not found on server');
         return response.text();
       })
       .then(markdownText => {
-        // Set options for marked.js to match standard flavors
-        marked.setOptions({
-          gfm: true, // GitHub Flavored Markdown
-          breaks: true
+        const mathBlocks = [];
+
+        // 1. Isolate display math formulas ($$ ... $$)
+        markdownText = markdownText.replace(/\$\$([\s\S]+?)\$\$/g, (match, math) => {
+          mathBlocks.push({ type: 'display', math: math });
+          return `%%MATH_BLOCK_${mathBlocks.length - 1}%%`;
         });
 
-        // Inject the converted HTML into our page
-        document.getElementById('content').innerHTML = marked.parse(markdownText);
+        // 2. Isolate inline math formulas ($ ... $)
+        markdownText = markdownText.replace(/\$([^\$\n]+?)\$/g, (match, math) => {
+          mathBlocks.push({ type: 'inline', math: math });
+          return `%%MATH_BLOCK_${mathBlocks.length - 1}%%`;
+        });
+
+        // 3. Compile layout to core Markdown string elements
+        let html = marked.parse(markdownText, { gfm: true, breaks: true });
+
+        // 4. Restore preserved math blocks securely back to the output HTML string
+        mathBlocks.forEach((block, index) => {
+          const placeholder = `%%MATH_BLOCK_${index}%%`;
+          const replacement = block.type === 'display' ? `$$\n${block.math}\n$$` : `$${block.math}$`;
+          html = html.replace(placeholder, replacement);
+        });
+
+        // 5. Structure DOM Node arrays to catch and convert generic Blockquotes into true Markdown Alerts
+        const parserContainer = document.createElement('div');
+        parserContainer.innerHTML = html;
+
+        const blockquotes = parserContainer.querySelectorAll('blockquote');
+        blockquotes.forEach(bq => {
+          const firstP = bq.querySelector('p');
+          if (firstP) {
+            const innerText = firstP.innerHTML.trim();
+            const alertMatch = innerText.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\](?:\s*<br\s*\/?>)?([\s\S]*)$/i);
+
+            if (alertMatch) {
+              const type = alertMatch[1].toUpperCase();
+              const remainingText = alertMatch[2].trim();
+
+              const alertDiv = document.createElement('div');
+              alertDiv.className = `markdown-alert markdown-alert-${type.toLowerCase()}`;
+
+              const titleP = document.createElement('p');
+              titleP.className = 'markdown-alert-title';
+              titleP.innerHTML = `${icons[type]} ${type}`;
+              alertDiv.appendChild(titleP);
+
+              if (remainingText) {
+                firstP.innerHTML = remainingText;
+                alertDiv.appendChild(firstP.cloneNode(true));
+              }
+
+              while (bq.childNodes.length > 0) {
+                const child = bq.childNodes[0];
+                if (child !== firstP) {
+                  alertDiv.appendChild(child);
+                } else {
+                  bq.removeChild(child);
+                }
+              }
+              bq.parentNode.replaceChild(alertDiv, bq);
+            }
+          }
+        });
+
+        // Inject final document output into container body
+        document.getElementById('content').innerHTML = parserContainer.innerHTML;
+
+        // 6. Request layout compile update from MathJax engine
+        if (window.MathJax && window.MathJax.typesetPromise) {
+          window.MathJax.typesetPromise();
+        }
       })
       .catch(error => {
-        document.getElementById('content').innerHTML = `<p style="color: #f48771;">Error loading markdown: ${error.message}</p>`;
+        document.getElementById('content').innerHTML = `<p style="color: #f85149; font-weight: bold;">Error: ${error.message}</p>`;
       });
   </script>
 </body>
