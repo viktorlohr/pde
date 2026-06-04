@@ -8,9 +8,15 @@
     - [Test Functions and Schwartz Space](#test-functions-and-schwartz-space)
     - [Distributions](#distributions)
     - [Tempered Distributions](#tempered-distributions)
+    - [Regular Distributions](#regular-distributions)
     - [The Distributional Derivative](#the-distributional-derivative)
     - [Weak Derivatives](#weak-derivatives)
     - [Other Operations on Distributions](#other-operations-on-distributions)
+    - [Fourier Transform](#fourier-transform)
+    - [Qualitative Aspects](#qualitative-aspects)
+  - [Fundamental Solutions and Green's Functions](#fundamental-solutions-and-greens-functions)
+    - [Motivation](#motivation)
+    - [The Fundamental Solution](#the-fundamental-solution)
   - [Weak Solutions and Sobolev-Spaces](#weak-solutions-and-sobolev-spaces)
     - [Trace Theorem](#trace-theorem)
     - [Gagliardo-Nirenberg Inequality](#gagliardo-nirenberg-inequality)
@@ -86,10 +92,11 @@ The dual space of the Schwartz space $\mathcal{S}$ is denoted by $\mathcal{S}'$.
 >[!NOTE]
 > Because $\mathcal{S}$ contains functions that do not have compact support, $\mathcal{S}'$ is a *smaller* (more restrictive) space of distributions than the general space $\mathcal{D}'(\mathbb{R}^n)$ (which is the dual of $C_c^\infty$).
 
+### Regular Distributions
 >[!NOTE]
 > For a **locally** **integrable** function $u$, the ***associated distribution*** is the linear functional
 > $$T_u\colon \phi\mapsto\int u\phi,$$
-> where $\phi$ is &ndash; as always &ndash; a test function.
+> where $\phi$ is &ndash; as always &ndash; a test function. A distribution that arises from such an association is called **regular**.
 
 There are distributions which are *not* locally integrable. The most famous example is the **Dirac-Delta Distribution**. It evaluates a test function at a single point:
 $$\delta\colon \phi\mapsto \phi(0).$$
@@ -119,7 +126,7 @@ Because $\phi$ belongs to $C_c^\infty$ or $\mathcal{S}$, its derivative $D^\alph
 >[!IMPORTANT]
 > In one dimension the definition becomes
 > $$T'\colon\phi\mapsto - T\phi'.$$
-> When $T=T_u$ is an associated distribution to a classically differentiable function $u$, the formula becomes *exactly* the integration by parts equation we discussed above and $T_u' = T_{u'}$, i.e. the derivative of the associated distribution is exactly the distribution associated with the derivative: 
+> When $T=T_u$ is an associated distribution to a classically differentiable function $u$, the formula becomes *exactly* the integration by parts equation we discussed above and $T_u' = T_{u'}$, i.e. the **derivative** **of** the **associated** **distribution** **is** exactly the **distribution** **associated** **with** the **derivative**: 
 > $$T_u'\phi = - T_u \phi' = - \int u \phi' = \int u' \phi = T_{u'}\phi.$$
 
 Let's try to find a distributional derivative of the Dirac-Delta. We just follow the definition:
@@ -165,13 +172,68 @@ $f*g := \int f(y)(\_-y)dy.$
 
 >[!WARNING]
 > For *distributions* $T$ and $S$, operations like $T\cdot S$ or $T*S$ are ***not*** well-defined!
- 
 
 
+### Fourier Transform
+The **Fourier Transform** **maps** a function **from** the **spatial** domain **into** the **frequency** **domain**. It **decomposes** a **signal** **into** its constituent **pure** **tones**. For solving PDEs, its core value lies in its ability to **turn** **differentiation** **into multiplication**.
+
+>[!TIP]
+> The power of the Fourier Transform lies in **swapping differentiation with multiplication** which is due to the elementary fact that
+> $$\frac{d}{dx}e^{ax} = ae^{ax}.$$
+> This allows us to "get rid of" differentials and replace them with nice multiplication.
+
+For a function $f \in \mathcal{S}$, the **Fourier Transform** $\mathcal{F}f$ (or $\hat{f}$) and its **Inverse Fourier Transform** $\overline{\mathcal{F}}\hat{f}$ are defined as:
+$$\mathcal{F}f(p) = \frac{1}{(2\pi)^{\frac{n}{2}}}\int_{\mathbb{R}^n} e^{-ipx}f(x)\,d^nx, \quad \overline{\mathcal{F}}\hat{f}(x) = \frac{1}{(2\pi)^{\frac{n}{2}}}\int_{\mathbb{R}^n} e^{+ipx}\hat{f}(p)\,d^np.$$
+
+>[!NOTE]
+> Notice the $-i$ vs. the $+i$ in the exponents. Also, in higher dimensions $px$ is  scalar multiplication of *vectors* $p$ and $x$.
+
+The Fourier transform is a **continuous, linear bijection** **on** the **Schwartz Space** $\mathcal{S}$. This means shifting to frequency space preserves the "nice" decay and smoothness properties of our test functions.
+
+Differentiating a function in space corresponds to multiplying by the frequency variable:
+$$\mathcal{F}(D^\alpha f)(p) = (ip)^\alpha \mathcal{F}f(p).$$
+
+>[!TIP]
+> For example this allows us to turn the Poisson equation $\Delta u = f$ into an algebraic equation $-\|p\|^2\hat{u}(p) = \hat{f}(p),$ which allows us to solve directly for $\hat{u}$.
+ns
+
+For a *tempered* distribution $T \in \mathcal{S}'$, its **Fourier Transform** $\mathcal{F}T$ is defined by:
+$$\mathcal{F}T(\phi) := T(\mathcal{F}\phi).$$
+
+### Qualitative Aspects
+- **Smoothing vs. Decay**: The smoothness of a function determines the decay rate of its transform at infinity. If $f$ is smooth, its Fourier transform $\hat{f}$ drops off rapidly. If a function is sharply concentrated in space, its transform is highly spread out (Heisenberg Uncertainty Principle).
+- **Plancherel Isometry**: The Fourier transform preserves the $L^2$-norm.
+- **Convolution Theorem**: Convolution in space simplifies to point-wise multiplication in frequency: $\mathcal{F}(f * g) = (2\pi)^{\frac{n}{2}} \hat{f} \cdot \hat{g}$.
+- **Transform of the Dirac-Delta**: A point mass in space transforms into a uniform constant in frequency: $\mathcal{F}\delta = (2\pi)^{-\frac{n}{2}}$. This means that an instantaneous impulse contains all frequencies in equal measure.
 
 
+## Fundamental Solutions and Green's Functions
 
+### Motivation
+The **Fourier Transform** is powerful, but it **only works** when our domain is the **entire**, unbounded **space $\mathbb{R}^n$**. 
+To solve Laplace Equations on bounded domains, we **calculate** the response to a single, **isolated point mass** at the origin ($-\Delta\Phi = \delta$). The resulting spatial function is called the **Fundamental Solution**. This function becomes our new building block allowing us to construct solutions &ndash; so called  **Green's Functions**.
 
+### The Fundamental Solution
+
+> [!NOTE]
+> A **Fundamental Solution** of the Laplace operator is a locally integrable function $\Phi \colon \mathbb{R}^n \setminus \{0\} \to \mathbb{R}$ that satisfies the equation 
+> $$-\Delta \Phi = \delta.$$
+> in the sense of distributions. This means that for every test function $\phi$, we have:
+> $$T_\Phi(-\Delta\phi) = \int_{\mathbb{R}^n} \Phi (-\Delta \phi) = \phi(0).$$
+
+Via the Fourier Transform one can calculate that
+
+$$
+\Phi(x) = \begin{cases} 
+-\frac{1}{2\pi} \ln\|x\| & \text{if } n = 2, \\ 
+\frac{1}{n(n-2)\omega_n} \frac{1}{\|x\|^{n-2}} & \text{if } n \geq 3,
+\end{cases}
+$$
+
+where $\omega_n$ denotes the volume of the $n$-dimensional unit ball in $\mathbb{R}^n.$
+
+>[!TIP]
+> Since the Fundamental Solution has a singularity at the origin, proving the equality involves **"punching a hole"** $B_\varepsilon(0)$ in the origin and considering the limit of the integral as $\varepsilon\rightarrow 0.$ This, together with **integration by parts**,  are considered **standard tricks.**
 
 
 
