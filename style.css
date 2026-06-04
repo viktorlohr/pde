@@ -1,7 +1,7 @@
 body {
   background-color: #0d1117;
   color: #c9d1d9;
-  font-size: 1.75rem !important;
+  font-size: 1.5rem !important;
 }
 
 .markdown-body {
@@ -68,18 +68,38 @@ details>div {
 }
 
 details[open]>div {
-  max-height: 2000px;
+  max-height: 20000px;
   opacity: 1;
 }
 
+/* 1. Remove overflow from details so the summary can 'break out' of the parent boundary */
+details {
+  margin-top: 20px;
+  overflow: visible;
+}
+
+/* Accordion Headers - Standard (No longer sticky) */
 summary {
   cursor: pointer;
   list-style: none;
-  padding: 10px 40px 10px 10px;
+  padding: 15px 40px 15px 15px;
   background: #161b22;
   border-radius: 6px;
-  position: relative;
+  border-bottom: 2px solid #30363d;
   transition: background 0.2s;
+  margin-top: 20px;
+}
+
+
+
+
+/* 3. The content wrapper needs the overflow hidden to allow for the animation */
+details>div {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  /* HIDDEN moved here */
+  transition: max-height 0.3s ease, opacity 0.3s ease;
 }
 
 summary:hover {
@@ -100,23 +120,62 @@ details[open] .summary-arrow {
   transform: rotate(180deg);
 }
 
-/* TOC Styles */
-#toc {
-  margin-bottom: 40px;
+/* 3. The content wrapper needs the overflow hidden to allow for the animation */
+details>div {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  /* HIDDEN moved here */
+  transition: max-height 0.3s ease, opacity 0.3s ease;
 }
 
-#toc ul {
-  list-style-type: none;
-  padding-left: 0;
+/* Ensure the body and markdown-body don't block sticky */
+body,
+.markdown-body {
+  overflow: visible !important;
 }
 
-#toc a {
+/* Sticky Accordion Headers */
+details summary {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #0d1117;
+  border-bottom: 2px solid #30363d;
+  padding: 15px 40px 15px 15px;
+  /* Slightly larger for easier clicking */
+  margin-top: 20px;
+}
+
+/* Visual cue that it's sticky */
+details[open] summary {
+  background-color: #161b22;
+  border-bottom: 2px solid #58a6ff;
+}
+
+/* Remove any 'sticky' rules */
+details {
+  margin-top: 20px;
+  overflow: hidden;
+  /* Back to original behavior */
+}
+
+.nav-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  padding: 10px 20px;
+  background-color: #58a6ff;
+  color: #0d1117;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
   cursor: pointer;
-  color: #58a6ff;
-  text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
-#toc a:hover {
-  text-decoration: underline;
-  color: #ffffff;
+.nav-btn:hover {
+  background-color: #79b8ff;
 }

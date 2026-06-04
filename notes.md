@@ -1,4 +1,4 @@
-# PDE notes - conceptual overview
+# PDE notes
 >[!CAUTION]
 > This document is by no means meant to be a rigorous script. It should merely serve as an overview.
 

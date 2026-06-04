@@ -64,3 +64,32 @@ fetch('notes.md')
 
     renderMathInElement(content, { delimiters: [{ left: '$$', right: '$$', display: true }, { left: '$', right: '$', display: false }], throwOnError: false });
   });
+
+const navBtn = document.getElementById('prev-nav');
+navBtn.innerText = "↑";
+
+window.addEventListener('scroll', () => {
+  const sections = document.querySelectorAll('details');
+  let currentSection = null;
+
+  sections.forEach(section => {
+    const rect = section.getBoundingClientRect();
+    // Check if section is in view
+    if (rect.top <= 100 && rect.bottom > 100) {
+      currentSection = section;
+    }
+  });
+
+  // Only show button if we are inside a section AND it is currently open
+  if (currentSection && currentSection.hasAttribute('open')) {
+    navBtn.style.display = 'block';
+    navBtn.onclick = () => {
+      currentSection.querySelector('summary').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    };
+  } else {
+    navBtn.style.display = 'none';
+  }
+});
