@@ -1,26 +1,4 @@
 # PDE notes - conceptual overview
-- [PDE notes - conceptual overview](#pde-notes---conceptual-overview)
-  - [Introduction](#introduction)
-    - [Laplacian](#laplacian)
-    - [Boundary Conditions](#boundary-conditions)
-    - [Heat Equation](#heat-equation)
-  - [Schwartz Space and Distributions](#schwartz-space-and-distributions)
-    - [Test Functions and Schwartz Space](#test-functions-and-schwartz-space)
-    - [Distributions](#distributions)
-    - [Tempered Distributions](#tempered-distributions)
-    - [Regular Distributions](#regular-distributions)
-    - [The Distributional Derivative](#the-distributional-derivative)
-    - [Weak Derivatives](#weak-derivatives)
-    - [Other Operations on Distributions](#other-operations-on-distributions)
-    - [Fourier Transform](#fourier-transform)
-    - [Qualitative Aspects](#qualitative-aspects)
-  - [Fundamental Solutions and Green's Functions](#fundamental-solutions-and-greens-functions)
-    - [Motivation](#motivation)
-    - [The Fundamental Solution](#the-fundamental-solution)
-  - [Weak Solutions and Sobolev-Spaces](#weak-solutions-and-sobolev-spaces)
-    - [Trace Theorem](#trace-theorem)
-    - [Gagliardo-Nirenberg Inequality](#gagliardo-nirenberg-inequality)
-
 >[!CAUTION]
 > This document is by no means meant to be a rigorous script. It should merely serve as an overview.
 

@@ -13,7 +13,7 @@
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3.0.8/dist/purify.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked-katex-extension@5.0.0/lib/index.umd.js"></script>
   <style>
-    /* Dark Mode Defaults */
+    /* Base Styles */
     body {
       background-color: #0d1117;
       color: #c9d1d9;
@@ -28,20 +28,21 @@
       color: #c9d1d9;
     }
 
-    /* Dark Mode Callout Styling */
+    .markdown-body a {
+      color: #58a6ff;
+    }
+
+    /* Callout Styling */
     .callout {
       padding: 16px;
       margin: 16px 0;
       border-left: 6px solid;
       border-radius: 4px;
       color: #c9d1d9;
-      /* Lighter text for better contrast */
     }
 
-    /* Ensure headers within callouts aren't glaringly bright */
     .callout strong {
-      color: #e2e2ec !important;
-      /* margin-right: 4px; */
+      color: #ffffff !important;
       font-weight: 700;
     }
 
@@ -70,81 +71,209 @@
       background-color: rgb(63, 41, 0);
     }
 
-    /* Ensure text in callouts is readable */
-    .callout strong {
-      color: #ffffff;
-    }
-
-    /* Optional: Override link colors for better dark mode visibility */
-    .markdown-body a {
-      color: #58a6ff;
-    }
-
+    /* Math Rendering */
     .katex-display {
       overflow-x: auto;
       overflow-y: hidden;
       padding: 1em 0;
-      /* Ensures scrollbars don't clip the math */
+    }
+
+    /* TOC Styling */
+    #toc>ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    #toc a {
+      cursor: pointer;
+      color: #58a6ff;
+      text-decoration: none;
+    }
+
+    #toc a:hover {
+      text-decoration: underline;
+      color: #ffffff;
+    }
+
+    /* Force the animation on the details element */
+    details {
+      overflow: hidden !important;
+      margin-top: 20px !important;
+      display: block !important;
+      /* Force block so max-height works */
+    }
+
+    /* The content wrapper - target this explicitly */
+    details>div {
+      max-height: 0 !important;
+      opacity: 0 !important;
+      overflow: hidden !important;
+      transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out !important;
+    }
+
+    /* The open state - force the expansion */
+    details[open]>div {
+      max-height: 2000px !important;
+      /* Arbitrary high value */
+      opacity: 1 !important;
+    }
+
+    /* Summary Layout */
+    summary {
+      cursor: pointer;
+      list-style: none;
+      padding: 10px 40px 10px 10px;
+      background: #161b22;
+      border-radius: 6px;
+      position: relative;
+      transition: background 2s ease;
+      display: block;
+    }
+
+    summary:hover {
+      background: #21262d;
+    }
+
+    /* Arrow Positioning */
+    .summary-arrow {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 0.8em;
+      color: #58a6ff;
+      pointer-events: none;
+      transition: transform 0.3s ease;
+    }
+
+    details[open] .summary-arrow {
+      transform: rotate(180deg);
     }
   </style>
 </head>
 
 <body class="markdown-body">
+  <h1 id="page-title"></h1>
   <div id="toc"></div>
   <div id="content">Loading notes...</div>
 
   <script>
-    // 1. Define the custom tokenizer to "protect" math blocks
-    const mathExtension = {
-      name: 'math',
-      level: 'block',
-      start(src) { return src.indexOf('$$'); },
-      tokenizer(src) {
-        const match = /^\$\$[\s\S]*?\$\$/.exec(src);
-        if (match) {
-          return {
-            type: 'math',
-            raw: match[0],
-            text: match[0].trim()
-          };
-        }
-      },
-      renderer(token) {
-        // Return the raw text, which we will render later via KaTeX
-        return token.raw;
-      }
-    };
-
-    // 2. Register the extension
-    marked.use({ extensions: [mathExtension] });
-
-    // 3. Setup Blockquote renderer
-    const renderer = {
-      blockquote(quote) {
-        const cleanQuote = quote.replace(/\[!(NOTE|TIP|CAUTION|IMPORTANT|WARNING)\]/g, '');
-        if (quote.includes('[!NOTE]')) return `<div class="callout callout-note">${cleanQuote}</div>`;
-        if (quote.includes('[!TIP]')) return `<div class="callout callout-tip">${cleanQuote}</div>`;
-        if (quote.includes('[!IMPORTANT]')) return `<div class="callout callout-important">${cleanQuote}</div>`;
-        if (quote.includes('[!WARNING]')) return `<div class="callout callout-warning">${cleanQuote}</div>`;
-        if (quote.includes('[!CAUTION]')) return `<div class="callout callout-caution">${cleanQuote}</div>`;
-        return `<blockquote>${quote}</blockquote>`;
-      }
-    };
-    marked.use({ renderer });
-
-    // 4. Fetch and render
     fetch('notes.md')
       .then(response => response.text())
       .then(markdownSource => {
+        // 1. Register extensions BEFORE parsing
+        const calloutExtension = {
+          name: 'callout',
+          level: 'block',
+          // Look for lines starting with the blockquote '>' and the callout tag '[!'
+          start(src) { return src.indexOf('> [!'); },
+          tokenizer(src) {
+            // Matches: > [!STYLE]
+            // Followed by any number of lines that also start with >
+            const match = /^> ?\[!(NOTE|TIP|CAUTION|IMPORTANT|WARNING)\]\n((?:> ?.*\n?)*)/.exec(src);
+            if (match) {
+              // Remove the "> " prefix from every line in the body
+              const body = match[2].replace(/^> ?/gm, '');
+              return {
+                type: 'callout',
+                raw: match[0],
+                style: match[1],
+                text: body
+              };
+            }
+          },
+          renderer(token) {
+            const style = token.style.toLowerCase();
+            // Use parse to handle multi-line content (like your list of Boundary Conditions)
+            return `<div class="callout callout-${style}">${marked.parse(token.text)}</div>`;
+          }
+        };
+        marked.use({ extensions: [calloutExtension] });
+
+        // 2. Parse the markdown
         const contentDiv = document.getElementById('content');
+        contentDiv.innerHTML = DOMPurify.sanitize(marked.parse(markdownSource));
 
-        // Parse to HTML
-        const html = marked.parse(markdownSource);
+        // 1. Extract the title
+        const h1 = contentDiv.querySelector('h1');
 
-        // Sanitize and inject
-        contentDiv.innerHTML = DOMPurify.sanitize(html);
+        if (h1) {
+          // 2. Put it in the new container
+          document.getElementById('page-title').innerText = h1.innerText;
 
-        // Trigger KaTeX to render all math blocks now that they are in the DOM
+          // 3. Remove it from the markdown content so it isn't duplicated
+          h1.remove();
+        }
+
+        // COLLAPSE LOGIC: Group sections into <details>
+        // MUST happen here, before building the TOC
+        const h2s = contentDiv.querySelectorAll('h2');
+        h2s.forEach((h2) => {
+          const details = document.createElement('details');
+          details.open = false;
+
+          const summary = document.createElement('summary');
+
+          // Create a container for the title to control width
+          const titleSpan = document.createElement('span');
+          titleSpan.className = 'summary-title';
+          titleSpan.appendChild(h2.cloneNode(true));
+
+          // Create the independent arrow element
+          const arrow = document.createElement('span');
+          arrow.className = 'summary-arrow';
+          arrow.innerHTML = '▼';
+
+          summary.appendChild(titleSpan);
+          summary.appendChild(arrow);
+          details.appendChild(summary);
+          const contentWrapper = document.createElement('div');
+
+          let next = h2.nextElementSibling;
+          while (next && next.tagName !== 'H2') {
+            const sibling = next;
+            next = next.nextElementSibling;
+            contentWrapper.appendChild(sibling);
+          }
+          details.appendChild(contentWrapper); // Move content into the div
+          h2.parentNode.replaceChild(details, h2);
+        });
+
+        // 3. Build TOC
+        const headers = contentDiv.querySelectorAll('h2, h3');
+        const tocDiv = document.getElementById('toc');
+
+        if (headers.length > 0) {
+          tocDiv.innerHTML = '<h2>Contents</h2>';
+          const ul = document.createElement('ul');
+          tocDiv.appendChild(ul);
+
+          headers.forEach((header, index) => {
+            const id = 'heading-' + index;
+            header.id = id;
+
+            const li = document.createElement('li');
+            // Indent based on whether it is an h2 or h3
+            li.style.marginLeft = (header.tagName === 'H3' ? '40px' : '0px');
+
+            const a = document.createElement('a');
+            a.href = '#' + id;
+            a.innerText = header.innerText;
+
+            // Click handler for expansion
+            a.addEventListener('click', (e) => {
+              const targetHeader = document.getElementById(id);
+              const parentDetails = targetHeader.closest('details');
+              if (parentDetails) {
+                parentDetails.open = true; // Expand the section
+              }
+            });
+
+            li.appendChild(a);
+            ul.appendChild(li);
+          });
+        }
+
+        // Trigger KaTeX (Typo fixed here: falsec -> false)
         renderMathInElement(contentDiv, {
           delimiters: [
             { left: '$$', right: '$$', display: true },
@@ -152,10 +281,6 @@
           ],
           throwOnError: false
         });
-      })
-      .catch(err => {
-        console.error(err);
-        document.getElementById('content').innerText = "Error loading notes.md.";
       });
   </script>
 </body>
