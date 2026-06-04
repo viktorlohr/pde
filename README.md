@@ -73,8 +73,7 @@ If a point is hotter than its surroundings, meaning $\Delta u(p) < 0$, then heat
 Classical derivatives require point-by-point differentiability. If a function has a sharp corner or a jump discontinuity, its classical derivative fails to exist at that point. To solve PDEs with realistic, rough behaviors, we must stop evaluating functions point-by-point and instead study how they behave *on average* when **integrated against smooth test functions**.
 
 ### Test Functions and Schwartz Space
-To make integration by parts perfectly rigorous, we need "nice" test functions $\phi.$ The 
-**Space of Test Functions $C_c^\infty(\Omega)$** consists of **smooth** (infinitely differentiable) functions with **compact support**. 
+The **Space of Test Functions $C_c^\infty(\Omega)$** consists of **smooth** (infinitely differentiable) functions with **compact support**. 
 
 >[!TIP]
 > Remember that compact support means that **boundary terms vanish during integration by parts**. 
@@ -165,13 +164,13 @@ By definition this means that $T_v = T_u'.$
 ### Other Operations on Distributions
 One can check that 
 - $(\psi T)\phi := T(\psi\cdot \phi)$ and
-- $(\psi*T)\phi := T(\psi(-\_)*\phi)$
+- $(\psi\ast T)\phi := T(\psi(-\_)\ast \phi)$
 
-are well-defined. Remember that "$*$" is *convolution* 
-$f*g := \int f(y)(\_-y)dy.$ 
+are well-defined. Remember that "$\ast$" is *convolution* 
+$f\ast g := \int f(y)(\_-y)dy.$ 
 
 >[!WARNING]
-> For *distributions* $T$ and $S$, operations like $T\cdot S$ or $T*S$ are ***not*** well-defined!
+> For *distributions* $T$ and $S$, operations like $T\cdot S$ or $T\ast S$ are ***not*** well-defined!
 
 
 ### Fourier Transform
