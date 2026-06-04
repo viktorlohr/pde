@@ -14,18 +14,36 @@ body {
 
 /* Custom Accordion (Sections) */
 .custom-section {
-  margin-top: 20px;
-  border-bottom: 1px solid #30363d;
+  margin: 1.5rem 0;
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  background: #0d1117;
+  border-radius: 0;
+  /* Removing radius often reveals hidden border artifacts */
+  overflow: hidden;
 }
 
 .custom-header {
+  padding: 1rem 1.5rem;
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
-  padding: 15px;
-  background: #161b22;
-  cursor: pointer;
-  border-radius: 6px;
-  border: 1px solid #30363d;
+  align-items: center;
+  background: rgb(20, 25, 41) !important;
+  border: 0 !important;
+  /* Killing any inherited border here */
+  font-weight: 1000;
+  font-size: 2rem !important;
+  color: #adbac7 !important;
+  user-select: none;
+  line-height: 2;
+  border-radius: 12px;
+}
+
+/* Ensure no accidental outlines on click */
+.custom-header:focus {
+  outline: none !important;
 }
 
 .custom-header:hover {
@@ -145,4 +163,41 @@ body {
 
 .katex-display::-webkit-scrollbar-thumb:hover {
   background: #58a6ff !important;
+}
+
+
+.custom-header {
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  /* Force the arrow to stay vertically centered relative to the whole block */
+  align-items: center;
+  background: #0d1117;
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: #adbac7;
+  user-select: none;
+  /* Ensure the header has a fixed line height */
+  line-height: 1.5;
+}
+
+.custom-header .arrow {
+  /* Set a fixed width/height for the arrow container */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+
+  /* Ensure the rotation happens around the center of this container */
+  transition: transform 0.2s ease;
+  transform-origin: center;
+
+  /* Push the arrow to the far right */
+  flex-shrink: 0;
+  margin-left: 1rem;
+
+  font-size: 1rem;
+  color: #57606a;
 }

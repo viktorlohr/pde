@@ -59,7 +59,31 @@ fetch('notes.md')
 
       header.onclick = () => {
         section.classList.toggle('active');
-        wrapper.style.height = section.classList.contains('active') ? inner.scrollHeight + 'px' : '0px';
+
+        if (section.classList.contains('active')) {
+          // 1. Get the real height of the inner container
+          // We add a small buffer if needed, though scrollHeight is usually precise
+          const height = inner.scrollHeight;
+
+          // 2. Set the height dynamically
+          wrapper.style.height = height + 'px';
+
+          // 3. Optional: Set back to 'auto' after transition ends
+          // This allows the section to stay responsive if the window resizes
+          setTimeout(() => {
+            if (section.classList.contains('active')) {
+              wrapper.style.height = 'auto';
+            }
+          }, 300); // Wait for the 0.3s CSS transition to finish
+        } else {
+          // Force height back to specific value before animating to 0
+          wrapper.style.height = inner.scrollHeight + 'px';
+
+          // Force a reflow to ensure the transition triggers
+          wrapper.offsetHeight;
+
+          wrapper.style.height = '0px';
+        }
       };
     });
 
