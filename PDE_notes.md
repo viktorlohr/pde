@@ -248,7 +248,7 @@ One can show that the $L^p$-norm of these functions on the boundary is bounded b
 > We used the densitiy of smooth functions in Sobolev Spaces to find a well-defined restriction on the boundary.
 
 ### Gagliardo-Nirenberg Inequality
-The derivatives control the slopes of the function. By bounding the $L^p$ norm of the gradient, we restrict how fast the function can grow or spike. This makes it "more integrable", i.e. an element of even higher order $L^q$ space.
+The derivatives control the slopes of the function. By bounding the $L^p$ norm of the gradient, we restrict how fast the function can grow or spike. This makes it "more integrable", i.e. an element of even higher order $L^q$ space. test
 
 >[!NOTE]
 > A main application of this inequality is the ability to *embed Sobolev functions* in higher order $L^q$ spaces.
