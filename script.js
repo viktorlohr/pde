@@ -36,52 +36,66 @@ fetch('notes.md')
       bq.innerHTML = bq.innerHTML.replace(/\[!.*?\]\n?/g, '');
     });
 
-    // 5. POST-PROCESSING: Accordions
+    // 5. POST-PROCESSING: Accordions & TOC
     content.querySelectorAll('h2').forEach((h2) => {
       const section = document.createElement('div');
       section.className = 'custom-section';
+
       const header = document.createElement('div');
       header.className = 'custom-header';
       header.innerHTML = `<span>${h2.innerText}</span><span class="arrow">▼</span>`;
+
       const wrapper = document.createElement('div');
       wrapper.className = 'content-wrapper';
       const inner = document.createElement('div');
       inner.className = 'content-inner';
 
+      // Collect elements and identify H3s
+      const subHeadings = [];
       let next = h2.nextElementSibling;
+
       while (next && next.tagName !== 'H2') {
+        if (next.tagName === 'H3') {
+          subHeadings.push(next);
+        }
         inner.appendChild(next);
         next = h2.nextElementSibling;
       }
+
+      // If we found H3s, build the TOC list and prepend to the 'inner' container
+      if (subHeadings.length > 0) {
+        const tocList = document.createElement('ul');
+        tocList.className = 'toc-list';
+        subHeadings.forEach(h3 => {
+          if (!h3.id) h3.id = h3.textContent.toLowerCase().replace(/\s+/g, '-');
+          const li = document.createElement('li');
+          li.innerHTML = `<a href="#${h3.id}">${h3.textContent}</a>`;
+          tocList.appendChild(li);
+        });
+
+        inner.prepend(tocList);
+      }
+
       wrapper.appendChild(inner);
       section.append(header, wrapper);
       h2.replaceWith(section);
 
+      // RESTORED: Click logic with height animation
       header.onclick = () => {
         section.classList.toggle('active');
 
         if (section.classList.contains('active')) {
-          // 1. Get the real height of the inner container
-          // We add a small buffer if needed, though scrollHeight is usually precise
           const height = inner.scrollHeight;
-
-          // 2. Set the height dynamically
           wrapper.style.height = height + 'px';
 
-          // 3. Optional: Set back to 'auto' after transition ends
-          // This allows the section to stay responsive if the window resizes
           setTimeout(() => {
             if (section.classList.contains('active')) {
               wrapper.style.height = 'auto';
             }
-          }, 300); // Wait for the 0.3s CSS transition to finish
+          }, 300);
         } else {
-          // Force height back to specific value before animating to 0
           wrapper.style.height = inner.scrollHeight + 'px';
-
-          // Force a reflow to ensure the transition triggers
-          wrapper.offsetHeight;
-
+          wrapper.offsetHeight; // Force reflow
           wrapper.style.height = '0px';
         }
       };

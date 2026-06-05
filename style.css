@@ -50,6 +50,13 @@ body {
   padding: 0.5em 0;
 }
 
+#content h3 {
+  margin-top: 5rem !important;
+  /* Adjust this value as needed */
+  margin-bottom: 1rem;
+  /* Keeps the space below the heading balanced */
+}
+
 #content a {
   color: #58a6ff;
 }
@@ -117,20 +124,6 @@ pre {
   transform: rotate(180deg);
 }
 
-.nav-wrapper {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  /* Ensures it stays on top */
-  background-color: red;
-  width: 60px;
-  /* Same as your body background */
-  display: flex;
-  justify-content: center;
-  padding: 1rem 0;
-  margin-bottom: 1rem;
-}
-
 .nav-btn {
   /* Positioning */
   position: fixed;
@@ -140,8 +133,8 @@ pre {
   z-index: 1000;
 
   /* Shape & Size */
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
 
   /* Centering the arrow */
@@ -213,4 +206,32 @@ pre {
 
 .callout strong {
   color: #ffffff;
+}
+
+.toc-list {
+  list-style: none;
+  padding: 10px 0 20px 0;
+  /* Removed left padding to align better with text */
+  margin: 10px 0;
+  border-left: 2px solid #30363d;
+  /* Muted border color */
+}
+
+.toc-list li {
+  margin-bottom: 5px;
+}
+
+.toc-list li a {
+  text-decoration: none;
+  /* Removes the underline */
+  color: #8b949e;
+  /* A subtle grey-blue */
+  font-size: 2rem;
+  /* Slightly smaller than your body text */
+  transition: color 0.2s ease;
+}
+
+.toc-list li a:hover {
+  color: #58a6ff;
+  /* Only lights up when hovered */
 }
