@@ -135,22 +135,59 @@ window.addEventListener('scroll', () => {
 
 navBtn.addEventListener('click', () => {
   // 1. Get all H2 headers and filter for those above the current scroll position
-  const headers = Array.from(document.querySelectorAll('h2'));
-  const currentScroll = window.scrollY;
+  const headers = Array.from(document.querySelectorAll('.custom-header'));
 
+  scroll = window.scrollY;
+  console.log(scroll);
   // Find the header closest to the current position that is above us
   const targetHeader = headers
-    .reverse() // Look from bottom to top
-    .find(h2 => h2.getBoundingClientRect().top + window.scrollY < currentScroll - 10);
+    // map headers to objects with attributes 
+    // header DOM element, YCoordinate
+    .map(h2 => ({
+      element: h2,
+      top: h2.getBoundingClientRect().top,
+      delta: scroll + h2.getBoundingClientRect().top
+    }))
+    .map(h2 => {
+      console.log("This header has been found:", h2);
+      return h2;
+    })
+    //only allow headers with negative relative position
+    // (these are the ones above) 
+    .filter(h => h.top < 0)
+    // find the minimum (reduce ~ fold)
+    // the function iterates through the "current"s
+    .map(h => { console.log("this is an h after the filter:", h); return h })
+    .reduce(
+      // implicit function that "combines" (here: compares)
+      // the current element with the accumulator 
+      // (here: the currently closest element)
+      (minimum, current) => {
+        // current is closer than previous closest
+        if (!minimum || current.delta < minimum.delta) {
+          // this return updates the old accumulator
+          // iteratively.
+          // So closest = current now
+          return current;
+        }
+        // returns the finished accumulator
+        return minimum;
+        // only try to get element if the element is not null
+        // (otherwise the expression is undefined)
+      }, null)?.element;
+
+  console.log("this is the minimum:", targetHeader);
 
   // 2. Decide where to jump
   if (targetHeader) {
+    console.log("found header");
     // Jump to the header
     window.scrollTo({
       top: targetHeader.offsetTop,
       behavior: 'smooth'
     });
   } else {
+    console.log("did not find header");
     // No more headers above? Jump to the very top
     window.scrollTo({
       top: 0,
