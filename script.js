@@ -172,8 +172,8 @@ navBtn.addEventListener('click', () => {
 
   // Decide where to jump
   _top = 0;
-  if (Math.abs(targetOffset) < 10) {
-    _top = scroll;
+  if (Math.abs(targetOffset) < 200) {
+    _top = 0;
   }
   else if (targetHeader) {
     _top = targetHeader.offsetTop;
