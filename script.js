@@ -131,9 +131,30 @@ window.addEventListener('scroll', () => {
 });
 
 // Existing click event for smooth scroll
+// const navBtn = document.getElementById('prev-nav');
+
 navBtn.addEventListener('click', () => {
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
-  });
+  // 1. Get all H2 headers and filter for those above the current scroll position
+  const headers = Array.from(document.querySelectorAll('h2'));
+  const currentScroll = window.scrollY;
+
+  // Find the header closest to the current position that is above us
+  const targetHeader = headers
+    .reverse() // Look from bottom to top
+    .find(h2 => h2.getBoundingClientRect().top + window.scrollY < currentScroll - 10);
+
+  // 2. Decide where to jump
+  if (targetHeader) {
+    // Jump to the header
+    window.scrollTo({
+      top: targetHeader.offsetTop,
+      behavior: 'smooth'
+    });
+  } else {
+    // No more headers above? Jump to the very top
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
 });
