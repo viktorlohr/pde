@@ -103,19 +103,56 @@ pre {
   transform: rotate(180deg);
 }
 
-/* 5. Navigation */
+.nav-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  /* Ensures it stays on top */
+  background-color: red;
+  width: 60px;
+  /* Same as your body background */
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+}
+
 .nav-btn {
+  /* Positioning */
   position: fixed;
   top: 20px;
-  right: 20px;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1000;
-  padding: 10px 20px;
-  background-color: #58a6ff;
+
+  /* Shape & Size */
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+
+  /* Centering the arrow */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Appearance */
+  background-color: #10253e;
   border: none;
-  border-radius: 12px;
   cursor: pointer;
-  color: #0d1117;
+  color: #cad0db;
   font-weight: bold;
+  font-size: 1.5rem;
+
+  /* Visibility Toggle */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.nav-btn.visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
 }
 
 /* 6. Math (KaTeX) */

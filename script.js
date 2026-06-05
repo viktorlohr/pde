@@ -98,16 +98,28 @@ fetch('notes.md')
   });
 
 // Navigation Button Logic
-const navBtn = document.getElementById('prev-nav');
-window.addEventListener('scroll', () => {
-  const sections = document.querySelectorAll('.custom-section');
-  let currentSection = null;
-  sections.forEach(s => {
-    const rect = s.getBoundingClientRect();
-    if (rect.top <= 100 && rect.bottom > 100) currentSection = s;
+document.getElementById('prev-nav').addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
   });
-  navBtn.style.display = (currentSection && currentSection.classList.contains('active')) ? 'block' : 'none';
-  if (navBtn.style.display === 'block') {
-    navBtn.onclick = () => currentSection.scrollIntoView({ behavior: 'smooth' });
+});
+
+const navBtn = document.getElementById('prev-nav');
+
+window.addEventListener('scroll', () => {
+  // Show button after scrolling down 300px
+  if (window.scrollY > 300) {
+    navBtn.classList.add('visible');
+  } else {
+    navBtn.classList.remove('visible');
   }
-}); 
+});
+
+// Existing click event for smooth scroll
+navBtn.addEventListener('click', () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+});
