@@ -224,9 +224,9 @@ pre {
 .toc-list li a {
   text-decoration: none;
   /* Removes the underline */
-  color: #8b949e;
+  color: #8098b4 !important;
   /* A subtle grey-blue */
-  font-size: 2rem;
+  font-size: 1.6rem;
   /* Slightly smaller than your body text */
   transition: color 0.2s ease;
 }
@@ -234,4 +234,11 @@ pre {
 .toc-list li a:hover {
   color: #58a6ff;
   /* Only lights up when hovered */
+}
+
+/* Force all states to use your custom color */
+.toc-list li a,
+.toc-list li a:visited,
+.toc-list li a:active {
+  color: #8b949e;
 }
