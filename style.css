@@ -1,26 +1,71 @@
-/* Core Page Styles */
+/* 1. Global Reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: #0d1117;
   color: #c9d1d9;
-  font-size: 1.5rem !important;
+  font-size: 2rem;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
 }
 
-.markdown-body {
-  max-width: 980px;
+.container {
+  width: 95%;
+  max-width: 720px;
   margin: 0 auto;
-  padding: 60px;
-  color: #c9d1d9;
+
+  /* The padding that wasn't showing */
+  padding-inline: 1rem !important;
+
+  box-sizing: border-box;
 }
 
-/* Custom Accordion (Sections) */
+#content {
+  width: 100%;
+}
+
+/* 3. Typography & Basic Elements */
+#content h1,
+#content h2 {
+  color: #ffffff;
+  border-bottom: 1px solid #30363d;
+  padding: 0.5em 0;
+}
+
+#content a {
+  color: #58a6ff;
+}
+
+/* Target both unordered and ordered lists */
+#content ul,
+#content ol {
+  /* Increase the space between the left edge and the bullets/numbers */
+  padding-left: 2.5rem;
+
+  /* Adds a bit of breathing room between list items */
+  margin-block: 1rem;
+}
+
+/* Optional: Add spacing between individual list items */
+#content li {
+  margin-bottom: 0.5rem;
+}
+
+pre {
+  background: #161b22;
+  padding: 16px;
+  border-radius: 6px;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+/* 4. Custom Accordion */
 .custom-section {
-  margin: 1.5rem 0;
-  border: 0 !important;
-  outline: 0 !important;
-  box-shadow: none !important;
   background: #0d1117;
-  border-radius: 0;
-  /* Removing radius often reveals hidden border artifacts */
   overflow: hidden;
 }
 
@@ -30,20 +75,12 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgb(20, 25, 41) !important;
-  border: 0 !important;
-  /* Killing any inherited border here */
-  font-weight: 1000;
-  font-size: 2rem !important;
-  color: #adbac7 !important;
-  user-select: none;
-  line-height: 2;
+  background: #141929;
+  font-weight: 600;
+  font-size: 2rem;
+  color: #adbac7;
   border-radius: 12px;
-}
-
-/* Ensure no accidental outlines on click */
-.custom-header:focus {
-  outline: none !important;
+  margin: 1rem 0;
 }
 
 .custom-header:hover {
@@ -58,53 +95,15 @@ body {
 
 .arrow {
   transition: transform 0.3s;
+  flex-shrink: 0;
+  margin-left: 1rem;
 }
 
 .custom-section.active .arrow {
   transform: rotate(180deg);
 }
 
-/* GitHub-Style Callouts (Post-Processed) */
-.callout {
-  padding: 16px;
-  margin: 16px 0;
-  border-left: 5px solid;
-  border-radius: 6px;
-  color: #e6edf3 !important;
-}
-
-/* We use !important to override github-markdown-css defaults */
-.callout-note {
-  border-left-color: #1f6feb !important;
-  background: #161b22 !important;
-}
-
-.callout-tip {
-  border-left-color: #238636 !important;
-  background: #161b22 !important;
-}
-
-.callout-warning {
-  border-left-color: #d29922 !important;
-  background: #262117 !important;
-}
-
-.callout-important {
-  border-left-color: #a371f7 !important;
-  background: #201a2a !important;
-}
-
-.callout-caution {
-  border-left-color: #f85149 !important;
-  background: #291a1a !important;
-}
-
-/* Ensure internal elements remain readable */
-.callout strong {
-  color: #ffffff !important;
-}
-
-/* Navigation Button */
+/* 5. Navigation */
 .nav-btn {
   position: fixed;
   top: 20px;
@@ -117,87 +116,50 @@ body {
   cursor: pointer;
   color: #0d1117;
   font-weight: bold;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-.nav-btn:hover {
-  background-color: #79b8ff;
-
-  /* Enable horizontal scrolling for display math equations */
-  .katex-display {
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 10px 0;
-    /* Ensure it doesn't break the layout */
-    max-width: 100%;
-  }
-}
-
-/* Force horizontal scrolling for display math */
+/* 6. Math (KaTeX) */
 .katex-display {
-  display: block !important;
-  overflow-x: auto !important;
-  overflow-y: hidden !important;
-  white-space: nowrap !important;
-  /* Prevents math from wrapping */
-  padding: 10px 0 !important;
-  margin: 1em 0 !important;
-  max-width: 100% !important;
+  display: block;
+  overflow-x: auto;
+  padding: 10px 0;
   scrollbar-width: thin;
-  /* For Firefox */
 }
 
-/* Chrome/Safari Scrollbar Styling */
-.katex-display::-webkit-scrollbar {
-  height: 8px !important;
+/* GitHub-Style Callouts */
+.callout {
+  padding: 16px;
+  margin: 16px 0;
+  border-left: 5px solid;
+  border-radius: 6px;
+  color: #e6edf3;
 }
 
-.katex-display::-webkit-scrollbar-track {
-  background: transparent !important;
+.callout-note {
+  border-left-color: #1f6feb;
+  background: #161b22;
 }
 
-.katex-display::-webkit-scrollbar-thumb {
-  background: #30363d !important;
-  border-radius: 4px !important;
+.callout-tip {
+  border-left-color: #238636;
+  background: #161b22;
 }
 
-.katex-display::-webkit-scrollbar-thumb:hover {
-  background: #58a6ff !important;
+.callout-warning {
+  border-left-color: #d29922;
+  background: #262117;
 }
 
-
-.custom-header {
-  padding: 1rem 1.5rem;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  /* Force the arrow to stay vertically centered relative to the whole block */
-  align-items: center;
-  background: #0d1117;
-  font-weight: 500;
-  font-size: 1.5rem;
-  color: #adbac7;
-  user-select: none;
-  /* Ensure the header has a fixed line height */
-  line-height: 1.5;
+.callout-important {
+  border-left-color: #a371f7;
+  background: #201a2a;
 }
 
-.custom-header .arrow {
-  /* Set a fixed width/height for the arrow container */
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  width: 20px;
-  height: 20px;
+.callout-caution {
+  border-left-color: #f85149;
+  background: #291a1a;
+}
 
-  /* Ensure the rotation happens around the center of this container */
-  transition: transform 0.2s ease;
-  transform-origin: center;
-
-  /* Push the arrow to the far right */
-  flex-shrink: 0;
-  margin-left: 1rem;
-
-  font-size: 1rem;
-  color: #57606a;
+.callout strong {
+  color: #ffffff;
 }
