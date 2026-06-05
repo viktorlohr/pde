@@ -13,6 +13,10 @@
   /* Removes the blue focus ring on desktop/accessibility */
 }
 
+html {
+  font-size: 22px;
+}
+
 /* 2. Optional: Add a custom subtle feedback */
 button:active {
   filter: brightness(1.2);
@@ -22,13 +26,22 @@ button:active {
 body {
   background-color: #0d1117;
   color: #c9d1d9;
-  font-size: 1.7rem;
+  font-size: 100%;
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+h1 {
+  font-size: 150%;
+  text-align: center;
+  color: lightgray;
 }
 
 .container {
-  width: 95%;
+  width: 100%;
   max-width: 720px;
   margin: 0 auto;
 
@@ -51,9 +64,9 @@ body {
 }
 
 #content h3 {
-  margin-top: 5rem !important;
+  margin-top: 1rem !important;
   /* Adjust this value as needed */
-  margin-bottom: 1rem;
+  margin-bottom: 0 !important;
   /* Keeps the space below the heading balanced */
 }
 
@@ -91,17 +104,17 @@ pre {
 }
 
 .custom-header {
-  padding: 1rem 1.5rem;
+  padding: 1rem 1rem;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: #141929;
   font-weight: 600;
-  font-size: 2rem;
+  font-size: 110%;
   color: #adbac7;
   border-radius: 12px;
-  margin: 1rem 0;
+  margin: 0.2rem 0;
 }
 
 .custom-header:hover {
@@ -148,7 +161,7 @@ pre {
   cursor: pointer;
   color: #cad0db;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 100%;
 
   /* Visibility Toggle */
   opacity: 0;
@@ -208,11 +221,17 @@ pre {
   color: #ffffff;
 }
 
+ul,
+ol {
+  padding-left: 20px !important;
+}
+
 .toc-list {
   list-style: none;
-  padding: 10px 0 20px 0;
+  /* padding: 10px 0 20px 0; */
   /* Removed left padding to align better with text */
-  margin: 10px 0;
+  padding-left: 10px !important;
+  /* margin: 10px 0; */
   border-left: 2px solid #30363d;
   /* Muted border color */
 }
@@ -226,7 +245,7 @@ pre {
   /* Removes the underline */
   color: #8098b4 !important;
   /* A subtle grey-blue */
-  font-size: 1.5rem;
+  font-size: 80%;
   /* Slightly smaller than your body text */
   transition: color 0.2s ease;
 }
@@ -244,8 +263,8 @@ pre {
 }
 
 
-@media (max-width: 1000px) {
+/* @media (max-width: 1000px) {
   html {
     font-size: 200% !important;
   }
-}
+} */

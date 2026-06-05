@@ -35,15 +35,15 @@ A PDE on its own has infinitely many solutions.
 **Boundary conditions** are used to **"pin down" unique solutions**.
 Two of the most important boundary conditions are
 >[!NOTE]
-> - **Dirichlet** Boundary Conditions: Our **solution** shall **coincide** **with** a **function** **on the boundary** of the domain $\Omega$, so 
-  $u(x) = g(x)$ on the boundary $\partial\Omega$.
+> - **Dirichlet** Boundary Conditions: Our **solution** shall **coincide** **with** a **function** **on the boundary** of the domain $\Omega,$ so 
+  $u(x) = g(x)$ on the boundary $\partial\Omega.$
 > - **Neumann** Boundary Conditions: We **fix** the **normal outward derivative** (the slope pointing out of the domain) 
   $\frac{\partial u}{\partial\nu} = g(x)$ for all $x\in\partial\Omega.$ 
 
 ### Heat Equation
-The *Heat Equation* is of the form $u_t = \Delta u$, where $u_t$ is the rate of temperature change. The rate of temperature change will eventually be zero. Therefore, **for large $t$** the equation **becomes** the **Laplace Equation**.
+The *Heat Equation* is of the form $u_t = \Delta u,$ where $u_t$ is the rate of temperature change. The rate of temperature change will eventually be zero. Therefore, **for large $t$** the equation **becomes** the **Laplace Equation**.
 
-If a point is hotter than its surroundings, meaning $\Delta u(p) < 0$, then heat will flow away from it.
+If a point is hotter than its surroundings, meaning $\Delta u(p) < 0,$ then heat will flow away from it.
 
 
 ## Schwartz Space and Distributions
@@ -55,23 +55,23 @@ The **Space of Test Functions $C_c^\infty(\Omega)$** consists of **smooth** (inf
 
 >[!TIP]
 > Remember that compact support means that **boundary terms vanish during integration by parts**. 
-> Because the support of $\phi$ is fully contained within $\Omega$, the function $\phi$ (and all its derivatives) are identically zero on and near the boundary $\partial\Omega$. Thus, all boundary evaluations drop out completely.
+> Because the support of $\phi$ is fully contained within $\Omega,$ the function $\phi$ (and all its derivatives) are identically zero on and near the boundary $\partial\Omega.$ Thus, all boundary evaluations drop out completely.
 
-The **Schwartz Space** $\mathcal{S}$ consists of **rapidly decreasing functions** that decay to zero faster than any polynomial can grow. They have "**almost compact support**". A standard example is the Gaussian bell curve $e^{-x^2}$. Boundary term vanish here also.
+The **Schwartz Space** $\mathcal{S}$ consists of **rapidly decreasing functions** that decay to zero faster than any polynomial can grow. They have "**almost compact support**". A standard example is the Gaussian bell curve $e^{-x^2}.$ Boundary term vanish here also.
 
 ### Distributions
 In physical reality we often find possible "rough" solutions to PDEs that are actually not differentiable in the classical sense.
-Instead of looking at a rough function $u$ directly, we view it as a **Distribution** $T_u$. A **distribution** is a continuous, linear **functional** that **acts on** a smooth **test function** $\phi$ and outputs a single real number.
+Instead of looking at a rough function $u$ directly, we view it as a **Distribution** $T_u.$ A **distribution** is a continuous, linear **functional** that **acts on** a smooth **test function** $\phi$ and outputs a single real number.
 
 ### Tempered Distributions
-The dual space of the Schwartz space $\mathcal{S}$ is denoted by $\mathcal{S}'$. An element of this dual space is called a **tempered distribution**.
+The dual space of the Schwartz space $\mathcal{S}$ is denoted by $\mathcal{S}'.$ An element of this dual space is called a **tempered distribution**.
 
 >[!NOTE]
 > Because $\mathcal{S}$ contains functions that do not have compact support, $\mathcal{S}'$ is a *smaller* (more restrictive) space of distributions than the general space $\mathcal{D}'(\mathbb{R}^n)$ (which is the dual of $C_c^\infty$).
 
 ### Regular Distributions
 >[!NOTE]
-> For a **locally** **integrable** function $u$, the ***associated distribution*** is the linear functional
+> For a **locally** **integrable** function $u,$ the ***associated distribution*** is the linear functional
 > $$T_u\colon \phi\mapsto\int u\phi,$$
 > where $\phi$ is &ndash; as always &ndash; a test function. A distribution that arises from such an association is called **regular**.
 
@@ -85,23 +85,23 @@ $$\delta\colon \phi\mapsto \phi(0).$$
 ### The Distributional Derivative
 >[!TIP]
 > **Idea**: **We define derivatives via Integration by parts**.
-> For differentiable $u$, we integrate $u' \phi$ by parts. 
+> For differentiable $u,$ we integrate $u' \phi$ by parts. 
 > Because a test function $\phi$ has compact support, the boundary term vanishes and we are left with $\int u'\phi = -\int u \phi'.$ 
 > Now lets say $u$ is *not* differentiable but some function **$v$ satisfies**
 > $$\int v\phi = -\int u\phi'.$$ 
-> Then we say that $v$ is a **distributional derivative** of $u$. 
+> Then we say that $v$ is a **distributional derivative** of $u.$ 
 
 
 We define the $\alpha$-th derivative $D^{\alpha}T$ of a distribution $T$ by
 
 $$D^\alpha T\colon\phi\mapsto (-1)^{|\alpha|} T(D^\alpha \phi)$$
 
-Because $\phi$ belongs to $C_c^\infty$ or $\mathcal{S}$, its derivative $D^\alpha\phi$ is guaranteed to exist. We are now able to **"differentiate rough functions."**
+Because $\phi$ belongs to $C_c^\infty$ or $\mathcal{S},$ its derivative $D^\alpha\phi$ is guaranteed to exist. We are now able to **"differentiate rough functions."**
 
 >[!IMPORTANT]
 > In one dimension the definition becomes
 > $$T'\colon\phi\mapsto - T\phi'.$$
-> When $T=T_u$ is an associated distribution to a classically differentiable function $u$, the formula becomes *exactly* the integration by parts equation we discussed above and $T_u' = T_{u'}$, i.e. the **derivative** **of** the **associated** **distribution** **is** exactly the **distribution** **associated** **with** the **derivative**: 
+> When $T=T_u$ is an associated distribution to a classically differentiable function $u,$ the formula becomes *exactly* the integration by parts equation we discussed above and $T_u' = T_{u'},$ i.e. the **derivative** **of** the **associated** **distribution** **is** exactly the **distribution** **associated** **with** the **derivative**: 
 > $$T_u'\phi = - T_u \phi' = - \int u \phi' = \int u' \phi = T_{u'}\phi.$$
 
 Let's try to find a distributional derivative of the Dirac-Delta. We just follow the definition:
@@ -113,7 +113,7 @@ So the distributional derivative of the Dirac-Delta is a linear functional that 
 > [!NOTE]
 > A function is **weakly differentiable** if it is distributionally differentiable and its **distributional derivative** is associated with a locally **integrable** function.
 
-Let's try to find a weak derivative of the absolute value function $u\colon x\mapsto \vert x |$. In order to do that we need to find a fitting candidate first. The obvious one would be the Signum Function
+Let's try to find a weak derivative of the absolute value function $u\colon x\mapsto \vert x |.$ In order to do that we need to find a fitting candidate first. The obvious one would be the Signum Function
 
 $$v\colon x\mapsto\begin{cases}
   -1 &x < 0 \\
@@ -132,7 +132,7 @@ Integrating $x\phi$ by parts, this is equal to
 
 $$ -[ x\phi ]_{-\infty}^{0} + [x\phi ]_{0}^{\infty} + \int_{-\infty}^{0} x\phi' - \int_{0}^{\infty} x\phi' $$
 
-The boundary terms vanish because test functions tend to zero as $x\rightarrow\infty$, and $\phi(0)$ gets multiplied with zero. For negative $x$ we have $x= -\vert x\vert$. Therefore, the equation concludes to
+The boundary terms vanish because test functions tend to zero as $x\rightarrow\infty,$ and $\phi(0)$ gets multiplied with zero. For negative $x$ we have $x= -\vert x\vert.$ Therefore, the equation concludes to
 $$T_v\phi = - \int_{-\infty}^0 |x|\phi' - \int_0^{\infty} |x|\phi' = - \int |x|\phi' = - T_u \phi'.$$
 
 By definition this means that $T_v = T_u'.$ 
@@ -146,7 +146,7 @@ are well-defined. Remember that "$\ast$" is *convolution*
 $f\ast g := \int f(y)(\\_-y)dy.$ 
 
 >[!WARNING]
-> For *distributions* $T$ and $S$, operations like $T\cdot S$ or $T\ast S$ are ***not*** well-defined!
+> For *distributions* $T$ and $S,$ operations like $T\cdot S$ or $T\ast S$ are ***not*** well-defined!
 
 
 ### Fourier Transform
@@ -157,7 +157,7 @@ The **Fourier Transform** **maps** a function **from** the **spatial** domain **
 > $$\frac{d}{dx}e^{ax} = ae^{ax}.$$
 > This allows us to "get rid of" differentials and replace them with nice multiplication.
 
-For a function $f \in \mathcal{S}$, the **Fourier Transform** $\mathcal{F}f$ (or $\hat{f}$) and its **Inverse Fourier Transform** $\overline{\mathcal{F}}\hat{f}$ are defined as:
+For a function $f \in \mathcal{S},$ the **Fourier Transform** $\mathcal{F}f$ (or $\hat{f}$) and its **Inverse Fourier Transform** $\overline{\mathcal{F}}\hat{f}$ are defined as:
 $$\mathcal{F}f(p) = \frac{1}{(2\pi)^{\frac{n}{2}}}\int_{\mathbb{R}^n} e^{-ipx}f(x)\,d^nx,$$
 
 $$\quad \overline{\mathcal{F}}\hat{f}(x) = \frac{1}{(2\pi)^{\frac{n}{2}}}\int_{\mathbb{R}^n} e^{+ipx}\hat{f}(p)\,d^np.$$
@@ -165,23 +165,23 @@ $$\quad \overline{\mathcal{F}}\hat{f}(x) = \frac{1}{(2\pi)^{\frac{n}{2}}}\int_{\
 >[!NOTE]
 > Notice the $-i$ vs. the $+i$ in the exponents. Also, in higher dimensions $px$ is  scalar multiplication of *vectors* $p$ and $x.$
 
-The Fourier transform is a **continuous, linear bijection** **on** the **Schwartz Space** $\mathcal{S}$. This means shifting to frequency space preserves the "nice" decay and smoothness properties of our test functions.
+The Fourier transform is a **continuous, linear bijection** **on** the **Schwartz Space** $\mathcal{S}.$ This means shifting to frequency space preserves the "nice" decay and smoothness properties of our test functions.
 
 Differentiating a function in space corresponds to multiplying by the frequency variable:
 $$\mathcal{F}(D^\alpha f)(p) = (ip)^\alpha \mathcal{F}f(p).$$
 
 >[!TIP]
-> For example this allows us to turn the Poisson equation $\Delta u = f$ into an algebraic equation $-\|p\|^2\hat{u}(p) = \hat{f}(p),$ which allows us to solve directly for $\hat{u}$.
+> For example this allows us to turn the Poisson equation $\Delta u = f$ into an algebraic equation $-\|p\|^2\hat{u}(p) = \hat{f}(p),$ which allows us to solve directly for $\hat{u}.$
 ns
 
-For a *tempered* distribution $T \in \mathcal{S}'$, its **Fourier Transform** $\mathcal{F}T$ is defined by:
+For a *tempered* distribution $T \in \mathcal{S}',$ its **Fourier Transform** $\mathcal{F}T$ is defined by:
 $$\mathcal{F}T(\phi) := T(\mathcal{F}\phi).$$
 
 ### Qualitative Aspects
 - **Smoothing vs. Decay**: The smoothness of a function determines the decay rate of its transform at infinity. If $f$ is smooth, its Fourier transform $\hat{f}$ drops off rapidly. If a function is sharply concentrated in space, its transform is highly spread out (Heisenberg Uncertainty Principle).
 - **Plancherel Isometry**: The Fourier transform preserves the $L^2$-norm.
-- **Convolution Theorem**: Convolution in space simplifies to point-wise multiplication in frequency: $\mathcal{F}(f * g) = (2\pi)^{\frac{n}{2}} \hat{f} \cdot \hat{g}$.
-- **Transform of the Dirac-Delta**: A point mass in space transforms into a uniform constant in frequency: $\mathcal{F}\delta = (2\pi)^{-\frac{n}{2}}$. This means that an instantaneous impulse contains all frequencies in equal measure.
+- **Convolution Theorem**: Convolution in space simplifies to point-wise multiplication in frequency: $\mathcal{F}(f * g) = (2\pi)^{\frac{n}{2}} \hat{f} \cdot \hat{g}.$
+- **Transform of the Dirac-Delta**: A point mass in space transforms into a uniform constant in frequency: $\mathcal{F}\delta = (2\pi)^{-\frac{n}{2}}.$ This means that an instantaneous impulse contains all frequencies in equal measure.
 
 
 ## Fundamental Solutions and Green's Functions
@@ -195,7 +195,7 @@ To solve Laplace Equations on bounded domains, we **calculate** the response to 
 > [!NOTE]
 > A **Fundamental Solution** of the Laplace Equation is a locally integrable function $\Phi \colon \mathbb{R}^n \setminus \{0\} \to \mathbb{R}$ that satisfies the equation 
 > $$-\Delta \Phi = \delta.$$
-> in the sense of distributions. This means that for every test function $\phi$, we have:
+> in the sense of distributions. This means that for every test function $\phi,$ we have:
 > $$T_\Phi(-\Delta\phi) = \int_{\mathbb{R}^n} \Phi (-\Delta \phi) = \phi(0).$$
 
 Via the Fourier Transform one can calculate that
