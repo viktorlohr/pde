@@ -5,6 +5,20 @@
   padding: 0;
 }
 
+/* 1. Global Reset for Tap Feedback */
+* {
+  -webkit-tap-highlight-color: transparent;
+  /* Removes the blue flash on mobile */
+  outline: none;
+  /* Removes the blue focus ring on desktop/accessibility */
+}
+
+/* 2. Optional: Add a custom subtle feedback */
+button:active {
+  filter: brightness(1.2);
+  /* Makes the button subtly 'glow' when tapped */
+}
+
 body {
   background-color: #0d1117;
   color: #c9d1d9;
