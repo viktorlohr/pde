@@ -109,7 +109,7 @@ const navBtn = document.getElementById('prev-nav');
 
 window.addEventListener('scroll', () => {
   // Show button after scrolling down 300px
-  if (window.scrollY > 1500) {
+  if (window.scrollY > 200) {
     navBtn.classList.add('visible');
   } else {
     navBtn.classList.remove('visible');
