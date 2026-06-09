@@ -219,17 +219,24 @@ where $\omega_n$ denotes the volume of the $n$-dimensional unit ball in $\mathbb
 >[!NOTE]
 > The **Trace Theorem** **solves** the problem of not being able to **evaluate** an equivalence class of functions **on** the **boundary** of a domain in a well-defined manner.
 
-Since smooth functions are dense in the Sobolev Space, we can approximate a Sobolev function by smooth functions. 
+Since smooth functions are dense in Sobolev Spaces, we can approximate a Sobolev function by smooth functions. 
 One can show that the $L^p$-norm of these functions on the boundary is bounded by the Sobolev-Norm. Therefore the sequence of smooth functions, restricted to the boundary (restriction is well-defined for smooth functions), is a Cauchy-Sequence which has a limit in the Banach-Space $L^p$ on the boundary. We define $T^u$ to be that limit.
 
 >[!TIP]
 > We used the densitiy of smooth functions in Sobolev Spaces to find a well-defined restriction on the boundary.
 
 ### Gagliardo-Nirenberg Inequality
-The derivatives control the slopes of the function. By bounding the $L^p$ norm of the gradient, we restrict how fast the function can grow or spike. This makes it "more integrable", i.e. an element of even higher order $L^q$ space. test
+The derivatives control the slopes of the function. By **bounding the $L^p$ norm** **of** the **gradient**, we restrict how fast the function can grow or spike. This **makes** it "**more integrable**", i.e. an element of even higher order $L^q$ space. Formally, we are trying to find 
+a constant $C$ such that 
+$$||u||_{L^q} \leq C||Du||_{L^p}.$$
+
+>[!TIP]
+> A main application of this inequality is the ability to *embed Sobolev functions* in higher order $L^q$ spaces.
 
 >[!NOTE]
-> A main application of this inequality is the ability to *embed Sobolev functions* in higher order $L^q$ spaces.
+> In the proof one uses the **Fundamental Theorem** of calculus to bound $u$ by the integral over a partial derviative of $u$. If we do this for all partial derviatives, we can **bound $|u|^n$ by** the **product** of these integrals. Then the Hölder inequality is used. In order for this to work one has to find a **Sobolev exponent q** (or $p^*$) via a **scaling argument**. This is done by considering $u_\lambda (x) = u(\lambda x)$. The correct exponent $q$ will make the inequality 
+> $${||u||_{L^q} \leq C||Du||_{L^p}}$$ 
+> invariant under scaling by $\lambda.$
 
 
 
