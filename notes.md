@@ -219,8 +219,10 @@ where $\omega_n$ denotes the volume of the $n$-dimensional unit ball in $\mathbb
 >[!NOTE]
 > The **Trace Theorem** **solves** the problem of not being able to **evaluate** an equivalence class of functions **on** the **boundary** of a domain in a well-defined manner.
 
-Since smooth functions are dense in Sobolev Spaces, we can approximate a Sobolev function by smooth functions. 
-One can show that the $L^p$-norm of these functions on the boundary is bounded by the Sobolev-Norm. Therefore the sequence of smooth functions, restricted to the boundary (restriction is well-defined for smooth functions), is a Cauchy-Sequence which has a limit in the Banach-Space $L^p$ on the boundary. We define $T^u$ to be that limit.
+>[!PROOFIDEA]
+>Since **smooth** functions are **dense** **in** **Sobolev** Spaces, we can approximate a Sobolev function by smooth functions. 
+>One can show that the **$L^p$-norm** of these functions **on the boundary** is **bounded** by the **Sobolev-Norm**. Therefore the sequence of smooth functions, restricted to the boundary (restriction is well-defined for smooth functions), is a Cauchy-Sequence which has a **limit in** the **Banach-Space** $L^p$ on the boundary. 
+>We **define** $T^u$ to be that **limit**.
 
 >[!TIP]
 > We used the densitiy of smooth functions in Sobolev Spaces to find a well-defined restriction on the boundary.
@@ -268,6 +270,7 @@ where $\gamma$ is the **Hölder Exponent** defined as $\gamma:= 1-\frac{n}{p}.$
 
 > [!PROOFIDEA]
 >In the **proof**, one uses **Hölder**'s Inequality to construct a **geometric series** of radii $r^{1-\frac{n}{p}}$. This series only **converges** **because $p>n$**. Otherwise it would not!
+One also uses the **Poincare Inequality** to show that the **oscillation** of a function on a ball can be **controlled by** its **gradient**.
 
 
 

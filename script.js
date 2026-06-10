@@ -33,7 +33,7 @@ fetch('notes.md')
       else if (text.includes('[!WARNING]')) bq.classList.add('callout', 'callout-warning');
       else if (text.includes('[!IMPORTANT]')) bq.classList.add('callout', 'callout-important');
       else if (text.includes('[!CAUTION]')) bq.classList.add('callout', 'callout-caution');
-      else if (text.includes('[!PROOFIDEA]')) bq.classList.add('callout', 'callout-proof-idea');
+      else if (text.includes('[!PROOFIDEA]')) bq.classList.add('callout', 'callout-proofidea');
       bq.innerHTML = bq.innerHTML.replace(/\[!.*?\]\n?/g, '');
     });
 

@@ -228,13 +228,20 @@ pre {
   background: #291a1a;
 }
 
-.callout-proof-idea {
-  border-left-color: #454545;
-  background: #605e5e;
+.callout-proofidea {
+  border-left: 0;
+  padding: 24px !important;
+  margin: 24px 0 !important;
+  background: rgb(43, 43, 43);
+  color: rgb(153, 153, 153);
+}
+
+.callout-proofidea strong {
+  color: rgb(189, 188, 188) !important;
 }
 
 .callout strong {
-  color: #ffffff;
+  color: #e0e0e0;
 }
 
 ul,
