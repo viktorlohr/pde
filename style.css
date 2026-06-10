@@ -228,6 +228,11 @@ pre {
   background: #291a1a;
 }
 
+.callout-proof-idea {
+  border-left-color: #454545;
+  background: #605e5e;
+}
+
 .callout strong {
   color: #ffffff;
 }

@@ -228,18 +228,22 @@ One can show that the $L^p$-norm of these functions on the boundary is bounded b
 ### Gagliardo-Nirenberg Inequality
 The derivatives control the slopes of the function. By **bounding the $L^p$ norm** **of** the **gradient**, we restrict how fast the function can grow or spike. This **makes** it "**more integrable**", i.e. an element of even higher order $L^q$ space. Formally, we are trying to find 
 a constant $C$ such that 
-$$||u||_{L^q} \leq C||Du||_{L^p}.$$
+$$||u||_{L^q} \leq C(n,p)||Du||_{L^p}.$$
 
 > [!NOTE]
 > Note that $p$ must be **bounded** by the **dimension** $n$ of the underlying space, but the **inequality holds on all of $\R^n$.** 
 
 >[!TIP]
-> A main application of this inequality is the ability to *embed Sobolev functions* in higher order $L^q$ spaces.
+> A main application of this inequality is the ability to *embed Sobolev functions* in higher order $L^q$ spaces:
+> $$W^{1,p}(\R^n) \hookrightarrow L^{p^*}(\R^n).$$
 
->[!NOTE]
-> In the proof one uses the **Fundamental Theorem** of calculus to bound $u$ by the integral over a partial derviative of $u$. If we do this for all partial derviatives, we can **bound $|u|^n$ by** the **product** of these integrals. Then the Hölder inequality is used. In order for this to work one has to find a **Sobolev exponent q** (or $p^*$) via a **scaling argument**. This is done by considering $u_\lambda (x) = u(\lambda x)$. The correct exponent $q$ will make the inequality 
-> $${||u||_{L^q} \leq C||Du||_{L^p}}$$ 
-> invariant under scaling by $\lambda.$
+
+>[!PROOFIDEA]
+>In the **proof** of the inequality one uses the **Fundamental Theorem** of calculus to bound $u$ by the integral over a partial derviative of $u$. 
+>If we do this for all partial derviatives, we can **bound $|u|^n$ by** the **product** of these integrals. 
+>Then the Hölder inequality is used. 
+>In order for this to work one has to find a **Sobolev Conjugated Exponent $q = p^* = \frac{np}{n-p}$** via a **scaling argument**. This is done by considering $u_\lambda (x) = u(\lambda x)$. 
+>The Sobolev Conjugated Exponent will make the Gagliardo-Nirenberg Inequality invariant under scaling by $\lambda.$
 
 ### Poincaré Inequality
 While **Gagliardo-Nirenberg holds on *all* of $\R^n$**, the **Poincare** Inequality **holds for bounded domains** and functions with compact support on these domains. The **constant** $C$ in the Poincaré Inequality **is dependent on the domain** though. On the other hand, the **exponent $p$** is **independent of $n$**. (which is *not* the case in Gagliardo-Nirenberg) The inequality states
@@ -251,6 +255,19 @@ where $u$ must be a Sobolev function with **compact support** on $\Omega$ and $1
 > Note again that **$p$** is not bounded by the dimension $n$ of $\Omega.$
 
 ### Morrey Inequality
+>[!IMPORTANT]
+> The Morrey Inequality implies the following: **A Sobolev-Function in $W^{1,p}(\R^n)$** is already **continuous, if $p$** is **larger than the dimension $n$.**
+
+> [!NOTE]
+> To be precise, the function has a **continuous** ***representative***, since Sobolev Spaces are only defined modulo sets of measure zero.
+
+Morreys Inequality states, that **for $p>n$** and 
+$u\in W^{1,p}$, there exists a constant $C(n,p)$, such that
+$$||u||_{C^{0,\gamma}(\R^n)} < C(n,p)||u||_{W^{1,p}(\R^n)},$$
+where $\gamma$ is the **Hölder Exponent** defined as $\gamma:= 1-\frac{n}{p}.$
+
+> [!PROOFIDEA]
+>In the **proof**, one uses **Hölder**'s Inequality to construct a **geometric series** of radii $r^{1-\frac{n}{p}}$. This series only **converges** **because $p>n$**. Otherwise it would not!
 
 
 
