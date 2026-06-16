@@ -274,5 +274,25 @@ One also uses the **Poincare Inequality** to show that the **oscillation** of a 
 
 
 
+## Construction of weak solutions to ellipitic equations
+### The Dirichlet Principle
+**Instead** **of** looking at a differential equation **directly**, we formulate an equivalent minimization problem. We **look** **for** a **function** $u$ **that** **minimizes** 
+a physical energy or **action functional $S(u).$**
+
+> [!TIP]
+> The *Dirichlet Principle* says that **finding** a **minimizer** of the action functional is **equivalent** to **finding** a weak **solution** to the differential equation.
+
+> [!PROOFIDEA]
+> To proof this, assume that $u$ is a minimizer of $S(u).$ We Define a **perturbation** 
+> $$g(\tau) = S(u+\tau\phi),$$
+> where $\tau$ is a scalar and $\phi$ is a test function. We know that **$g'(0)$ must be zero**. (otherwise $u$ would not be minimal) Here we can 
+> **differentiate with respect to $\tau$**, which shifts
+> the derivative (by design of $S$ and integration by parts) to the test function und **leaves** us with the **weak formulation.**
+
+#### Euler-Lagrange Equation
+(pops up during the proof above when differentiating the action functional. It is equivalent to the elliptic equation)
+
+
+
 
 
