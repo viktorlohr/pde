@@ -276,12 +276,19 @@ One also uses the **Poincare Inequality** to show that the **oscillation** of a 
 
 ## Construction of weak solutions to ellipitic equations
 ### The Dirichlet Principle
+
+TODO: 
+- [ ] State the Problem
+- [ ] Write down Su explicitely
+- [ ] Show that for a_ij = Kronecker, the equation collapses to Laplace Equation
+
 **Instead** **of** looking at a differential equation **directly**, we formulate an equivalent minimization problem. We **look** **for** a **function** $u$ **that** **minimizes** 
-a physical energy or **action functional $S(u).$**
+a physical energy or **action functional** 
+$$S(u):= .$$
 
 > [!TIP]
 > The *Dirichlet Principle* says that **finding** a **minimizer** of the action functional is **equivalent** to **finding** a weak **solution** to the differential equation.
-
+#### Euler-Lagrange Equation Theorem
 > [!PROOFIDEA]
 > To proof this, assume that $u$ is a minimizer of $S(u).$ We Define a **perturbation** 
 > $$g(\tau) = S(u+\tau\phi),$$
@@ -289,8 +296,27 @@ a physical energy or **action functional $S(u).$**
 > **differentiate with respect to $\tau$**, which shifts
 > the derivative (by design of $S$ and integration by parts) to the test function und **leaves** us with the **weak formulation.**
 
-#### Euler-Lagrange Equation
-(pops up during the proof above when differentiating the action functional. It is equivalent to the elliptic equation)
+The action functional is 
+$$S(u) = A(u,u) + l(u),$$
+where $A$ is symmetric, continuous and bilinear and $l(u)$ is a functional representing the external force.
+One can show that this is ***coercitive***, which implies that norms stay bounded for bounded energies.
+
+> [!PROOFIDEA]
+> **Existence** can be proven using **completeness** of the space and the **Parallelogram** law. Here, one argues that the midpoint $\frac{u_n + u_m}{2}$ of two elements in our minimizing sequence is still in the convex space. The Parallelogramm Law will force the energy of the differences $u_n - u_m$ to approach zero. By coercivity, the norms also approaches zero, hence the sequence is Cauchy. Because the space is complete, the limit (the minimum) exists. 
+
+### Convex Variational Problems
+In the previous chapter, we solved linear elliptic PDEs. Our action functional was a simple quadratic form. Now we generalize this to solve ***nonlinear*** PDEs by looking at general Langragian densitiy functions $f(x,Du).$ 
+
+When moving to **nonlinear functions**, **convergence no longer** behaves **nicely** with the integral. 
+**Therefore**, we need to introduce structural conditions to $f$, specifically ***convexity***, to ensure a minimizer exists. The three conditions are
+- **Measurability**: Ensures that the integral $\int_\Omega f(x,Du) dx$ is well-defined.
+- **Convexity** of $f(x,.)$: This is the most  important condition.
+  It ensures that $S(u)$ is ***weakly lower semicontinuous***. Without it, a minimizing sequence might oscillate wildly and fail to converge. This is proven using **Fatou's Lemma**.
+- **Coercivity**: Allows one to bound the Sobolev norm of the minimizing sequence, so we can extract a weakly convergent subsequence.
+
+**Examples** for applications of convex variational problems to non-linear equations are
+- **p-Laplacian**
+- **minimal surface problem**
 
 
 
