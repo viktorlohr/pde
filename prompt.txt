@@ -1,81 +1,26 @@
-# elliptic PDEs conceptual overview
+i have an *oral* exam in *elliptic* PDE theory in 2 weeks. The prof is a *very nice person.* Last semester, i scored an 1,3 in functional analysis with him. The *grade* for this exam *will not matter*. I already have a solid understanding of distributions and how the fundamental solution is constructed. I also have the basics down for Sobolev Spaces. 
 
-## Gemini's Roadmap
-
-```mermaid
-flowchart TD
-    %% Styling
-    classDef default fill:#1e1e2e,stroke:#cdd6f4,stroke-width:1px,color:#cdd6f4;
-    classDef mainHeader fill:#89b4fa,stroke:#89b4fa,color:#11111b,font-weight:bold;
-    classDef sectionHeader fill:#313244,stroke:#89b4fa,stroke-width:2px,color:#89b4fa,font-weight:bold;
-
-    TITLE["<b>PDE I: COMPLETE ORAL EXAM ROADMAP</b>"]:::mainHeader
-
-    %% Phase 1
-    P1["<b>1. Foundations & Classification</b>"]:::sectionHeader
-    P1_1["• PDE Types (Elliptic, Parabolic, Hyperbolic)<br>• Order, Linearity & Boundary Conditions"]
-
-    %% Phase 2
-    P2["<b>2. Classical Elliptic Theory</b>"]:::sectionHeader
-    P2_1["• Laplace/Poisson: -Δu = f<br>• Fundamental Solution Φ(x)<br>• Green's Functions G(x,y)<br>• Method of Images (Half-space, Ball)"]
-
-    %% Phase 3
-    P3["<b>3. Generalized Functions & Distributions</b>"]:::sectionHeader
-    P3_1["• Schwartz Space 𝒮 & Test Functions C_c^∞<br>• Distributions 𝒟' & Tempered Distributions 𝒮'<br>• Distributional & Weak Derivatives<br>• Fourier Transform: 𝔉(D^α f) = (ip)^α 𝔉f"]
-
-    %% Phase 4
-    P4["<b>4. Properties of Harmonic Functions</b>"]:::sectionHeader
-    P4_1["• Mean Value Property (MVP)<br>• Maximum Principles (Weak, Strong, Hopf)<br>• Smoothness of Harmonic Functions<br>• Perron's Method (Subharmonic, Barriers)"]
-
-    %% Phase 5
-    P5["<b>5. Sobolev Spaces W^{k,p} & H^k</b>"]:::sectionHeader
-    P5_1["• Definitions & Norms (H^1, H^1_0)<br>• Density of Smooth Functions (Mollification)<br>• Trace Operator T: W^{1,p}(Ω) → L^p(∂Ω)<br>• Poincaré's Inequality"]
-
-    %% Phase 6
-    P6["<b>6. Embedding & Compactness Theorems</b>"]:::sectionHeader
-    P6_1["• p < n: Gagliardo-Nirenberg-Sobolev<br>• p = n: Critical Exponent / BMO<br>• p > n: Morrey's Inequality (Hölder Continuity)<br>• Compactness: Rellich-Kondrachov Theorem"]
-
-    %% Phase 7
-    P7["<b>7. Existence of Weak Solutions</b>"]:::sectionHeader
-    P7_1["• Weak Formulation of Elliptic PDEs<br>• Lax-Milgram Theorem & Coercivity<br>• Dirichlet Principle & Direct Method<br>• Convex Variational Problems (e.g., p-Laplacian)"]
-
-    %% Phase 8
-    P8["<b>8. Regularity Theory for Elliptic PDEs</b>"]:::sectionHeader
-    P8_1["• Interior H^2 Regularity (Difference Quotients)<br>• Boundary Regularity up to ∂Ω<br>• Higher Regularity (H^k and C^∞)<br>• De Giorgi–Nash–Moser Theory (Hölder Continuity)"]
-
-    %% Graph Connections
-    TITLE --> P1
-    P1 --> P1_1
-
-    P1_1 --> P2
-    P1_1 --> P3
-
-    P2 --> P2_1
-    P3 --> P3_1
-
-    P2_1 --> P4
-    P4 --> P4_1
-
-    P4_1 --> P5
-    P3_1 --> P5
-
-    P5 --> P5_1
-    P5_1 --> P6
-    P6 --> P6_1
-
-    P6_1 --> P7
-    P7 --> P7_1
-
-    P7_1 --> P8
-    P8 --> P8_1
-```
+A friend of mine did not learn any proofs and skipped regularity theory for the most part. He still got a 2.0. Here is is exam protocol:
 
 
 
+"Dgl Laplace u = f, u am Rand = 0 auf offenem Gebiet Omega. Lösungsansätze-> Hab gesagt wenn f ne schwartz funktion ist kann man fourier transformieren, dann hat er gesagt ich solls mal durchführen. andere Ansätze? Mit lösungsformel und greens function, sollt ich aufschreiben und bisschen erklären. Dann Regularitätstheorie, wohin kann man W^1,p einbetten. Morrey Ungl beweisidee. 
+
+Dann Definition einer schwachen Lösung von Integral von Du ^ 2 + cu + f = 0. 
+
+Dann Beweisidee von u in W^1,2 in W^2,2"
 
 
 
+As i said, i only need to *pass*. The grade is irrelevant. How many hours per day would you invest give the (minimum) 14 days of preparation time. Attached you find the script
 
+
+
+These are my notes that i have taken during the semester. Assume that i am able to review them in less than 5 hours and understand them again. (I have understood everything when writing them down):
+
+# PDE notes
+>[!CAUTION]
+> This document is by no means meant to be a rigorous script. It should merely serve as an overview.
 
 ## high level overview
 - The **goal** of the lecture is to **solve elliptic equations.** 
@@ -88,6 +33,8 @@ flowchart TD
 
 ## basics
 $$\begin{aligned} \mathbf{\text{Gradient } (\nabla f)} &\longrightarrow \text{Vector of slopes } (\text{"Which way is uphill?"}) \\ \mathbf{\text{Divergence } (\nabla \cdot \mathbf{F})} &\longrightarrow \text{Net outward flow of a vector field } (\text{"Is this point a source or sink?"}) \\ \mathbf{\text{Laplacian } (\nabla^2 f = \nabla \cdot \nabla f)} &\longrightarrow \text{Net outward flow of the slope field } (\text{"Are slopes rushing into or out of this point?"}) \end{aligned}$$
+
+
 
 
 ## Introduction
@@ -303,53 +250,8 @@ where $\omega_n$ denotes the volume of the $n$-dimensional unit ball in $\mathbb
 >[!TIP]
 > Since the Fundamental Solution has a singularity at the origin, proving the equality involves **"punching a hole"** $B_\varepsilon(0)$ in the origin and considering the limit of the integral as $\varepsilon\rightarrow 0.$ This, together with **integration by parts**,  are considered **standard tricks.**
 
-### Gemini's summary on The Fundamental Solution
-# 📐 The Fundamental Solution of the Laplace Equation
-
-> **Definition:** 
-> A **fundamental solution** of the Laplace equation is a locally integrable function $\Phi \colon \mathbb{R}^n \setminus \{0\} \to \mathbb{R}$ satisfying 
-> $$-\Delta \Phi = \delta$$ 
-> in the sense of distributions. Explicitly, for every test function $\phi \in C^\infty_c(\mathbb{R}^n)$:
-> $$\int_{\mathbb{R}^n} \Phi(x) (-\Delta \phi(x)) \, dx = \phi(0)$$
-
----
-The formula for $\Phi(x)$ is derived and proven using a two-part analytical process:
-
-#### Finding the Candidate Function (ODE Analysis)
-* **Rotational Invariance:** Since the domain ($\mathbb{R}^n$) and the Laplacian operator ($\Delta$) are rotationally symmetric, we assume a radial solution $u(x) = v(r)$ where $r = \|x\|_2$.
-* **Reduction to ODE:** Away from the origin ($r > 0$), $\Delta u = 0$ reduces via the chain rule to the separable ODE:
-  $$v''(r) + \frac{n-1}{r}v'(r) = 0$$
-* **Separation of Variables:** Solving this ODE yields the radial shape up to an arbitrary scaling constant $C$:
-  $$v(r) = \begin{cases} C \ln r & \text{if } n = 2 \\ \frac{C}{r^{n-2}} & \text{if } n \ge 3 \end{cases}$$
-
----
-
-#### Fixing the Constant & Distributional Validation (Green's Identity)
-* **"Punching a Hole":** Because $\Phi(x)$ possesses a singularity at $x = 0$, we isolate the singularity by defining a punctured domain $\Omega_\varepsilon = \mathbb{R}^n \setminus B_\varepsilon(0)$.
-* **Integration by Parts:** Applying Green's Second Identity on $\Omega_\varepsilon$ transfers the Laplacian operator onto the test function $\phi$. 
-* **Boundary Limits:** Taking the limit as $\varepsilon \to 0$ causes the volume integral over $B_\varepsilon(0)$ to vanish while the boundary integral over $\partial B_\varepsilon(0)$ isolates $\phi(0)$:
-  $$\lim_{\varepsilon \to 0} \int_{\partial B_\varepsilon(0)} \phi \frac{\partial \Phi}{\partial \nu} \, d\sigma = \phi(0)$$
-* **Matching the Scale:** This boundary relation uniquely fixes the normalization constant $C$, yielding the exact closed form:
-
-$$
-\Phi(x) = \begin{cases} 
--\frac{1}{2\pi} \ln\|x\| & \text{if } n = 2 \\[6pt] 
-\frac{1}{n(n-2)\omega_n} \frac{1}{\|x\|^{n-2}} & \text{if } n \geq 3
-\end{cases}
-$$
-
-*(where $\omega_n$ denotes the volume of the $n$-dimensional unit ball, making $n\omega_n$ the surface area of the unit sphere).*
-
----
-
-> [!TIP] **Core Analytical Insight**
-> **Integration acts as a smoothing operator.** While $\Phi(x)$ blows up at $x=0$, integrating $\Phi$ against smooth test functions averages out the local singularity, converting a non-differentiable point source into a continuous evaluation functional ($\delta$).
-
-### Gemini's summary on Green's Functions
-The Motivation: "We start with the fundamental solution $\Phi$, which solves $-\Delta u = \delta$ on $\mathbb{R}^n$. But to handle a bounded domain with Dirichlet boundary data, we need the response to vanish on the boundary."The Definition: "So we set $G(x,y) = \Phi(y-x) - \phi^x(y)$, where $\phi^x(y)$ is a corrector function."The Core Properties of the Corrector:"$\phi^x$ must be harmonic in the domain so it doesn't perturb the delta distribution.""$\phi^x$ must match $\Phi$ on the boundary so that $G(x,y) = 0$ for $y \in \partial U$."The Method of Images Strategy: "To actually find $\phi^x$ explicitly, we use domain symmetries to place an image point $\tilde{x}$ outside the domain. Because $\tilde{x}$ is outside, $\Phi(y - \tilde{x})$ is automatically harmonic inside the domain, and symmetry ensures it matches on the boundary."What to Expect on the WhiteboardIf the professor asks you to write something down:They will likely ask you to state the definition $G(x,y) = \Phi(y-x) - \phi^x(y)$ and write down the two conditions on $\phi^x(y)$.For the half-space, showing the reflection $\tilde{x} = (x_1, \dots, -x_n)$ and sketching a 2D diagram on the board shows immediate mastery.For a ball, just saying "We use inversion through the sphere, $\tilde{x} = \frac{R^2}{\vert{}x\vert{}^2}x$" without working out every step of the algebra is almost always more than enough.
-
-#### checklist 
-If Green's functions come up, here is the $100\%$ pass-rate checklist of what you need to know:[x] Definition: $G(x,y) = \Phi(y-x) - \phi^x(y)$.[x] Properties of $\phi^x$: Harmonic inside $U$, cancels $\Phi$ on $\partial U$.[x] Boundary value: $G(x,y) = 0$ for $y \in \partial U$.[x] Symmetry: $G(x,y) = G(y,x)$ (Reciprocity).[x] Method of Images: Place a singularity outside the domain (e.g., reflection across a plane or inversion across a sphere) so it stays harmonic inside while balancing the boundary.[x] Representation Formula: $u(x) = \int_U G f + \int_{\partial U} -\frac{\partial G}{\partial \nu} g$. Linear superposition of interior source + boundary data.
+> [!NOTE]
+> For Gemini's summary on constructing the fundamental solution, see the corresponding file.
 
 
 
@@ -516,3 +418,7 @@ glätte Familie von Funktionen, um Arzela anwenden zu können. Dann müssen aber
 ### Schwartz Ineq
 ### 
 
+
+
+
+ 
