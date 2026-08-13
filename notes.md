@@ -77,16 +77,16 @@ flowchart TD
 
 
 
-## high level overview
+## High Level Overview
 - The **goal** of the lecture is to **solve elliptic equations.** 
 - One of the **most important** elliptic equations is the **Laplace Equation.**
-- We can apply the **Fourier Transform** to both sides of a Laplace Equation $\Delta u = f$ to get a solution, 
+- We can apply the **Fourier Transform** to both sides of the Poisson Equation $\Delta u = f$ to get a solution, 
   if $f$ is **smooth and decays** "far out" and if there are **no boundary conditions** for $u$.
 - If $f$ is a "point-mass", this process yields a **fundamental solution.**
 - **If** there are **boundary conditions,** then one must find a **Green's Function**.
   Here, the **fundamental solution** is used. 
 
-## basics
+### basics
 $$\begin{aligned} \mathbf{\text{Gradient } (\nabla f)} &\longrightarrow \text{Vector of slopes } (\text{"Which way is uphill?"}) \\ \mathbf{\text{Divergence } (\nabla \cdot \mathbf{F})} &\longrightarrow \text{Net outward flow of a vector field } (\text{"Is this point a source or sink?"}) \\ \mathbf{\text{Laplacian } (\nabla^2 f = \nabla \cdot \nabla f)} &\longrightarrow \text{Net outward flow of the slope field } (\text{"Are slopes rushing into or out of this point?"}) \end{aligned}$$
 
 
@@ -133,6 +133,150 @@ The *Heat Equation* is of the form $u_t = \Delta u,$ where $u_t$ is the rate of 
 
 If a point is hotter than its surroundings, meaning $\Delta u(p) < 0,$ then heat will flow away from it.
 
+## Fundamental Solutions and Green's Functions
+
+### Motivation
+The **Fourier Transform** is powerful, but it **only works** when our domain is the **entire**, unbounded **space $\mathbb{R}^n$**. 
+To solve Laplace Equations on bounded domains, we **calculate** the response to a single, **isolated point mass** at the origin ($-\Delta\Phi = \delta$). The resulting spatial function is called the **Fundamental Solution**. This function becomes our new building block allowing us to construct solutions &ndash; so called  **Green's Functions**.
+
+### The Fundamental Solution
+
+> [!NOTE]
+> A **Fundamental Solution** of the Laplace Equation is a locally integrable function $\Phi \colon \mathbb{R}^n \setminus \{0\} \to \mathbb{R}$ that satisfies the equation 
+> $$-\Delta \Phi = \delta.$$
+> in the sense of distributions. This means that for every test function $\phi,$ we have:
+> $$T_\Phi(-\Delta\phi) = \int_{\mathbb{R}^n} \Phi (-\Delta \phi) = \phi(0).$$
+
+One can construct a solution to the Laplace-Equations
+for *radially symmetric* (such as $\R^n$). 
+Via the Fourier Transform and the **"punching hole"**-
+technique, one can then calculate that
+
+$$
+\Phi(x) = \begin{cases} 
+-\frac{1}{2\pi} \ln\|x\| & \text{if } n = 2, \\ 
+\frac{1}{n(n-2)\omega_n} \frac{1}{\|x\|^{n-2}} & \text{if } n \geq 3,
+\end{cases}
+$$
+
+where $\omega_n$ denotes the volume of the $n$-dimensional unit ball in $\mathbb{R}^n.$
+
+>[!TIP]
+> Since the Fundamental Solution has a singularity at the origin, proving the equality involves **"punching a hole"** $B_\varepsilon(0)$ in the origin and considering the limit of the integral as $\varepsilon\rightarrow 0.$ This, together with **integration by parts**,  are considered **standard tricks.**
+
+### Gemini's summary on The Fundamental Solution
+
+
+> **Definition:** 
+> A **fundamental solution** of the Laplace equation is a locally integrable function $\Phi \colon \mathbb{R}^n \setminus \{0\} \to \mathbb{R}$ satisfying 
+> $$-\Delta \Phi = \delta$$ 
+> in the sense of distributions. Explicitly, for every test function $\phi \in C^\infty_c(\mathbb{R}^n)$:
+> $$\int_{\mathbb{R}^n} \Phi(x) (-\Delta \phi(x)) \, dx = \phi(0)$$
+
+---
+The formula for $\Phi(x)$ is derived and proven using a two-part analytical process:
+
+#### Finding the Candidate Function (ODE Analysis)
+* **Rotational Invariance:** Since the domain ($\mathbb{R}^n$) and the Laplacian operator ($\Delta$) are rotationally symmetric, we assume a radial solution $u(x) = v(r)$ where $r = \|x\|_2$.
+* **Reduction to ODE:** Away from the origin ($r > 0$), $\Delta u = 0$ reduces via the chain rule to the separable ODE:
+  $$v''(r) + \frac{n-1}{r}v'(r) = 0$$
+* **Separation of Variables:** Solving this ODE yields the radial shape up to an arbitrary scaling constant $C$:
+  $$v(r) = \begin{cases} C \ln r & \text{if } n = 2 \\ \frac{C}{r^{n-2}} & \text{if } n \ge 3 \end{cases}$$
+
+---
+
+#### Fixing the Constant & Distributional Validation (Green's Identity)
+* **"Punching a Hole":** Because $\Phi(x)$ possesses a singularity at $x = 0$, we isolate the singularity by defining a punctured domain $\Omega_\varepsilon = \mathbb{R}^n \setminus B_\varepsilon(0)$.
+* **Integration by Parts:** Applying Green's Second Identity on $\Omega_\varepsilon$ transfers the Laplacian operator onto the test function $\phi$. 
+* **Boundary Limits:** Taking the limit as $\varepsilon \to 0$ causes the volume integral over $B_\varepsilon(0)$ to vanish while the boundary integral over $\partial B_\varepsilon(0)$ isolates $\phi(0)$:
+  $$\lim_{\varepsilon \to 0} \int_{\partial B_\varepsilon(0)} \phi \frac{\partial \Phi}{\partial \nu} \, d\sigma = \phi(0)$$
+* **Matching the Scale:** This boundary relation uniquely fixes the normalization constant $C$, yielding the exact closed form:
+
+$$
+\Phi(x) = \begin{cases} 
+-\frac{1}{2\pi} \ln\|x\| & \text{if } n = 2 \\[6pt] 
+\frac{1}{n(n-2)\omega_n} \frac{1}{\|x\|^{n-2}} & \text{if } n \geq 3
+\end{cases}
+$$
+
+*(where $\omega_n$ denotes the volume of the $n$-dimensional unit ball, making $n\omega_n$ the surface area of the unit sphere).*
+
+---
+
+> [!TIP] **Core Analytical Insight**
+> **Integration acts as a smoothing operator.** While $\Phi(x)$ blows up at $x=0$, integrating $\Phi$ against smooth test functions averages out the local singularity, converting a non-differentiable point source into a continuous evaluation functional ($\delta$).
+
+### Gemini's summary on Green's Functions
+The Motivation: "We start with the fundamental solution $\Phi$, which solves $-\Delta u = \delta$ on $\mathbb{R}^n$. But to handle a bounded domain with Dirichlet boundary data, we need the response to vanish on the boundary."The Definition: "So we set $G(x,y) = \Phi(y-x) - \phi^x(y)$, where $\phi^x(y)$ is a corrector function."The Core Properties of the Corrector:"$\phi^x$ must be harmonic in the domain so it doesn't perturb the delta distribution.""$\phi^x$ must match $\Phi$ on the boundary so that $G(x,y) = 0$ for $y \in \partial U$."The Method of Images Strategy: "To actually find $\phi^x$ explicitly, we use domain symmetries to place an image point $\tilde{x}$ outside the domain. Because $\tilde{x}$ is outside, $\Phi(y - \tilde{x})$ is automatically harmonic inside the domain, and symmetry ensures it matches on the boundary."What to Expect on the WhiteboardIf the professor asks you to write something down:They will likely ask you to state the definition $G(x,y) = \Phi(y-x) - \phi^x(y)$ and write down the two conditions on $\phi^x(y)$.For the half-space, showing the reflection $\tilde{x} = (x_1, \dots, -x_n)$ and sketching a 2D diagram on the board shows immediate mastery.For a ball, just saying "We use inversion through the sphere, $\tilde{x} = \frac{R^2}{\vert{}x\vert{}^2}x$" without working out every step of the algebra is almost always more than enough.
+
+#### checklist 
+If Green's functions come up, here is the $100\%$ pass-rate checklist of what you need to know:[x] Definition: $G(x,y) = \Phi(y-x) - \phi^x(y)$.[x] Properties of $\phi^x$: Harmonic inside $U$, cancels $\Phi$ on $\partial U$.[x] Boundary value: $G(x,y) = 0$ for $y \in \partial U$.[x] Symmetry: $G(x,y) = G(y,x)$ (Reciprocity).[x] Method of Images: Place a singularity outside the domain (e.g., reflection across a plane or inversion across a sphere) so it stays harmonic inside while balancing the boundary.[x] Representation Formula: $u(x) = \int_U G f + \int_{\partial U} -\frac{\partial G}{\partial \nu} g$. Linear superposition of interior source + boundary data.
+
+
+
+## Properties of Harmonic Functions
+
+### Mean Value Property
+If a function is harmonic ($\Delta u = 0$), its value at the center of any ball equals the average value over the sphere (or ball).
+
+For a ball $B_r(x) \Subset \Omega$:
+
+Spherical Average:
+$$u(x) = \frac{1}{n \omega_n r^{n-1}} \int_{\partial B_r(x)} u(y) \, dS(y)$$
+Volumetric Average: 
+$$u(x) = \frac{1}{\omega_n r^n} \int_{B_r(x)} u(y) \, dy$$
+
+(where $\omega_n$ is the volume of the unit ball in $\mathbb{R}^n$, so $n\omega_n$ is the surface area of the unit sphere).
+
+>[!PROOFIDEA]
+> To prove the MVP, define the function $\phi(r)$ as the spherical average of $u$ over $\partial B_r(x)$. Transform the integral to the unit sphere using $y = x + rz$. Differentiating $\phi(r)$ with respect to $r$ and applying Green's First Identity turns the derivative into an integral of $\Delta u$ over the interior ball. Since $\Delta u = 0$, $\phi'(r) = 0$. Thus $\phi(r)$ is constant, and taking $r \to 0$ gives $u(x)$.
+
+### Maximum Principles
+
+#### Weak Maximum Principle
+**Statement**: If $u \in C^2(\Omega) \cap C(\overline{\Omega})$ and $\Delta u \ge 0$ (subharmonic) in a bounded domain $\Omega$, then
+$$\max_{\overline{\Omega}} u = \max_{\partial \Omega} u.$$
+
+>[!TIP]
+> Intuition: A **positive Laplacian** means the function **curves downwards on average** compared to its surroundings, so it cannot achieve an interior strict maximum.
+
+>[!PROOFIDEA]
+> Proof Technique (The $\varepsilon$-trick):
+If $\Delta u > 0$ everywhere strictly, an interior local maximum $x_0$ would require the Hessian matrix to be negative semi-definite, which would imply $\Delta u(x_0) \le 0$ (a contradiction!). For $\Delta u \ge 0$, we perturb $u$ by adding $\varepsilon \vert{}x\vert{}^2$, apply the strict argument, and take $\varepsilon \to 0$.
+
+
+#### Strong Maximum Principle
+**Statement**: If $\Omega$ is connected and $\Delta u \ge 0$ in $\Omega$, and $u$ attains its global maximum at an interior point $x_0 \in \Omega$, then $u$ must be constant throughout $\Omega$.
+
+>[!PROOFIDEA]
+> **Uses the Mean Value Property**. If $u(x_0) = M$, the average over any ball $B_r(x_0)$ must equal $M$. Since $u(y) \le M$ everywhere, $u(y)$ must be identically equal to $M$ on the whole ball. By connectedness, this propagates to all of $\Omega$.
+
+
+#### Uniqueness of Poisson's Equation
+**Application**: Uniqueness of Poisson's EquationIf $u_1, u_2$ both solve:
+$$\begin{cases} -\Delta u = f & \text{in } \Omega \\ u = g & \text{on } \partial\Omega \end{cases}$$
+Set $w = u_1 - u_2$. Then $\Delta w = 0$ in $\Omega$ and $w = 0$ on $\partial\Omega$. By the Maximum Principle applied to $w$ and $-w$, we get $\max \vert{}w\vert{} = 0$, so $u_1 \equiv u_2$.
+
+### Smooth and Qualitative Theorems
+#### Harmonic Functions are $C^\infty$
+Even if a boundary condition $g$ is just continuous, any solution to $\Delta u = 0$ in the interior is automatically infinitely differentiable ($u \in C^\infty(\Omega)$).
+
+>[!PROOFIDEA]
+> Proof Strategy: Convolve $u$ with a smooth, radially symmetric mollifier $\eta_\varepsilon$. Using the Mean Value Property, one shows that $u * \eta_\varepsilon = u$ on interior subdomains. Since $u * \eta_\varepsilon$ is smooth, $u$ is smooth.
+
+
+#### Lioville's Theorem
+**Statement**: If $u: \mathbb{R}^n \to \mathbb{R}$ is harmonic on the entire space $\mathbb{R}^n$ and bounded ($\vert{}u(x)\vert{} \le M$), then $u$ is constant.
+
+> [!PROOFIDEA] 
+> Cauchy's estimates bound the gradient $\vert{}\nabla u(x)\vert{}$ by $\frac{C}{r} \Vert{}u\Vert{}_{L^\infty(B_r(x))}$. Sending $r \to \infty$ forces $\vert{}\nabla u(x)\vert{} = 0$ everywhere, so $u$ must be constant.
+
+### Perron's Method (Solving $\Delta u = 0$ on general domains)
+- Subharmonic Functions: Functions satisfying $\Delta u \ge 0$ (weakly defined via the comparison principle with harmonic functions).
+- Perron Solution: Define the candidate solution $u(x)$ as the pointwise supremum of all subharmonic functions $v$ whose boundary values do not exceed $g$:
+  $$u(x) := \sup \{ v(x) \mid v \text{ subharmonic in } \Omega, \, v\vert{}_{\partial\Omega} \le g \}.$$
+- Harmonicity: Using "harmonic lifts", i.e replacing $v$ inside small balls by harmonic functions, one shows $u(x)$ is harmonic inside $\Omega$.
+- Boundary Regularity (Barriers): To show $u(x) \to g(x_0)$ as $x \to x_0 \in \partial\Omega$, the domain boundary must be reasonable (e.g., satisfying the exterior sphere condition). We construct a barrier function $w_{x_0}$ at $x_0$ to clamp $u(x)$ to $g(x_0)$.
 
 ## Schwartz Space and Distributions
 
@@ -168,7 +312,7 @@ $$\delta\colon \phi\mapsto \phi(0).$$
 
 >[!NOTE]
 > The Dirac-Delta Distribution represents a **point mass** or an **instantaneous** impulse. It is concentrated at a **single point**.
-> 
+
 
 ### The Distributional Derivative
 >[!TIP]
@@ -272,88 +416,118 @@ $$\mathcal{F}T(\phi) := T(\mathcal{F}\phi).$$
 - **Transform of the Dirac-Delta**: A point mass in space transforms into a uniform constant in frequency: $\mathcal{F}\delta = (2\pi)^{-\frac{n}{2}}.$ This means that an instantaneous impulse contains all frequencies in equal measure.
 
 
-## Fundamental Solutions and Green's Functions
-
-### Motivation
-The **Fourier Transform** is powerful, but it **only works** when our domain is the **entire**, unbounded **space $\mathbb{R}^n$**. 
-To solve Laplace Equations on bounded domains, we **calculate** the response to a single, **isolated point mass** at the origin ($-\Delta\Phi = \delta$). The resulting spatial function is called the **Fundamental Solution**. This function becomes our new building block allowing us to construct solutions &ndash; so called  **Green's Functions**.
-
-### The Fundamental Solution
-
-> [!NOTE]
-> A **Fundamental Solution** of the Laplace Equation is a locally integrable function $\Phi \colon \mathbb{R}^n \setminus \{0\} \to \mathbb{R}$ that satisfies the equation 
-> $$-\Delta \Phi = \delta.$$
-> in the sense of distributions. This means that for every test function $\phi,$ we have:
-> $$T_\Phi(-\Delta\phi) = \int_{\mathbb{R}^n} \Phi (-\Delta \phi) = \phi(0).$$
-
-One can construct a solution to the Laplace-Equations
-for *radially symmetric* (such as $\R^n$). 
-Via the Fourier Transform and the **"punching hole"**-
-technique, one can then calculate that
-
-$$
-\Phi(x) = \begin{cases} 
--\frac{1}{2\pi} \ln\|x\| & \text{if } n = 2, \\ 
-\frac{1}{n(n-2)\omega_n} \frac{1}{\|x\|^{n-2}} & \text{if } n \geq 3,
-\end{cases}
-$$
-
-where $\omega_n$ denotes the volume of the $n$-dimensional unit ball in $\mathbb{R}^n.$
-
->[!TIP]
-> Since the Fundamental Solution has a singularity at the origin, proving the equality involves **"punching a hole"** $B_\varepsilon(0)$ in the origin and considering the limit of the integral as $\varepsilon\rightarrow 0.$ This, together with **integration by parts**,  are considered **standard tricks.**
-
-### Gemini's summary on The Fundamental Solution
-# 📐 The Fundamental Solution of the Laplace Equation
-
-> **Definition:** 
-> A **fundamental solution** of the Laplace equation is a locally integrable function $\Phi \colon \mathbb{R}^n \setminus \{0\} \to \mathbb{R}$ satisfying 
-> $$-\Delta \Phi = \delta$$ 
-> in the sense of distributions. Explicitly, for every test function $\phi \in C^\infty_c(\mathbb{R}^n)$:
-> $$\int_{\mathbb{R}^n} \Phi(x) (-\Delta \phi(x)) \, dx = \phi(0)$$
-
----
-The formula for $\Phi(x)$ is derived and proven using a two-part analytical process:
-
-#### Finding the Candidate Function (ODE Analysis)
-* **Rotational Invariance:** Since the domain ($\mathbb{R}^n$) and the Laplacian operator ($\Delta$) are rotationally symmetric, we assume a radial solution $u(x) = v(r)$ where $r = \|x\|_2$.
-* **Reduction to ODE:** Away from the origin ($r > 0$), $\Delta u = 0$ reduces via the chain rule to the separable ODE:
-  $$v''(r) + \frac{n-1}{r}v'(r) = 0$$
-* **Separation of Variables:** Solving this ODE yields the radial shape up to an arbitrary scaling constant $C$:
-  $$v(r) = \begin{cases} C \ln r & \text{if } n = 2 \\ \frac{C}{r^{n-2}} & \text{if } n \ge 3 \end{cases}$$
-
----
-
-#### Fixing the Constant & Distributional Validation (Green's Identity)
-* **"Punching a Hole":** Because $\Phi(x)$ possesses a singularity at $x = 0$, we isolate the singularity by defining a punctured domain $\Omega_\varepsilon = \mathbb{R}^n \setminus B_\varepsilon(0)$.
-* **Integration by Parts:** Applying Green's Second Identity on $\Omega_\varepsilon$ transfers the Laplacian operator onto the test function $\phi$. 
-* **Boundary Limits:** Taking the limit as $\varepsilon \to 0$ causes the volume integral over $B_\varepsilon(0)$ to vanish while the boundary integral over $\partial B_\varepsilon(0)$ isolates $\phi(0)$:
-  $$\lim_{\varepsilon \to 0} \int_{\partial B_\varepsilon(0)} \phi \frac{\partial \Phi}{\partial \nu} \, d\sigma = \phi(0)$$
-* **Matching the Scale:** This boundary relation uniquely fixes the normalization constant $C$, yielding the exact closed form:
-
-$$
-\Phi(x) = \begin{cases} 
--\frac{1}{2\pi} \ln\|x\| & \text{if } n = 2 \\[6pt] 
-\frac{1}{n(n-2)\omega_n} \frac{1}{\|x\|^{n-2}} & \text{if } n \geq 3
-\end{cases}
-$$
-
-*(where $\omega_n$ denotes the volume of the $n$-dimensional unit ball, making $n\omega_n$ the surface area of the unit sphere).*
-
----
-
-> [!TIP] **Core Analytical Insight**
-> **Integration acts as a smoothing operator.** While $\Phi(x)$ blows up at $x=0$, integrating $\Phi$ against smooth test functions averages out the local singularity, converting a non-differentiable point source into a continuous evaluation functional ($\delta$).
-
-### Gemini's summary on Green's Functions
-The Motivation: "We start with the fundamental solution $\Phi$, which solves $-\Delta u = \delta$ on $\mathbb{R}^n$. But to handle a bounded domain with Dirichlet boundary data, we need the response to vanish on the boundary."The Definition: "So we set $G(x,y) = \Phi(y-x) - \phi^x(y)$, where $\phi^x(y)$ is a corrector function."The Core Properties of the Corrector:"$\phi^x$ must be harmonic in the domain so it doesn't perturb the delta distribution.""$\phi^x$ must match $\Phi$ on the boundary so that $G(x,y) = 0$ for $y \in \partial U$."The Method of Images Strategy: "To actually find $\phi^x$ explicitly, we use domain symmetries to place an image point $\tilde{x}$ outside the domain. Because $\tilde{x}$ is outside, $\Phi(y - \tilde{x})$ is automatically harmonic inside the domain, and symmetry ensures it matches on the boundary."What to Expect on the WhiteboardIf the professor asks you to write something down:They will likely ask you to state the definition $G(x,y) = \Phi(y-x) - \phi^x(y)$ and write down the two conditions on $\phi^x(y)$.For the half-space, showing the reflection $\tilde{x} = (x_1, \dots, -x_n)$ and sketching a 2D diagram on the board shows immediate mastery.For a ball, just saying "We use inversion through the sphere, $\tilde{x} = \frac{R^2}{\vert{}x\vert{}^2}x$" without working out every step of the algebra is almost always more than enough.
-
-#### checklist 
-If Green's functions come up, here is the $100\%$ pass-rate checklist of what you need to know:[x] Definition: $G(x,y) = \Phi(y-x) - \phi^x(y)$.[x] Properties of $\phi^x$: Harmonic inside $U$, cancels $\Phi$ on $\partial U$.[x] Boundary value: $G(x,y) = 0$ for $y \in \partial U$.[x] Symmetry: $G(x,y) = G(y,x)$ (Reciprocity).[x] Method of Images: Place a singularity outside the domain (e.g., reflection across a plane or inversion across a sphere) so it stays harmonic inside while balancing the boundary.[x] Representation Formula: $u(x) = \int_U G f + \int_{\partial U} -\frac{\partial G}{\partial \nu} g$. Linear superposition of interior source + boundary data.
-
-
 
 ## Weak Solutions and Sobolev-Spaces
+
+## Weak Solutions: The Big Picture
+
+### The problem
+$$-\Delta u = f \quad \text{in } \Omega, \qquad u = 0 \text{ on } \partial\Omega, \qquad f \in L^2(\Omega)$$
+
+Classical solutions require $u \in C^2(\Omega)$. Too restrictive: many natural $f$ (e.g. just $L^2$) don't
+produce classical solutions, and functional-analytic existence tools don't act directly on pointwise PDEs.
+We trade the pointwise equation for an integral identity that makes sense for much rougher $u$.
+
+### Step 1 — Weaken the equation via integration by parts
+Multiply by a smooth compactly supported test function $\varphi \in C_c^\infty(\Omega)$, integrate, apply
+Green's identity (boundary term vanishes since $\varphi$ has compact support):
+
+$$-\int_\Omega \Delta u \, \varphi \, dx = \int_\Omega f \varphi \, dx
+\quad\Longrightarrow\quad
+\int_\Omega \nabla u \cdot \nabla \varphi \, dx = \int_\Omega f \varphi \, dx$$
+
+Only **one** derivative of $u$ appears now (inside an integral, paired against a test function) instead of two
+classical derivatives. This identity makes sense as soon as $\nabla u \in L^2$ — i.e. $u \in H^1$.
+
+### Step 2 — Build the right function space: $H_0^1(\Omega)$
+
+Define the Sobolev space
+$$H^1(\Omega) = \{ u \in L^2(\Omega) : \nabla u \in L^2(\Omega) \}, \qquad \|u\|_{H^1}^2 = \|u\|_{L^2}^2 + \|\nabla u\|_{L^2}^2$$
+
+a Hilbert space. To encode the boundary condition $u = 0$ on $\partial\Omega$ *without* needing pointwise
+boundary values (which don't exist a.e. for $H^1$ functions), define
+
+$$H_0^1(\Omega) := \overline{C_c^\infty(\Omega)}^{\,\|\cdot\|_{H^1}}$$
+
+i.e. the **closure of smooth, compactly supported functions in the $H^1$-norm**. This:
+
+- builds "$u=0$ on $\partial\Omega$" in *by construction*, no trace theorem required to define it,
+- makes $C_c^\infty(\Omega)$ **dense** in $H_0^1(\Omega)$ — this density is the key technical fact we exploit next,
+- gives a genuine Hilbert space (closed subspace of $H^1$), so all Hilbert space machinery applies.
+
+### Step 3 — Extend the identity from test functions to all of $H_0^1$
+
+Both sides of
+$$\int_\Omega \nabla u \cdot \nabla \varphi \, dx = \int_\Omega f \varphi \, dx$$
+are **continuous in $\varphi$ w.r.t. the $H^1$-norm** (Cauchy–Schwarz on each side). Since $C_c^\infty(\Omega)$
+is dense in $H_0^1(\Omega)$, an identity holding for all $\varphi \in C_c^\infty(\Omega)$ extends by
+continuity to all $v \in H_0^1(\Omega)$.
+
+### Definition — Weak solution
+
+$$u \in H_0^1(\Omega) \text{ is a weak solution} \iff
+\int_\Omega \nabla u \cdot \nabla v \, dx = \int_\Omega f v \, dx \quad \forall v \in H_0^1(\Omega)$$
+
+Both the solution $u$ and test functions $v$ now live in the **same space** $H_0^1(\Omega)$ — this symmetry is
+what sets up the next step.
+
+### Step 4 — Cast as a bilinear form, apply Lax–Milgram
+
+Define
+$$a(u,v) := \int_\Omega \nabla u \cdot \nabla v \, dx, \qquad L(v) := \int_\Omega f v \, dx$$
+
+Then "weak solution" means: find $u \in H_0^1(\Omega)$ such that
+$$a(u,v) = L(v) \quad \forall v \in H_0^1(\Omega)$$
+
+This is now a purely functional-analytic problem. **Lax–Milgram** gives existence & uniqueness of such $u$
+provided:
+
+| Property | Statement | Why it holds here |
+|---|---|---|
+| Boundedness of $a$ | $\|a(u,v)\| \le C\|u\|_{H^1}\|v\|_{H^1}$ | Cauchy–Schwarz |
+| Coercivity of $a$ | $a(u,u) \ge \alpha \|u\|_{H^1}^2$ | $a(u,u) = \|\nabla u\|_{L^2}^2$, controlled below via **Poincaré inequality** on $H_0^1(\Omega)$ (bounded domain) |
+| Boundedness of $L$ | $\|L(v)\| \le C\|v\|_{H^1}$ | Cauchy–Schwarz, $f \in L^2$ |
+
+All three hold $\Rightarrow$ **unique** $u \in H_0^1(\Omega)$ solving $a(u,v) = L(v)$ for all $v$ exists.
+
+### One-line summary
+>[!TIP]
+> Weakening the derivative (integration by parts) lets the equation survive on the completion of smooth
+> functions ($H_0^1$); density of smooth functions extends the identity to all test functions; the resulting
+> problem is a bounded, coercive bilinear form equation, solvable uniquely by Lax–Milgram.
+
+
+### Existence via Lax–Milgram: Summary
+
+#### Setup
+$$-\Delta u = f \text{ in } \Omega, \qquad u = 0 \text{ on } \partial\Omega, \qquad f \in L^2(\Omega)$$
+
+#### The five-step template
+
+**1. Hilbert space.**
+$$H := H_0^1(\Omega), \qquad \langle u,v \rangle_{H^1} = \int_\Omega uv + \nabla u \cdot \nabla v \, dx$$
+
+**2. Bilinear form and functional** (from the weak formulation):
+$$a(u,v) = \int_\Omega \nabla u \cdot \nabla v \, dx, \qquad L(v) = \int_\Omega f v \, dx$$
+
+**3. Verify Lax–Milgram hypotheses:**
+
+$$\text{Bounded: } |a(u,v)| \le \|u\|_{H^1}\|v\|_{H^1} \quad \text{(Cauchy–Schwarz)}$$
+
+$$\text{Coercive: } a(u,u) = \|\nabla u\|_{L^2}^2 \ge \alpha \|u\|_{H^1}^2 \quad \text{(Poincaré, needs } \Omega \text{ bounded)}$$
+
+$$\text{Bounded functional: } |L(v)| \le \|f\|_{L^2}\|v\|_{H^1} \quad \text{(Cauchy–Schwarz)}$$
+
+**4. Apply Lax–Milgram:** unique $u \in H_0^1(\Omega)$ with
+$$a(u,v) = L(v) \quad \forall v \in H_0^1(\Omega)$$
+
+**5. Translate back + stability:**
+$$u \text{ is the unique weak solution}, \qquad \|u\|_{H^1(\Omega)} \le C\|f\|_{L^2(\Omega)}$$
+
+#### Punchline
+Existence reduced to checking **two inequalities** on a bilinear form — no explicit construction of $u$ needed.
+
+
 ### Trace Theorem
 >[!NOTE]
 > The **Trace Theorem** **solves** the problem of not being able to **evaluate** an equivalence class of functions **on** the **boundary** of a domain in a well-defined manner.
