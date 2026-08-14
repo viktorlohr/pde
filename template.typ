@@ -83,14 +83,15 @@
   bar: 4pt,
   accent: colors.muted,
   fg: colors.muted,
-  inset: 10pt,
+  inset: 12pt,
   gap: 0pt,
 ) = if items.len() > 0 {
-  block(above: 0pt, below: 16pt, pad(left: 4pt, block(inset: inset, stroke: (left: bar + accent))[
+  block(above: 0pt, below: 16pt, pad(left: 1pt + bar - bar / 2, block(inset: inset, stroke: (left: bar + accent))[
     #set text(size: size, weight: "regular", fill: fg)
-    #set par(leading: 0.65em + gap)
+    #set par(spacing: gap)
     #for h in items [
-      #link(h.location())[#h.body] \
+      #link(h.location())[#h.body]
+      #parbreak()
     ]
   ]))
 }
@@ -140,7 +141,7 @@
     accent: colors.accent1,
     fg: colors.text,
     inset: 13pt,
-    gap: 3pt,
+    gap: 18pt,
   )
 }
 
@@ -157,9 +158,38 @@
   // any content, which is why it leads the block.
   set document(title: if contents { title })
 
-  set page(fill: colors.bg, width: 250pt, height: auto, margin: (x: 12pt, y: 16pt))
-  set text(size: 12pt, fill: colors.text, font: "Helvetica")
+  set page(fill: colors.bg, width: 270pt, height: auto, margin: (x: 12pt, y: 16pt))
+  // The body measure is ~276pt, and inside a callout ~248pt once its bar and
+  // insets are taken out — narrow enough that line breaking needs help a
+  // normal-width page wouldn't. `hyphenate` defaults to `auto`, meaning "only
+  // when justified", and nothing here is justified; left alone it sends every
+  // long word to the next line whole, which at this width opens holes big
+  // enough to read as paragraph breaks. Justifying instead is the wrong
+  // trade: inline math boxes can't stretch, so the interword gaps around
+  // them would blow out.
+  // Costs bias *which* breaks the optimizer picks, and are what separate a
+  // useful hyphen from a cheap one. At 100% it happily produced "meth-ods",
+  // "har-monic", "The-ory" and "hav-ing" — short words split to save a few
+  // points of rag. At 180% those all close up while the breaks worth having
+  // ("con-structiveness", "func-tional") survive. `runt` guards the other
+  // end: a hyphen that strands a fragment alone on the last line reads worse
+  // than the long line it avoided.
+  set text(
+    size: 12pt,
+    fill: colors.text,
+    font: "Helvetica",
+    hyphenate: true,
+    costs: (hyphenation: 180%, runt: 300%),
+  )
+  // `auto` picks the greedy "simple" breaker for ragged text; the optimized
+  // one weighs the whole paragraph and evens out the rag.
+  set par(linebreaks: "optimized")
   set heading(numbering: none)
+
+  // Display type is short, deliberately worded, and read at a glance —
+  // breaking a chapter title mid-word costs more than the ragged edge it
+  // saves. Body text keeps the hyphenation set above.
+  show heading: set text(hyphenate: false)
 
   // Page numbers are meaningless here (the whole doc is one auto-height
   // page), so outline entries are just an indented link, no leader/number.
@@ -193,17 +223,18 @@
         if h.level == 2 { subs.push(h) }
       }
 
-      set text(size: 24pt, weight: "bold")
-      block(below: 18pt, it.body)
-      // Eats most of that trailing 18pt, so the box sits just under the title
+      set text(size: 24pt, weight: "bold", fill: colors.text)
+      set par(leading: 6pt)
+      block(above: 100pt, below: 14pt, it.body)
+      // Eats most of that trailing 14pt, so the box sits just under the title
       // with little more than its own inset providing the gap. Only when the
       // box will actually render something — a chapter with no "==" (like
       // "Conclusion") has none, and the pull would otherwise dent the space
       // before its body text for no reason.
       if subs.len() > 0 {
-        v(-12pt)
+        v(-10pt)
       }
-      overview-box(subs)
+      overview-box(subs, gap: 12pt, bar: 2pt, inset: 6pt)
     }
   }
 
@@ -233,11 +264,14 @@
 
 #let callout(accent: colors.accent1, body) = block(
   fill: colors.box-bg,
-  stroke: (left: 4pt + accent),
+  // stroke: (left: 4pt + accent),
   inset: 10pt,
   width: 100%,
-  radius: 4pt,
-  body,
+  radius: 12pt,
+  {
+    show strong: set text(fill: accent, weight: "bold")
+    body
+  },
 )
 
 #let callout1 = callout.with(accent: colors.accent1)
