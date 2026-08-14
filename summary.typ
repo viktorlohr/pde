@@ -137,43 +137,40 @@ Therefore *$A$ must equal* $ -1/(|S_(n-1)|). $
   Technincally, we only found a "radial" fundamental solution, but it turns out that its actually the _only_ one.
 ]
 
-== Deriving a Solution for arbitrary $f$ on $RR^n$
 
-Remember that our "point source" $delta$, more formally known as the Dirac Distribution, acted on a test function $phi$ by evaluating it at the origin: $ delta(phi) = phi(0). $
+== Deriving a Solution for \ arbitrary $f$ on $RR^n$
+
+Remember that our "point source" $delta$, more formally known as the Dirac Distribution acted on a test function $phi$ by evaluating it at the origin: $ delta(phi) = f(0). $
 
 Let $x$ now be an arbitrary point and consider the function $ phi_x := y |-> phi(x-y). $
-Then the Dirac Distribution gives us
+Then the Dirac Distribution would give us
+
 $ delta(phi_x) = phi(x). $
 
 #callout[
-  *Where is this going?* The goal of this subsection is to *solve $ -Laplace u = f $* for smooth $f$ *on $RR^n$.*
-  Distributionally, this equation means
-  $ -integral u Laplace phi = integral f phi $
-  for every test function $phi.$ We now *define the Fundamental Solution* $Phi$ to be the distribution satisfying
-  $ delta(phi) = Phi(Laplace phi) = integral Phi(y) Laplace phi (y) d y $
-  for every test function $phi$ -- i.e. $Laplace Phi = delta$ in the distributional sense. This is what lets us represent $phi(x)$ in terms of $Phi$ below.
+  *Where is this going?* The goal of this subsection is to *solve $ - Laplace u = f $* for smooth $f$ *on $RR^n.$*
+  In the distributional sense, this equation means
+  $ - integral u Laplace phi = integral f phi $
+  for every test function $phi.$ What we have achieved above is a way to *represent $phi$ in terms of* the *Delta Distribution.* This naturally leads to the *Fundamental Solution* which can be used to solve the equation -- but only on $RR^n$ of course.
 ]
-
-Let's reverse engineer a solution. We need $u$ to act on $phi$ the same way $f$ does under the pairing above. Substituting $phi(x) = delta(phi_x) = Phi(Laplace phi_x)$ into the action of $f$ on $phi$:
-
+Let's reverse engineer this further. As pointed out, we need
+$u$ to act on $phi$ the same way as $f$. So let's look at what happens when we *plug in $phi(x) = delta (phi_x)$* in the action of $f$ on $phi:$
 $
-                             & integral f(x) phi(x) d x \
-                           = & integral f(x) delta(phi_x) d x \
-                           = & integral f(x) integral Phi(y) Laplace_y phi_x (y) d y d x \
-                           = & integral f(x) integral Phi(y) Laplace phi (x-y) d y d x \
-                           = & integral integral Phi(y) f(x) Laplace phi(x-y) d y d x \
-        =^"Fubini + reindex" & integral Phi(y) integral f(x) Laplace phi(x-y) d x d y \
-  =^"convolution\nsymmetric" & integral (Phi * f)(x) Laplace phi(x) d x. \
+                                & int f(x) phi(x) d x \
+                              = & int f(x) delta(phi_x) d x \
+                              = & int f(x) int Phi(y) Laplace phi(x-y) d y d x \
+                              = & int int Phi (y) f(x) phi(x-y) d y d x \
+  =^"Convolution\nis symmetric" & int int Phi (y) f(x-y) d y space Laplace phi(x) d x \
+                              = & int (Phi * f) (x) Laplace phi (x) d x. \
 $
 
 #callout[
   Now we're *done.* *Why?*
-  This matches the distributional definition of $Laplace(Phi * f)$ acting on $phi$:
-  $ integral f(x) phi(x) d x = integral (Phi * f)(x) Laplace phi (x) d x = Laplace(Phi * f)(phi). $
-  Since this holds for *every* test function $phi$, the two distributions $T_f$ and $Laplace(Phi * f)$ coincide, so
-  $ Laplace(Phi * f) = f. $
-  Therefore *$Phi * f$ solves the Poisson equation* $-Laplace u = -f$ on $RR^n$ (up to the sign convention you fix for $Phi$).
+  The Equation above matches the distributional definition perfectly. It implies
+  $ Laplace (Phi * f) = f(x). $
+  Therefore, *$ Phi * f $ solves the Poisson Equation* on $RR^n.$
 ]
+
 
 == Honorable Mention: \ The Fourier Transform
 
