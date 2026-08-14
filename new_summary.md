@@ -37,11 +37,28 @@ flowchart TD
     end
 
     X --> I
-
-    style X fill:#f9dede,stroke:#c0392b,stroke-width:2px
 ```
 
+# Existence Methods for Elliptic PDEs — Course Overview
 
+| Method | Domain / hypotheses | Idea | What it gives you |
+|---|---|---|---|
+| **1. Explicit construction** (fundamental solution, Green's function)  | $\Delta$ only, $\Omega$ "nice" (mirror trick / reflection works) | Build $\Gamma$ radially, correct with a harmonic $h$ to force $G=0$ on $\partial\Omega$, integrate against data | An actual formula for $u$ — the strongest possible result, but only on domains where the correction $h$ is explicitly solvable |
+| **2. Perron's method**  | $\Delta$ only, but *any* bounded domain (given regular boundary) | Take the sup of all subharmonic functions below the boundary data; show the sup is itself harmonic (via local harmonic lifts) and matches the boundary data at regular points | Existence with **no explicit formula** — trades constructiveness for generality of domain |
+| **3. Lax–Milgram**  | General elliptic $L$ (divergence form), linear, **no symmetry needed** | Weak formulation is a bounded, coercive bilinear form on $H_0^1$; Riesz representation + coercivity give existence and uniqueness directly | Existence for *any* linear elliptic problem — most general of the "modern" methods, but linear only |
+| **4. Dirichlet principle / Direct method** | General elliptic $L$, but needs **symmetric** bilinear form | Recast the PDE as minimizing an energy functional; coercivity + lower semicontinuity + weak compactness of a minimizing sequence give a minimizer, whose Euler–Lagrange equation is the PDE | Same conclusion as Lax–Milgram for the symmetric case, but the method itself generalizes further (see below) |
+| **5. Convex variational methods** | Convex (not necessarily quadratic) functionals, so genuinely **nonlinear** PDEs | Same direct-method skeleton as (4), but with a general convex functional instead of a quadratic energy — lower semicontinuity now needs convexity instead of linearity | The only method here that reaches nonlinear elliptic problems |
+
+## Supporting machinery (not existence methods themselves)
+
+- **Sobolev embeddings** (GNS, Morrey, Rellich–Kondrachov) — feed the compactness step inside methods 4/5, and the boundedness step inside method 3's coercivity estimates (Poincaré).
+- **Regularity theory** (Cacciopoli, difference quotients, Moser, De Giorgi–Nash) — no existence content; a postprocessing step applied *after* methods 3/4/5 already produced a weak solution, to upgrade its smoothness.
+- **Hopf's Lemma / general max principle** — no existence content either; supplies uniqueness and a priori bounds. In a fuller course this would feed a sixth method (method of continuity), but that route isn't developed as its own chapter here — the classical path to existence for general $L$ is left as the gap that motivates the weak-solution methods instead.
+
+## Exam framing
+"Classical theory" → methods 1–2.
+"How modern approaches show existence" → methods 3–5.
+Five short paragraphs total — know the *idea* of each cold; treat the supporting lemmas (Rellich–Kondrachov proof, Moser iteration algebra, etc.) with the tedium tiering from before.
 
 # Classical Elliptic PDE Theory
 
@@ -104,7 +121,7 @@ flowchart TD
 ### Liouville's Theorem
 ### Perron's Method
 > [!TIP]
-> Perron's method answers the question raised earlier: existence on domains
+> Perron's method answers the question raised earlier about existence on domains
 > without an explicit Green's function.
 #### Barriers
 #### Regular Points
@@ -175,6 +192,47 @@ flowchart TD
 ### Non-Linear
 #### De Giorgi-Nash
 #### Moser Iteration
+
+---
+---
+# Exam Prep Priority Queue — Tiered by Relevance × Low Tedium
+
+## Tier S — cheap and central, do these first
+| Topic | Why high-value | Tedium |
+|---|---|---|
+| Fundamental solution derivation (radial ODE + flux constant) | Core focus area; already deeply internalized | Low — one clean computation |
+| $-\Delta\Gamma=\delta_y$ via Green's second identity + excised ball | Same — already built real intuition here | Low–medium, short once you know the trick |
+| MVP → strong max principle → weak max principle chain | Two-line proofs each, high narrative payoff | Very low |
+| Uniqueness / Liouville as corollaries | One line each, cheap to state | Trivial |
+| Hopf's Lemma idea (barrier function + comparison) | Named focus area, genuinely short — one auxiliary function, one comparison argument | Low–medium |
+| GNS exponent via scaling argument | Two lines, elegant, shows real understanding without memorization | Very low |
+
+## Tier A — worth the proof, moderate cost
+| Topic | Why | Tedium |
+|---|---|---|
+| Green's representation formula | Reuses the excise-a-ball + Green's 2nd identity trick already known, just on a bounded domain with an extra boundary integral | Medium — bookkeeping with two boundary pieces (∂Ω and ∂Bε), but structurally nothing new |
+| Green's function existence for the ball (reflection / method of images) | Classic, concrete, satisfying to derive once | Medium — mostly algebra (inversion point $y^*=R^2y/\lvert y\rvert^2$) |
+| Cacciopoli inequality | Short — one cutoff-function test in the weak formulation | Low |
+| Difference-quotient idea (uniform $L^2$ bound ⇒ weak derivative exists) | Already sketched correctly; leans on known FA fact | Low (for this background) |
+
+## Tier B — know statement + one-paragraph idea, skip full proof
+| Topic | Why demote | Tedium if attempted |
+|---|---|---|
+| Green's function **symmetry** theorem | Two excised balls, careful sign tracking on normals, asymptotic expansion of Γ and ∇Γ near each singularity — high effort, modest conceptual payoff | High |
+| Moser iteration full computation | Idea is the goal; actual iteration (testing with $u^{2\beta-1}\eta^2$, Sobolev embedding, induction over $\beta_k\to\infty$) is long and unenlightening to reproduce live | High |
+| Rellich–Kondrachov proof | Needs Arzelà–Ascoli + covering/extraction argument — mechanically standard but long-winded, low payoff beyond "compactness via equicontinuity" | High |
+| Perron's method full construction (harmonic lift existence, sup-is-harmonic argument) | Conceptually rich but has several fiddly lemmas (lift is subharmonic, sup doesn't decrease, local harmonicity via covering argument). State the *idea*, skip the lemma chain | High |
+| Barriers / regular points / exterior sphere condition | Good to know *what* they are and *why* Lebesgue's spine is a counterexample; the regularity-criterion proofs are case-heavy | Medium–high |
+
+## Tier C — statement only, no proof attempt needed
+- Trace theorem (accept "continuous extension of a density argument" without reproducing it)
+- Lax–Milgram (state coercivity + boundedness precisely; proof already natural from FA)
+- Morrey's inequality statement (proof — Hölder estimate via integrating along a cone — is fiddly for the payoff)
+- Convex variational problems / lower semicontinuity lemmas (mechanically similar to known FA-style direct method arguments — trust intuition, don't grind lemma numbers)
+
+---
+
+**Ordering for five days**: Tier S first (cheap, matches stated focus) → Tier A next (reuses techniques from Tier S, so marginal cost is lower than it looks) → Tier B and C as read-and-narrate only (full credit for "what it says and why it's needed," without the risk of blanking mid-proof on something fiddly with low payoff even when reproduced correctly).
 
 
 
