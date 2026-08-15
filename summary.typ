@@ -26,7 +26,7 @@ Setting $F = u Laplace v$ and using the product rule, one unpacks the definition
 $
   intinside u Laplace v
   = intbound u Gradient v dot nu
-  - intinside Gradient u Gradient v
+  - intinside Gradient u dot Gradient v
 $
 
 In one dimension, this is *Integration By Parts*:
@@ -45,7 +45,12 @@ In this case, the outward normal field points to the right at the border point $
 "upper bound minus lower bound" term.
 
 === Green's Second Identity
-Green's Second Identity just
+Green's Second Identity just subtracts two Green's First Identity Equation. One for $u Laplace v$ and one for the other way around where $v Laplace u$. Since the scalar product is symmetric, the rightmost integrals cancel out and we are left with
+
+$
+  intinside u Laplace v - v Laplace u
+  = intbound u partial_nu v - v partial_nu u.
+$
 
 
 
@@ -55,49 +60,12 @@ $
 $
 of $u$ in the direction of $nu$.
 
-= Constructing Solutions to the Poisson Equation
-#callout1[
-  *Motivation:* The Laplace/Poisson Equation is the
-  simplest form of a second order elliptic PDE. Thus it is natural to try to
-  solve it -- if possible explicitly -- first.
-  Before we do that, we need just a bit of technical theory.
+#callout2[
+  As stated at the beginning, this allows -- minding the boundary terms -- to "*move the Laplacian over*."
 ]
 
-== Solving the Laplace Equation for radially symmetric functions
-We are looking for solutions to the *Laplace Equation
-$ Delta u = 0. $* If $u$ is *radial-symmetric*, i.e. there is a function $v$ such that
+= Prerequisits
 
-*$ u(x) = Phi(r) $*
-
-for some function $Phi$ and $r := ||x||$, then we can *turn* the *Laplace Equation* *into* an *ordinary* differential *equation* depending only on the radius.
-Using the chain rule, one computes that for all $r != 0,$ we have
-
-$ Delta Phi(r) = Phi''(r) + (n-1) (Phi'(r))/r =^! 0. $
-
-This is equivalent to
-
-$ (Phi''(r)) / (Phi'(r)) = (1-n) /r $
-
-Integrating both sides yields
-
-$ ln|Phi'(r)| = (1-n)ln r + c. $
-
-Applying the exponential function gives
-
-$ Phi'(r) = A r^(1-n) $
-
-Integrating again yields
-
-$ Phi(r) = cases(A ln r + B &"if" n = 2, A/(2-n) r^(2-n) + B quad &"if" n >= 3), $
-
-where $A,B$ are constants depending on $n.$
-
-#callout[
-  What we just derived is the basis for the *Fundamental Solution,* which we are going to find now.
-]
-
-To make sense of the subsection afterwards, we need just a bit of distribution
-theory now:
 == Introduction to Distributions
 === The Fundamental Lemma of the Calculus of Variations
 #callout[
@@ -144,6 +112,63 @@ is the _Associated Distribution_ to $f$. However, _not_ every Distribution needs
 
 
 
+
+
+= Constructing Solutions to the Laplace / Poisson Equation
+
+The *Poisson Equation* is 
+$
+ Laplace u =  f.
+$
+
+The *Laplace Equation* is the homogeneous Poisson Equation, i.e 
+$
+  Laplace u = 0.  
+$
+
+== Solving the Laplace Equation for radially symmetric functions
+
+#callout1[
+  *Motivation:* The Laplace/Poisson Equation is the
+  simplest form of a second order elliptic PDE. Thus it is natural to try to
+  solve it -- if possible explicitly -- first.
+  Before we do that, we need just a bit of technical theory.
+]
+
+We are looking for solutions to the *Laplace Equation
+$ Delta u = 0. $* If $u$ is *radial-symmetric*, i.e. there is a function $v$ such that
+
+*$ u(x) = Phi(r) $*
+
+for some function $Phi$ and $r := ||x||$, then we can *turn* the *Laplace Equation* *into* an *ordinary* differential *equation* depending only on the radius.
+Using the chain rule, one computes that for all $r != 0,$ we have
+
+$ Delta Phi(r) = Phi''(r) + (n-1) (Phi'(r))/r =^! 0. $
+
+This is equivalent to
+
+$ (Phi''(r)) / (Phi'(r)) = (1-n) /r $
+
+Integrating both sides yields
+
+$ ln|Phi'(r)| = (1-n)ln r + c. $
+
+Applying the exponential function gives
+
+$ Phi'(r) = A r^(1-n) $
+
+Integrating again yields
+
+$ Phi(r) = cases(A ln r + B &"if" n = 2, A/(2-n) r^(2-n) + B quad &"if" n >= 3), $
+
+where $A,B$ are constants depending on $n.$
+
+#callout[
+  What we just derived is the basis for the *Fundamental Solution,* which we are going to find now.
+]
+
+To make sense of the subsection afterwards, we need just a bit of distribution
+theory now:
 == Solving the Poisson Equation for a point source -- The Fundamental Solution
 
 The Laplace Equation
