@@ -359,18 +359,53 @@ $
 
 === Liouville's Theorem
 
-=== Perron's Method
+== Harnack Inequality
+#callout[
+  Harnack's Inequality says that a non-negative *harmonic function* *can't vary too wildly* on a compact subset of the domain. It is used to prove a theorem that *upgrades*
+  pointwise *convergence* of harmonic functions to uniform convergence. We will need this to show existence of solutions using Perron's Method later.
+]
+Formally: Let $u$ be *harmonic* and *_non-negative_*. For every *compact $Omega' subset.eq Omega$*, where *$Omega$* is an *open* and *connected domain*, there exists a constant $c = c(Omega', Omega)$, such that
+$
+  sup_(Omega') u <= c dot inf_(Omega') u.
+$
+
+#callout[
+  Note that $c$ not only depends on $Omega'$, but also on $Omega$. In general, *$c$ will blow up as $Omega'$ approaches $partial Omega.$*
+]
+
+#callout[
+  *Proof idea:* Locally, we can take any two points and balls around them such that *the smaller ball* is *contained* in the other. Since *$0<= u$*, the *integral over* the *larger ball* will be larger than the integral over the smaller ball. The *MVP does the rest*.
+  Then *extend using compactness* and *connectedness*. (Cover $Omega'$ with balls)
+]
+
+We consider the situation locally first and then expand. Let $x in Omega$, $Omega' = B_r (x)$ where $r$ is small enough such that still $B_(4r)(x) subset.eq Omega.$
+
+Now let $y$ and $tilde(y)$ be arbitrary values in $Omega'.$ The triangle inequality gives us $B_r (y) subset B_(3r)(tilde(y)).$
+Hence the MVP yields
+$
+  u(y) & = 1/(r^n omega_n) integral_(B_r (y)) u(xi) d xi \
+       & <=^(0<=u) 1/(r^n omega_n) integral_(B_(3r) (tilde(y))) u(xi) d xi = 3^n u(tilde(y)).
+$
+
+#callout[
+  This can now be extended using compactness and connectedness. We cover $Omega'$ with balls and apply the above inequality transitively for every point. Note that there is *always an $4r < "dist"(Omega', Omega)$*, since $Omega$ is open and $Omega'$ is compactly contained.
+]
+
+=== Harnack's Convergence Theorem
+
+
+= Perron's Method
 
 #callout2[
   Perron's method answers the question raised earlier about existence on domains
   without an explicit Green's function.
 ]
 
-==== Barriers
+== Barriers
 
-==== Regular Points
+== Regular Points
 
-==== Lebesgue-Spine
+== Lebesgue-Spine
 
 #callout1[
   Now we move from the Laplace-Operator to more general Second-Order Elliptic
