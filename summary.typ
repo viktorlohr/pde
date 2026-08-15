@@ -1,7 +1,10 @@
 #import "template.typ": *
 
 #let Laplace = $Delta$
+#let Gradient = $nabla$
 #let int = $integral_(RR^n)$
+#let intinside = $integral_Omega$
+#let intbound = $integral_(partial Omega)$
 #let int0 = $integral_(B_epsilon)$
 #let int1 = $integral_(RR^n \\ B_epsilon)$
 #let int2 = $integral_(partial B_epsilon)$
@@ -9,15 +12,56 @@
 
 #show: conf.with(title: "Second-Order \nElliptic PDEs", subtitle: "A Conceptual Overview")
 
+= Integration By Parts
+#callout[*Integration By Parts* plays a fundamental role in modern PDE theory. It allows us to *find* otherwise *"hidden" solutions*. It allows us to "*move the Laplacian over*" to another function, *enabling countless proofs*. Therefore, we revise the reason why it works in the first place -- the Divergence Theorem --right at the beginning of this summary.]
+== Divergence Theorem
+The Divergence Therom states, that for a differentiable vector field $F = (F_1, ..., F_n)$ and bounded $Omega subset RR^n$ we have
+$ intinside Gradient dot F = intbound F dot nu, $
+
+where $nu$ is the outer normal field of Omega and $ Gradient dot F = (partial_1 F_1, ..., partial_n F_n) $ is the Divergence of F.
+
+== Green's Identities
+=== Green's First Identity
+Setting $F = u Laplace v$ and using the product rule, one unpacks the definitions to Green's First Identity:
+$
+  intinside u Laplace v
+  = intbound u Gradient v dot nu
+  - intinside Gradient u Gradient v
+$
+
+In one dimension, this is *Integration By Parts*:
+$
+  integral_[a,b] u v''
+  = underbrace(
+    integral_(partial[a,b]) u v' dot nu, = (u v')(a) dot (-1)\
+    + (u v') (b) dot (+1)
+  )
+  - integral_[a,b] u'v'.
+$
+
+The border $partial[a,b]$ is discrete. It consits of the points $a$ and $b$. So the Integral is actually a sum.
+
+In this case, the outward normal field points to the right at the border point $b$ and to the left at the border point $a$, giving us the expected
+"upper bound minus lower bound" term.
+
+=== Green's Second Identity
+Green's Second Identity just
+
+
+
+Note that $Gradient u dot nu$ is actually the *directional derivative*
+$
+  partial_nu u
+$
+of $u$ in the direction of $nu$.
+
+= Constructing Solutions to the Poisson Equation
 #callout1[
-  *Motivation for the first two sections:* The Laplace/Poisson Equation is the
+  *Motivation:* The Laplace/Poisson Equation is the
   simplest form of a second order elliptic PDE. Thus it is natural to try to
   solve it -- if possible explicitly -- first.
   Before we do that, we need just a bit of technical theory.
 ]
-
-
-= Constructing Solutions to the Poisson Equation
 
 == Solving the Laplace Equation for radially symmetric functions
 We are looking for solutions to the *Laplace Equation
@@ -90,8 +134,11 @@ is the _Associated Distribution_ to $f$. However, _not_ every Distribution needs
   $ T_(Laplace u) phi = int (Laplace u) phi = int u (Laplace phi) = T_u Laplace phi. $
 
   This motivates the definition
-  $ (L T)phi := T (L phi), $
-  where $L$ is a Linear Operator and $T$ is a Distribution.
+  $ (Laplace T) phi = T (Laplace phi). $
+
+  More general:
+  $ (L T)phi := T (L^* phi), $
+  where $L$ is a Linear Operator, $L^*$ is its _adjoint_ and $T$ is a Distribution. Keep in mind that the Laplacian is self-adjoint.
 ]
 
 
@@ -114,20 +161,21 @@ The "point source" itself will be the *Dirac Distribution* $delta$: it
 *evaluates* a test function *at $0$*:
 $ delta(psi) := psi(0). $
 #callout[
-  The *idea* behind this is the following: Our "point source" is the *limit* of test functions $psi_k$ that get *taller and narrower* towards the origin, *but* their *integral remains constant* Let's see how how these act on a test function $phi$. For large $k$, the support of $psi_k$ shrinks by construction. Hence there are $epsilon_k -> 0$ such that
+  The *idea* behind this is the following: Our "point source" is the *limit* of test functions $psi_k$ that get *taller and narrower* towards the origin, *but* their *integral remains constant*. Let's see how how these act on a test function $phi$. For large $k$, the support of $psi_k$ shrinks by construction. Hence there are $epsilon_k -> 0$ such that
   #let intk = $integral_(||x|| < epsilon_k )$
   $
-    integral psi_k phi & = intk psi_k phi \
-                       & = intk psi_k
-                         underbrace(phi, approx phi(0)) \
-                       & approx phi (0) intk psi_k \
-                       & approx phi (0) dot 1
+    T_(phi_k) = integral psi_k phi & = intk psi_k phi \
+                                   & = intk psi_k
+                                     underbrace(phi, approx phi(0)) \
+                                   & approx phi (0) intk psi_k \
+                                   & approx phi (0) dot 1
   $
 
   To actually show equality, one considers the difference between the two sides and shows its bounded by a multiple of $epsilon_k$. The *bottom line* is:
 
-  *$ integral psi_k phi --> delta(phi). $*
+  *$ T_(phi_k) --> delta(phi). $*
 
+  So *intuitively*, one can *associate* the *Dirac Distribution* with a function that is *very narrow and high*.
 ]
 
 
@@ -136,7 +184,7 @@ $ delta(psi) := psi(0). $
 
 
 
-Per Definition, $-Delta Phi = delta$ holds in the _sense of distributions_ if
+Per Definition, $-Delta Phi = delta$ holds in the sense of Distributions if
 $ -integral_(RR^n) Phi Delta psi dif x = delta(psi) $
 for every test function $psi$.
 
@@ -147,7 +195,7 @@ Since there is a *singularity at the origin*, we cannot integrate
 
 $ integral_(RR^n) Phi Delta psi $
 
-directly. We *punch a hole* of radius $epsilon$ around the origin and take the limit $epsilon -> 0$. We then *apply Green's Second Identity* to move the Laplacian over. Because *test functions vanish far out* and *$Phi$ is harmonic*, this yields
+directly. Therefore, we *punch a hole* of radius $epsilon$ around the origin and take the limit $epsilon -> 0$. We then *apply Green's Second* Identity. Because *test functions vanish far out* and *$Phi$ is harmonic*, this yields
 
 
 
@@ -168,7 +216,7 @@ Now the second term. Since the *normal unit vector points inward*, we have $nu =
 
 $ psi (partial Phi) / (partial nu) = psi (partial Phi) / (partial (-r)). $
 
-#callout[As the radius approaches zero, *$Phi'$ blows up as fast as $r^(1-n)$* -- *exactly* the rate the *surface area shrinks*. The section below formalizes this observation.]
+#callout[As the radius approaches zero, *$Phi'$ blows up as fast as $r^(1-n)$* -- *exactly* the rate the *surface area shrinks* in. The section below formalizes this observation.]
 
 
 
@@ -214,8 +262,13 @@ $ delta(phi_x) = phi(x). $
   *Where is this going?* The goal of this subsection is to *solve $ - Laplace u = f $* for smooth $f$ *on $RR^n.$*
   In the distributional sense, this equation means
   $ - integral u Laplace phi = integral f phi $
-  for every test function $phi.$ What we have achieved above is a way to *represent $phi$ in terms of* the *Delta Distribution.* This naturally leads to the *Fundamental Solution* which can be used to solve the equation -- but only on $RR^n$ of course.
+  for every test function $phi.$ The idea is to apply our result above and *represent $phi$ via* the *Delta Distribution.* This naturally leads to the *Fundamental Solution* which can be used to solve the equation -- but only on $RR^n$ of course.
 ]
+
+#callout2[
+  Note that we are using the "*Detour Through Distributions* Strategy" described before.
+]
+
 Let's reverse engineer this further. As pointed out, we need
 $u$ to act on $phi$ the same way as $f$. So let's look at what happens when we *plug in $phi(x) = delta (phi_x)$* in the action of $f$ on $phi:$
 $
