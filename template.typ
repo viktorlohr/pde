@@ -158,7 +158,7 @@
   // any content, which is why it leads the block.
   set document(title: if contents { title })
 
-  set page(fill: colors.bg, width: 270pt, height: auto, margin: (x: 12pt, y: 16pt))
+  set page(fill: colors.bg, width: 300pt, height: auto, margin: (x: 12pt, y: 16pt))
   // The body measure is ~276pt, and inside a callout ~248pt once its bar and
   // insets are taken out — narrow enough that line breaking needs help a
   // normal-width page wouldn't. `hyphenate` defaults to `auto`, meaning "only

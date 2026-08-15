@@ -2,6 +2,10 @@
 
 #let Laplace = $Delta$
 #let int = $integral_(RR^n)$
+#let int0 = $integral_(B_epsilon)$
+#let int1 = $integral_(RR^n \\ B_epsilon)$
+#let int2 = $integral_(partial B_epsilon)$
+
 
 #show: conf.with(title: "Second-Order \nElliptic PDEs", subtitle: "A Conceptual Overview")
 
@@ -9,7 +13,9 @@
   *Motivation for the first two sections:* The Laplace/Poisson Equation is the
   simplest form of a second order elliptic PDE. Thus it is natural to try to
   solve it -- if possible explicitly -- first.
+  Before we do that, we need just a bit of technical theory.
 ]
+
 
 = Constructing Solutions to the Poisson Equation
 
@@ -46,6 +52,20 @@ where $A,B$ are constants depending on $n.$
   What we just derived is the basis for the *Fundamental Solution,* which we are going to find now.
 ]
 
+To make sense of the subsection afterwards, we need just a bit of distribution
+theory now:
+== Distributions I
+
+#callout[
+  The idea of this subsection is the following result:
+  #align(center)[
+    *A function is uniquely determined by its integral against a test function.*
+  ]
+
+]
+
+
+
 
 
 == Solving the Poisson Equation for a point source -- The Fundamental Solution
@@ -61,14 +81,31 @@ literally means that $Phi$ is in a *harmonic*, "peaceful" state.
   where $delta$ is a "point source".
 ]
 
-To make sense of this "point source", we need just a bit of distribution
-theory now:
+The "point source" itself will be the *Dirac Distribution* $delta$: it
+*evaluates* a _test function_ *at $0$*:
+$ delta(psi) := psi(0). $
+#callout[
+  The *idea* behind this is the following: Our "point source" is the *limit* of test functions $psi_k$ that get *taller and narrower* towards the origin, *but* their *integral remains constant* Let's see how how these act on a test function $phi$. For large $k$, the support of $psi_k$ shrinks by construction. Hence there are $epsilon_k -> 0$ such that
+  #let intk = $integral_(||x|| < epsilon_k )$
+  $
+    integral psi_k phi & = intk psi_k phi \
+                       & = intk psi_k
+                         underbrace(phi, approx phi(0)) \
+                       & approx phi (0) intk psi_k \
+                       & approx phi (0) dot 1
+  $
 
-- A *test function* $psi$ is _smooth_ and _compactly supported_.
+  To actually show equality, one considers the difference between the two sides and shows its bounded by a multiple of $epsilon_k$. The *bottom line* is:
 
-- The "point source" itself will be the *Dirac Distribution* $delta$: it
-  *evaluates* a test function *at $0$*:
-  $ delta(psi) := psi(0). $
+  *$ integral psi_k phi --> delta(phi). $*
+
+]
+
+
+
+
+
+
 
 - $-Delta Phi = delta$ holds *per definition* if
   $ -integral_(RR^n) Phi Delta psi dif x = delta(psi) $
@@ -88,8 +125,7 @@ directly. We *punch a hole* of radius $epsilon$ around the origin and take the l
 
 
 
-#let int1 = $integral_(RR^n \\ B_epsilon)$
-#let int2 = $integral_(partial B_epsilon)$
+
 
 $
   int1 Phi Delta psi
@@ -140,6 +176,7 @@ Therefore *$A$ must equal* $ -1/(|S_(n-1)|). $
 
 == Deriving a Solution for \ arbitrary $f$ on $RR^n$
 
+
 Remember that our "point source" $delta$, more formally known as the Dirac Distribution acted on a test function $phi$ by evaluating it at the origin: $ delta(phi) = f(0). $
 
 Let $x$ now be an arbitrary point and consider the function $ phi_x := y |-> phi(x-y). $
@@ -158,16 +195,16 @@ $u$ to act on $phi$ the same way as $f$. So let's look at what happens when we *
 $
                                 & int f(x) phi(x) d x \
                               = & int f(x) delta(phi_x) d x \
-                              = & int f(x) int Phi(y) Laplace phi(x-y) d y d x \
-                              = & int int Phi (y) f(x) phi(x-y) d y d x \
-  =^"Convolution\nis symmetric" & int int Phi (y) f(x-y) d y space Laplace phi(x) d x \
-                              = & int (Phi * f) (x) Laplace phi (x) d x. \
+                              = & - int f(x) int Phi(y) Laplace phi(x-y) d y d x \
+                              = & - int int Phi (y) f(x) phi(x-y) d y d x \
+  =^"Convolution\nis symmetric" & - int int Phi (y) f(x-y) d y space Laplace phi(x) d x \
+                              = & - int (Phi * f) (x) Laplace phi (x) d x. \
 $
 
 #callout[
   Now we're *done.* *Why?*
   The Equation above matches the distributional definition perfectly. It implies
-  $ Laplace (Phi * f) = f(x). $
+  $ - Laplace (Phi * f) = f(x). $
   Therefore, *$ Phi * f $ solves the Poisson Equation* on $RR^n.$
 ]
 
