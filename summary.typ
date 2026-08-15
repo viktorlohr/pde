@@ -8,12 +8,14 @@
 #let int0 = $integral_(B_epsilon)$
 #let int1 = $integral_(RR^n \\ B_epsilon)$
 #let int2 = $integral_(partial B_epsilon)$
+#let iff = $<=>$
 
 
 #show: conf.with(title: "Second-Order \nElliptic PDEs", subtitle: "A Conceptual Overview")
 
+= What is an _elliptic_ PDE?
 
-= Basic Tools for finding Solutions
+= Basic Tools for solving PDEs
 == Integration By Parts
 #callout[*Integration By Parts* plays a fundamental role in modern PDE theory. It allows us to *find* otherwise *"hidden" (weaker) solutions*. It allows us to "*move the Laplacian over*" to another function, *enabling countless proofs*. Therefore, we revise the reason why it works in the first place -- the Divergence Theorem --right at the beginning of this summary.]
 === Divergence Theorem
@@ -113,7 +115,7 @@ is the _Associated Distribution_ to $f$. However, _not_ every Distribution needs
 
 
 
-= Constructing Solutions to the Laplace / Poisson Equation
+= _Explicit_ Solutions to $-Laplace u = f$  -- but only on _nice_ domains!
 
 The *Poisson Equation* is
 $
@@ -146,7 +148,7 @@ $ Delta Phi(r) = Phi''(r) + (n-1) (Phi'(r))/r =^! 0. $
 
 This is equivalent to
 
-$ (Phi''(r)) / (Phi'(r)) = (1-n) /r $
+$ (Phi''(r)) / (Phi'(r)) = (1-n) /r . $
 
 Integrating both sides yields
 
@@ -154,7 +156,7 @@ $ ln|Phi'(r)| = (1-n)ln r + c. $
 
 Applying the exponential function gives
 
-$ Phi'(r) = A r^(1-n) $
+$ Phi'(r) = A r^(1-n). $
 
 Integrating again yields
 
@@ -166,8 +168,6 @@ where $A,B$ are constants depending on $n.$
   What we just derived is the basis for the *Fundamental Solution,* which we are going to find now.
 ]
 
-To make sense of the subsection afterwards, we need just a bit of distribution
-theory now:
 == Solving the Poisson Equation for a point source -- The Fundamental Solution
 
 The Laplace Equation
@@ -185,7 +185,7 @@ The "point source" itself will be the *Dirac Distribution* $delta$: it
 *evaluates* a test function *at $0$*:
 $ delta(psi) := psi(0). $
 #callout[
-  The *idea* behind this is the following: Our "point source" is the *limit* of test functions $psi_k$ that get *taller and narrower* towards the origin, *but* their *integral remains constant*. Let's see how how these act on a test function $phi$. For large $k$, the support of $psi_k$ shrinks by construction. Hence there are $epsilon_k -> 0$ such that
+  The *idea* behind this is the following: Our "point source" is the *limit* of test functions $psi_k$ that get *taller and narrower* towards the origin, *but* their *integral remains constant*. Let's see how how these act on a test function $phi$. For large $k$, the support of $psi_k$ shrinks by construction. Hence, there are $epsilon_k -> 0$ such that
   #let intk = $integral_(||x|| < epsilon_k )$
   $
     T_(phi_k) = integral psi_k phi & = intk psi_k phi \
@@ -312,7 +312,7 @@ $
 ]
 
 
-== Honorable Mention: \ The Fourier Transform
+== An Alternative Method: \ The Fourier Transform
 
 #callout1[
   The Fourier Transform yields an alternative way to derive the constants for
@@ -340,14 +340,24 @@ $
   more arbitrary settings *without* constructing *explicit* *solutions*.
 ]
 
-= Harmonic Functions
+= Harmonic Functions -- Inspecting $Laplace u = 0$ further
 
 #callout1[
-  This section is about finding more general but non-constructive solutions to
-  Laplace's Equation by investigating properties of harmonic functions.
+  This section is about laying the *foundation for Perron's Method*, which allows us to find more general, but non-constructive solutions to
+  Laplace's Equation by investigating properties of *harmonic functions*. These are *exactly* the functions that satisfy *$Laplace u = 0$*
 ]
 
 == Mean Value Property
+
+#callout[
+  A function *$u$ satisfies* the Mean Value Property (*MVP*) *if* *locally*, it *equals* the *avarage* of its integral *over* a *ball* *as well as* the avarage of its integral over the *surface* of a ball.
+]
+
+
+#callout[We define a function to be *harmonic* *if and only if* it satisfies the *MVP*]
+
+#callout[*Characterization:* A function $u$ is *harmonic* *if and only if* it satisfies the *Laplace Equation*]
+
 
 == Maximum Principles
 
@@ -407,13 +417,55 @@ Let $u_1 <= u_2 <= ...$ be a *monotonically increasing* sequence of *harmonic* f
   The uniform convergence proven in the first step will allow us to *swap* the *limit* *and* the *MVP integral*, *proving harmonicity* of the limit.
 ]
 
-= Perron's Method
+= Perron's Method -- _Existence_ of Solutions to $Laplace u = 0$ on _any_ domain
 
 #callout2[
   Perron's method answers the question raised earlier about *existence on bounded domains*
-  *without* an *explicit* Green's function.
+  *_without_* an *explicit* Green's function.
 ]
 
+#callout[
+  Remember, we *want* to find a *harmonic* *function* for a Dirichlet Problem. *Why?*  *Because* harmonic functions *solve* the *Laplace* Equation!
+
+  Perron's Method achieves this by taking the *supremum* *over* *functions that stay below harmonic functions* if they alredy do so on the boundary. These are called _subharmonic_ functions.
+]
+
+A function $u in C^0(Omega)$ is *_subharmonic_* if for every ball $B subset.double Omega$ and *every harmonic $h$* $in C^0 (overline(B))$ holds
+$
+  u <= h "on" partial B => u <= h "in" B
+$
+
+#callout[
+  Note that the definition is *stated locally* for balls.   *Otherwise* we would need to assume there already is a harmonic function defined on the whole domain in the first place, i.e. we *would have* found a *solution* to the Laplace Equation *already*.
+]
+
+#callout2[
+  Remember that we already know that *harmonic functions exist on* every *ball*. (Green's Function via mirror image!)
+]
+
+We define the set of *_subsolutions_*
+$
+  S_g := {v in C(overline(Omega)) | v "subharmonic", v_(|partial Omega) <= g_(|partial Omega) }.
+$
+
+This set is *not empty*, because the constant function that is identical to the minimum of $g$ is a subsolution.
+
+We now try to show that the set is *bounded from above.*
+
+#callout[
+  Note that the maximum principle gives us the implication
+  *$ "Harmonic" => "Subharmonic". $*
+  Therefore it makes sense to suspect that the *supremum of subsolutions* is indeed *harmonic*. It is as "high" as it can get with the constrained boundary holding it in place.
+
+  Furthermore, this tells us that _if_ a *solution* exists, it *must itself be* a *subsolution*. Since the supremum is harmonic and the Laplacian is linear, their *difference is* also *harmonic*. It vanishes on the boundary since the boundary conditions get subtracted as well. So it * attains* its *maximum* / *minimum* -- *zero* -- at the boundary. The *Maximum / Minimum Principle* *implies* that it vanishes everywhere. So they are *equal.*
+
+  Keep in mind that we use here that the supremum is harmonic -- that is the hard theorem, proven below.
+]
+
+
+
+=== Supremum of Subsolutions is harmonic
+// TODO
 
 
 == Barriers
@@ -433,7 +485,7 @@ Let $u_1 <= u_2 <= ...$ be a *monotonically increasing* sequence of *harmonic* f
   Property. We need _Hopf's Lemma_ to replace it in the argument.
 ]
 
-= General Second-Order Elliptic Operators
+= General Second-Order Elliptic Equations
 
 == The Ellipticity Condition
 
