@@ -188,11 +188,11 @@ $ delta(psi) := psi(0). $
   The *idea* behind this is the following: Our "point source" is the *limit* of test functions $psi_k$ that get *taller and narrower* towards the origin, *but* their *integral remains constant*. Let's see how how these act on a test function $phi$. For large $k$, the support of $psi_k$ shrinks by construction. Hence, there are $epsilon_k -> 0$ such that
   #let intk = $integral_(||x|| < epsilon_k )$
   $
-    T_(phi_k) = integral psi_k phi & = intk psi_k phi \
-                                   & = intk psi_k
-                                     underbrace(phi, approx phi(0)) \
-                                   & approx phi (0) intk psi_k \
-                                   & approx phi (0) dot 1
+    T_(phi_k) & = integral psi_k phi \
+              & = intk psi_k (x)
+                underbrace(phi (x), approx phi(0)) d x \
+              & approx phi (0) integral psi_k \
+              & approx phi (0) dot 1
   $
 
   To actually show equality, one considers the difference between the two sides and shows its bounded by a multiple of $epsilon_k$. The *bottom line* is:
@@ -253,8 +253,8 @@ $
                      & = psi(0) dot A epsilon^(1-n) dot |S_(n-1)| epsilon^(n-1) \
                      & = psi(0) dot A dot |S_(n-1)|
 $
-where $|S_(n-1)|$ is the surface area of the sphere. Remember, we want to show that
-$ - integral_(RR^n) Phi Delta psi = psi(0). $
+where $|S_(n-1)|$ is the surface area of the sphere. #callout[Remember, we *want to show* that
+  *$ - integral_(RR^n) Phi Delta psi = psi(0). $*]
 Therefore *$A$ must equal* $ -1/(|S_(n-1)|). $
 
 
@@ -268,7 +268,7 @@ Therefore *$A$ must equal* $ -1/(|S_(n-1)|). $
 
 
 #callout[
-  Technincally, we only found a "radial" fundamental solution, but it turns out that its actually the _only_ one.
+  Technincally, we only found a _radial_ fundamental solution, but it turns out that its actually the _only_ one.
 ]
 
 
