@@ -12,17 +12,18 @@
 
 #show: conf.with(title: "Second-Order \nElliptic PDEs", subtitle: "A Conceptual Overview")
 
-= Integration By Parts
-#callout[*Integration By Parts* plays a fundamental role in modern PDE theory. It allows us to *find* otherwise *"hidden" solutions*. It allows us to "*move the Laplacian over*" to another function, *enabling countless proofs*. Therefore, we revise the reason why it works in the first place -- the Divergence Theorem --right at the beginning of this summary.]
-== Divergence Theorem
+
+= Basic Tools for finding Solutions
+== Integration By Parts
+#callout[*Integration By Parts* plays a fundamental role in modern PDE theory. It allows us to *find* otherwise *"hidden" (weaker) solutions*. It allows us to "*move the Laplacian over*" to another function, *enabling countless proofs*. Therefore, we revise the reason why it works in the first place -- the Divergence Theorem --right at the beginning of this summary.]
+=== Divergence Theorem
 The Divergence Therom states, that for a differentiable vector field $F = (F_1, ..., F_n)$ and bounded $Omega subset RR^n$ we have
 $ intinside Gradient dot F = intbound F dot nu, $
 
 where $nu$ is the outer normal field of Omega and $ Gradient dot F = (partial_1 F_1, ..., partial_n F_n) $ is the Divergence of F.
 
-== Green's Identities
-=== Green's First Identity
-Setting $F = u Laplace v$ and using the product rule, one unpacks the definitions to Green's First Identity:
+=== Green's Identities
+Setting $F = u Laplace v$ and using the product rule, one unpacks the definitions to *Green's First Identity*:
 $
   intinside u Laplace v
   = intbound u Gradient v dot nu
@@ -44,8 +45,8 @@ The border $partial[a,b]$ is discrete. It consits of the points $a$ and $b$. So 
 In this case, the outward normal field points to the right at the border point $b$ and to the left at the border point $a$, giving us the expected
 "upper bound minus lower bound" term.
 
-=== Green's Second Identity
-Green's Second Identity just subtracts two Green's First Identity Equation. One for $u Laplace v$ and one for the other way around where $v Laplace u$. Since the scalar product is symmetric, the rightmost integrals cancel out and we are left with
+
+*Green's Second Identity* just subtracts two Green's First Identity Equation. One for $u Laplace v$ and one for the other way around where $v Laplace u$. Since the scalar product is symmetric, the rightmost integrals cancel out and we are left with
 
 $
   intinside u Laplace v - v Laplace u
@@ -64,9 +65,7 @@ of $u$ in the direction of $nu$.
   As stated at the beginning, this allows -- minding the boundary terms -- to "*move the Laplacian over*."
 ]
 
-= Prerequisits
-
-== Introduction to Distributions
+== Distributions
 === The Fundamental Lemma of the Calculus of Variations
 #callout[
   Let's say $f$ and $g$ are some integrable functions.
@@ -101,10 +100,10 @@ is the _Associated Distribution_ to $f$. However, _not_ every Distribution needs
   Let's say $u$ is differentiable twice. Then Green's Second Identity and the fact that test functions vanish far out imply
   $ T_(Laplace u) phi = int (Laplace u) phi = int u (Laplace phi) = T_u Laplace phi. $
 
-  This motivates the definition
-  $ (Laplace T) phi = T (Laplace phi). $
+  This *motivates* the *definition*
+  *$ (Laplace T) phi := T (Laplace phi). $*
 
-  More general:
+  More generally,
   $ (L T)phi := T (L^* phi), $
   where $L$ is a Linear Operator, $L^*$ is its _adjoint_ and $T$ is a Distribution. Keep in mind that the Laplacian is self-adjoint.
 ]
@@ -116,14 +115,14 @@ is the _Associated Distribution_ to $f$. However, _not_ every Distribution needs
 
 = Constructing Solutions to the Laplace / Poisson Equation
 
-The *Poisson Equation* is 
+The *Poisson Equation* is
 $
- Laplace u =  f.
+  - Laplace u = f.
 $
 
-The *Laplace Equation* is the homogeneous Poisson Equation, i.e 
+The *Laplace Equation* is the homogeneous Poisson Equation, i.e
 $
-  Laplace u = 0.  
+  Laplace u = 0.
 $
 
 == Solving the Laplace Equation for radially symmetric functions
@@ -220,7 +219,7 @@ Since there is a *singularity at the origin*, we cannot integrate
 
 $ integral_(RR^n) Phi Delta psi $
 
-directly. Therefore, we *punch a hole* of radius $epsilon$ around the origin and take the limit $epsilon -> 0$. We then *apply Green's Second* Identity. Because *test functions vanish far out* and *$Phi$ is harmonic*, this yields
+directly. Therefore, we *punch a hole* of radius $epsilon$ around the origin and take the limit $epsilon -> 0$. We then *apply Green's Second* Identity. Because *test functions vanish far out* and *$Phi$ is harmonic _away_ from* the *origin*, this yields
 
 
 
@@ -276,9 +275,9 @@ Therefore *$A$ must equal* $ -1/(|S_(n-1)|). $
 == Deriving a Solution for \ arbitrary $f$ on $RR^n$
 
 
-Remember that our "point source" $delta$, more formally known as the Dirac Distribution acted on a test function $phi$ by evaluating it at the origin: $ delta(phi) = f(0). $
+Remember that our "point source" $delta$ -- the Dirac Distribution acted on a test function $phi$ by evaluating it at the origin: $ delta(phi) = f(0). $
 
-Let $x$ now be an arbitrary point and consider the function $ phi_x := y |-> phi(x-y). $
+Let $x$ now be an arbitrary point and *consider* the function *$ phi_x := y |-> phi(x-y). $*
 Then the Dirac Distribution would give us
 
 $ delta(phi_x) = phi(x). $
@@ -334,11 +333,11 @@ $
 #callout1[
   *Motivation for the other chapters:* Even though we just got an explicit
   formula to solve one of the most important PDEs, it only works on "nice"
-  domains where something like the mirror-trick works. It's hard to find
-  solutions in general.
+  domains where something like the mirror-trick works. It's *hard to find
+  solutions in general*.
 
-  Therefore, the following sections mainly focus on uniqueness and existence in
-  more arbitrary settings without constructing explicit solutions.
+  *Therefore*, the following sections mainly focus on *uniqueness and existence* in
+  more arbitrary settings *without* constructing *explicit* *solutions*.
 ]
 
 = Harmonic Functions

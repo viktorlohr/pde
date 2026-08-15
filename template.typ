@@ -90,7 +90,7 @@
     #set text(size: size, weight: "regular", fill: fg)
     #set par(spacing: gap)
     #for h in items [
-      #link(h.location())[#h.body]
+      #link(h.location())[#context numbering(h.numbering, ..counter(heading).at(h.location())) #h.body]
       #parbreak()
     ]
   ]))
@@ -122,7 +122,11 @@
 // entries stay `text`-colored — coloring the entries `accent1` too would have
 // them read as level-2 headings, which are already that blue.
 #let contents-page(title: [Contents], subtitle: none) = {
-  [#heading(level: 1, title) #contents-label]
+  [#heading(level: 1, numbering: none, title) #contents-label]
+  // The contents heading still steps `counter(heading)` even with its own
+  // numbering suppressed, since the counter tracks every level-1 heading
+  // regardless of display — undone here so the first real chapter reads "1."
+  counter(heading).update(n => calc.max(n - 1, 0))
   block(below: 12pt, {
     // `set par` after `set text`, not a `text(...)` wrapper, so `leading`'s
     // `em` resolves against this 24pt scope rather than the 12pt ambient —
@@ -184,7 +188,7 @@
   // `auto` picks the greedy "simple" breaker for ragged text; the optimized
   // one weighs the whole paragraph and evens out the rag.
   set par(linebreaks: "optimized")
-  set heading(numbering: none)
+  set heading(numbering: "1.")
 
   // Display type is short, deliberately worded, and read at a glance —
   // breaking a chapter title mid-word costs more than the ragged edge it
@@ -225,7 +229,7 @@
 
       set text(size: 24pt, weight: "bold", fill: colors.text)
       set par(leading: 6pt)
-      block(above: 100pt, below: 14pt, it.body)
+      block(above: 100pt, below: 14pt, [#numbering(it.numbering, ..counter(heading).at(it.location())) #it.body])
       // Eats most of that trailing 14pt, so the box sits just under the title
       // with little more than its own inset providing the gap. Only when the
       // box will actually render something — a chapter with no "==" (like
@@ -253,7 +257,7 @@
     }
 
     set text(size: 15pt, weight: "bold", fill: colors.accent1)
-    block(above: 22pt, below: 10pt, it.body)
+    block(above: 22pt, below: 10pt, [#numbering(it.numbering, ..counter(heading).at(it.location())) #it.body])
   }
 
   if contents { contents-page(title: title, subtitle: subtitle) }
