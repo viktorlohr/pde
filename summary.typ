@@ -54,16 +54,45 @@ where $A,B$ are constants depending on $n.$
 
 To make sense of the subsection afterwards, we need just a bit of distribution
 theory now:
-== Distributions I
-
+== Introduction to Distributions
+=== The Fundamental Lemma of the Calculus of Variations
 #callout[
-  The idea of this subsection is the following result:
-  #align(center)[
-    *A function is uniquely determined by its integral against a test function.*
-  ]
+  Let's say $f$ and $g$ are some integrable functions.
+  #align(center)[*How can we tell if they are equal?*]
 
+  This is a fundamental problem in this course. Think of $g = Laplace u$. How can we tell if $Laplace u = f$ for some $u$?
+
+  _Distribution Theory_ tells us that *if*
+  *$ integral f phi = integral g phi $*
+  *for all* test functions *$phi$*, *then*
+  *$ f = g. $*
+
+  This is called #align(center)[*The Fundamental Lemma Of The Calculus Of Variations*]
+  What exactly a "Variation" is will be explained in the later chapters.
 ]
 
+A _test function_ is a "very nice" function. It is smooth and compactly supported, formally $phi in C^infty_c.$
+
+A _Distribution_ is a bounded linear functional acting on a test function. (i.e. an element of the dual space of $C_c^infty$)
+For example, for a locally integrable function $f$, the mapping
+$ T_f colon quad phi |-> integral f phi $
+is the _Associated Distribution_ to $f$. However, _not_ every Distribution needs to stem from a locally integrable function!
+
+#callout[
+  We will often argue in the following way. Let's say we want to show that $f =g$. Then we *make* a *detour* *through* the world of *Distributions:* That means, often we can find a distribution $S$, such that
+  $ T_f = S = T_g. $
+  Now we are done, because this implies $f=g$ by the Fundamental Lemma stated above.
+]
+
+=== Operator applied to Distribution
+#callout[
+  Let's say $u$ is differentiable twice. Then Green's Second Identity and the fact that test functions vanish far out imply
+  $ T_(Laplace u) phi = int (Laplace u) phi = int u (Laplace phi) = T_u Laplace phi. $
+
+  This motivates the definition
+  $ (L T)phi := T (L phi), $
+  where $L$ is a Linear Operator and $T$ is a Distribution.
+]
 
 
 
@@ -82,7 +111,7 @@ literally means that $Phi$ is in a *harmonic*, "peaceful" state.
 ]
 
 The "point source" itself will be the *Dirac Distribution* $delta$: it
-*evaluates* a _test function_ *at $0$*:
+*evaluates* a test function *at $0$*:
 $ delta(psi) := psi(0). $
 #callout[
   The *idea* behind this is the following: Our "point source" is the *limit* of test functions $psi_k$ that get *taller and narrower* towards the origin, *but* their *integral remains constant* Let's see how how these act on a test function $phi$. For large $k$, the support of $psi_k$ shrinks by construction. Hence there are $epsilon_k -> 0$ such that
@@ -107,15 +136,12 @@ $ delta(psi) := psi(0). $
 
 
 
-- $-Delta Phi = delta$ holds *per definition* if
-  $ -integral_(RR^n) Phi Delta psi dif x = delta(psi) $
-  for *every* test function $psi$.
+Per Definition, $-Delta Phi = delta$ holds in the _sense of distributions_ if
+$ -integral_(RR^n) Phi Delta psi dif x = delta(psi) $
+for every test function $psi$.
 
 
-If $Phi$ is smooth, *Green's second Identity* lets us *swap the Laplacian
-over*. Both sides become linear functionals *acting on the same test function*. The bottom line: *$Phi$'s behavior* is *determined* by its behavior on *all test functions* -- and distribution theory says that *uniquely* determines $Phi$.
-
-#callout[Since $delta$ is *radially symmetric*, we expect the response $Phi$ to be too. We therefore *assume $Phi$ is radially symmetric* and *try to find constants* that fit our result above.]
+#callout[Since $delta$ is radially symmetric, we expect the response $Phi$ to be too. We therefore *assume $Phi$ is radially symmetric* and *try to find constants* that fit our result above.]
 
 Since there is a *singularity at the origin*, we cannot integrate
 

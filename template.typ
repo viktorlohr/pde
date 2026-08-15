@@ -279,3 +279,6 @@
 #let callout3 = callout.with(accent: colors.accent3)
 #let callout4 = callout.with(accent: colors.accent4)
 #let callout5 = callout.with(accent: colors.accent5)
+
+
+#let infty = $infinity$
