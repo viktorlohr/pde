@@ -364,7 +364,7 @@ $
   Harnack's Inequality says that a non-negative *harmonic function* *can't vary too wildly* on a compact subset of the domain. It is used to prove a theorem that *upgrades*
   pointwise *convergence* of harmonic functions to uniform convergence. We will need this to show existence of solutions using Perron's Method later.
 ]
-Formally: Let $u$ be *harmonic* and *_non-negative_*. For every *compact $Omega' subset.eq Omega$*, where *$Omega$* is an *open* and *connected domain*, there exists a constant $c = c(Omega', Omega)$, such that
+Formally: Let $u$ be *harmonic* and *_non-negative_*. For every *compact* and *connected $Omega'$* $subset.eq Omega$, where *$Omega$* is an *open*  domain, there exists a constant $c = c(Omega', Omega)$, such that
 $
   sup_(Omega') u <= c dot inf_(Omega') u.
 $
@@ -388,18 +388,33 @@ $
 $
 
 #callout[
-  This can now be extended using compactness and connectedness. We cover $Omega'$ with balls and apply the above inequality transitively for every point. Note that there is *always an $4r < "dist"(Omega', Omega)$*, since $Omega$ is open and $Omega'$ is compactly contained.
+  This can now be *extended* using compactness and connectedness. We cover $Omega'$ with balls and apply the above *inequality transitively* for *every point* -- *including* the ones where $u$ is *extreme*, hence the theorem.
+
+  *Note* that there is *always an $4r < "dist"(Omega', partial Omega)$*, since $Omega$ is open and $Omega'$ is compactly contained.
+  Also, the smaller $r$ becomes, the more balls one needs to cover the domain. *For every ball*, we *have to add another *factor* $3^n$* to the constant. This is the reason, that *$c$ blows up* as $Omega'$ approaches $partial Omega.$
 ]
 
 === Harnack's Convergence Theorem
+Let $u_1 <= u_2 <= ...$ be a *monotonically increasing* sequence of *harmonic* functions on $Omega subset.eq RR^n.$ Furthermore, let  $y in Omega$ be a *point*  such that the sequence of real numbers $ u_1 (y) <= u_2 (y) <= ... <= M $ is bounded. *Then* $(u_n)$ *converges* already *_locally_ uniformly!* and the *limit is harmonic.*
 
+#callout[
+  Whats remarkable is that -- a priori -- there needs to be only a *_single_* *point* where the sequence is bounded.
+]
+
+#callout[
+  *Proof Idea:* Monotone Convergence implies that the sequence of numbers is Cauchy. Harnack tells us that the neighborhood around $y$ is controlled by one point. More concretely, one *applies* *Harnack* is *to $ u_k - u_l >= 0, $* which is harmonic since the Laplacian is linear. Note that Harnack's constant depends on $Omega'.$ Therefore, it is important to *remember* that the *uniform convergence* is *only local!*
+
+  The uniform convergence proven in the first step will allow us to *swap* the *limit* *and* the *MVP integral*, *proving harmonicity* of the limit.
+]
 
 = Perron's Method
 
 #callout2[
-  Perron's method answers the question raised earlier about existence on domains
-  without an explicit Green's function.
+  Perron's method answers the question raised earlier about *existence on bounded domains*
+  *without* an *explicit* Green's function.
 ]
+
+
 
 == Barriers
 
