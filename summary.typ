@@ -67,7 +67,7 @@ of $u$ in the direction of $nu$.
   As stated at the beginning, this allows -- minding the boundary terms -- to "*move the Laplacian over*."
 ]
 
-== Distributions
+== Distributions -- Part I
 === The Fundamental Lemma of the Calculus of Variations
 #callout[
   Let's say $f$ and $g$ are some integrable functions.
@@ -81,7 +81,8 @@ of $u$ in the direction of $nu$.
   *$ f = g. $*
 
   This is called #align(center)[*The Fundamental Lemma Of The Calculus Of Variations*]
-  What exactly a "Variation" is will be explained in the later chapters.
+
+  What exactly a "Variation" and how its proven will be *postponed* to the later chapters.
 ]
 
 A _test function_ is a "very nice" function. It is smooth and compactly supported, formally $phi in C^infty_c.$
@@ -92,7 +93,7 @@ $ T_f colon quad phi |-> integral f phi $
 is the _Associated Distribution_ to $f$. However, _not_ every Distribution needs to stem from a locally integrable function!
 
 #callout[
-  We will often argue in the following way. Let's say we want to show that $f =g$. Then we *make* a *detour* *through* the world of *Distributions:* That means, often we can find a distribution $S$, such that
+  We will *often* argue in the following way. Let's say we want to show that $f =g$. Then we *make* a *detour* *through* the world of *Distributions:* That means, often we can find a distribution $S$, such that
   $ T_f = S = T_g. $
   Now we are done, because this implies $f=g$ by the Fundamental Lemma stated above.
 ]
@@ -168,7 +169,7 @@ where $A,B$ are constants depending on $n.$
   What we just derived is the basis for the *Fundamental Solution,* which we are going to find now.
 ]
 
-== Solving the Poisson Equation for a point source -- The Fundamental Solution
+== Solving $- Laplace u = f$ for a point source -- The Fundamental Solution
 
 The Laplace Equation
 $ Delta Phi = 0 $
@@ -353,21 +354,79 @@ $
   A function *$u$ satisfies* the Mean Value Property (*MVP*) *if* *locally*, it *equals* the *avarage* of its integral *over* a *ball* *as well as* the avarage of its integral over the *surface* of a ball.
 ]
 
+Let *$u in C^2(Omega)$*, where $Omega subset R^n$ is *open*. Then for $x in Omega$ and any Ball $B subset.eq Omega$, it holds that
+$
+  u(x) = 1/(|B|) integral_B u(y) d y.
+$
 
-#callout[We define a function to be *harmonic* *if and only if* it satisfies the *MVP*]
+and also
 
-#callout[*Characterization:* A function $u$ is *harmonic* *if and only if* it satisfies the *Laplace Equation*]
+$
+  u(x) = 1/(|partial B|) integral_(partial B) u(y) d y.
+$
 
 
+#callout[We *define* a function to be *harmonic* *if and only if* it satisfies the *Laplace Equation*.]
+
+#callout[*Characterization:* A function $u$ is *harmonic* *if and only if* it satisfies the *MVP*.
+
+  *Harmonic $=>$ MVP:* Start with the avarage integral of $u$ over a sphere around $x$. *Differentiate* with respect to the vector pointing outward. Then *apply* the *Divergence Theorem*. The *integrand* will be *$Laplace u$*, which is zero by assumption. *Hence*, the derviative of the avarage is zero, so the *avarage* is *constant*. *Sending $r -> 0$* *yields* that the consant is exactly *$u(x).$*
+
+  *MVP $=>$ Harmonic*: Argues almost the same. The sphere avarage integral will be constant by assumption. From there, everythings the same. The conclusion sends $r->0$ and this implies that the integrand -- which is $Laplace u$ -- must be zero.
+
+  *For balls*, one argues by *integrating over all spheres* *inside* the ball.
+]
+
+=== Harmonic Functions are Smooth
+#callout[
+  *Harmonic* functions are actually *smooth*. One can prove this by *convolving* with a *mollifier* function (see later chapters) and show via the MVP that the (smooth) convolution is *actually* *equal* to the harmonic function itself.
+]
 == Maximum Principles
-
 === The Weak Maximum Principle
 
+Let $Omega subset RR^n$ *bounded* and $u in C^2 (Omega) inter C^0 (overline(Omega))$ *harmonic*. Then
+$
+  max_Omega u <= max_(partial Omega) u.
+$
+
+#callout[
+  We will sketch the prove for strong maximum principle in a minute, which will imply this one.
+]
 === The Strong Maximum Principle
+
+Let $Omega subset R^n$ be *connected* and *$u in C^2 (Omega)$* *harmonic*. If $u$ achieves its *maximum* value on an *interior* point, *then* it must already be *consant*.
+
+#callout[
+  To *prove* this, let $x$ be an interior point where $u$ attains its maximum $M$ and let $B$ be a ball around $x$. The *MVP* now *squeezes* the avarage between $M$
+  $
+    0 <= integral.slash_B underbrace(M-u, >= 0) & = integral.slash_B M - integral.slash_B u \
+                                                & = M - u(x) = 0.
+  $
+  Since $M - u$ is non-negative, we have  *$u equiv M$ on $B.$* By *connectedness*, this *extends* to the whole domain.
+]
+
+This now *implies* the *weak* maximum principle. One can easily argue *by contradiction*. Let's say an interior point is strictly larger than a boundary point. By the strong maximum principle, $u$ must be identical to that larger value _everywhere_, including the point that is strictly smaller. Contradiction.
 
 === Uniqueness of Solutions
 
+#callout[
+  Let $u$ and $v$ be Solutions to the Laplace Equation, both having the same boundary values. *Apply* the *Maximum Principle* *to *both* $u-v$ and $v-u$*.
+  It will tell us that each of the differences is smaller or equal to zero (which is the value of the differences at the boundary)
+  Therefore
+  $
+    u equiv v.
+  $
+]
+
 === Liouville's Theorem
+
+The *MVP* yields a proof for Liouville's Therom: A harmonic function defined on all of $R^n$ that is bounded is already constant.
+
+#callout[
+  Take any two points $x$ and $y$ and show that $u(x) - u(y) = 0$. The MVP translates this into integrals over balls. The idea is now to *subtract these integrals*. The subtraction* will yield a factor $1/r$*. Then send $r -> infty.$
+]
+
+
 
 == Harnack Inequality
 #callout[
@@ -394,7 +453,7 @@ Now let $y$ and $tilde(y)$ be arbitrary values in $Omega'.$ The triangle inequal
 Hence the MVP yields
 $
   u(y) & = 1/(r^n omega_n) integral_(B_r (y)) u(xi) d xi \
-       & <=^(0<=u) 1/(r^n omega_n) integral_(B_(3r) (tilde(y))) u(xi) d xi = 3^n u(tilde(y)).
+       & <=^(0<=u) 1/(r^n omega_n) integral_(B_(3r) (tilde(y))) u(xi) d xi = bold(3^n) u(tilde(y)).
 $
 
 #callout[
@@ -417,7 +476,7 @@ Let $u_1 <= u_2 <= ...$ be a *monotonically increasing* sequence of *harmonic* f
   The uniform convergence proven in the first step will allow us to *swap* the *limit* *and* the *MVP integral*, *proving harmonicity* of the limit.
 ]
 
-= Perron's Method -- _Existence_ of Solutions to $Laplace u = 0$ on _any_ domain
+= Perron's Method -- Existence _without_ explicit formulas
 
 #callout2[
   Perron's method answers the question raised earlier about *existence on bounded domains*
@@ -474,36 +533,109 @@ We now try to show that the set is *bounded from above.*
 
 == Lebesgue-Spine
 
-#callout1[
+
+
+= The Maximum Principle for General Second-Order Elliptic Operators
+#callout[
   Now we move from the Laplace-Operator to more general Second-Order Elliptic
   Operators.
+
+  We will see that under the right assumptions, the *Maximum Principle still
+  holds* in the general setting. *But* we can *no* longer rely on the *MVP*. We *need _Hopf's Lemma_* to replace it in the argument.
+]
+== The General Operator
+
+#callout[
+  *Throughout this chapter, $Omega subset RR^n$* is assumed to be *bounded* and all functions *$u$* are in *$C^2 (Omega).$*
 ]
 
-#callout2[
-  We will see that under the right assumptions, the Maximum Principle still
-  holds in the general setting. But we can no longer rely on the Mean Value
-  Property. We need _Hopf's Lemma_ to replace it in the argument.
+A general Second-Order linear Differential Operator -- written in Einstein's Sum Notation -- looks like this:
+*$ L u = a^(i j) partial_(i j)u + b^i partial_i u + c u. $*
+
+Let $A:= (a^(i j)).$ We impose *three conditions* on the coefficients to make it elliptic:
+
+- *Symmetry* of A
+#callout[
+  Most operators of interest will be symmetric.
+]
+- *Uniform Ellipticty* of A: There must a exist a $lambda > 0$ such that
+  $
+    lambda ||xi||^2 <= xi^T A xi.
+  $
+  for all $x in Omega$ and $xi in R^d.$
+
+#callout[Note that this *_stronger_* than *postive definiteness*.]
+- *Boundedness* of the coefficients. There must exist a constant $K > 0$ such that it bounds all coefficient functions simultaneously.
+
+#callout[Remember that our domain is bounded]
+
+== Generalized Weak Maximum Principle
+Assume that $L u >= 0$ and that the coefficient function $c equiv 0.$ Then $u$ is bounded by its maximum on the boundary.
+$
+  max_(Omega) u = max_(partial Omega) u
+$
+
+#callout[
+  The proof for *$L u > 0$* follows from multivariable calculus. Remember that at an *interior maximum*, the first order derivatives must be zero and the Hessian Matrix must be _negative_ semi-definite. (In one dimension: *$u'(x_0) = 0, u''(x_0) <= 0$*)
+  This *contradicts* $L u > 0.$
+
+  The case $L u >= 0$ is reduced to the above case by modifying $u$.
 ]
 
-= General Second-Order Elliptic Equations
 
-== The Ellipticity Condition
 
-== Generalized Maximum Principles
+== Hopf's Lemma
+A boundary point $x_0 in Omega$ satisfies the _Interior Sphere Condition_ if there exists a Ball $B subset Omega$ such that
+$
+  x_0 in partial B.
+$
 
-=== Hopf's Lemma
+Hopf's Lemma now states:
+Assume $L u >= 0$ with $c = 0$  in $Omega$. Further, Let $x_0 in partial Omega$ be a boundary point such that
+- $u$ is *continuous at $x_0$*
+- $u(x_0) > u(x)$ for all $x in Omega$. So *$u(x_0)$ *is a* _strict_ maximum*
+- $x_0$ satisfies the *interior sphere condition*.
+
+Then the outer *normal derivative* of $u$ at $x_0$, if it exists, is *strictly positive*:
+$
+  (partial u) / (partial nu) (x_0) > 0.
+$
+
+
+#callout[
+  Rough proof idea: The *Weak Maximum Principle* gives us *$(partial u)/(partial nu) (x_0) >= 0$* almost for free. But we need a *barrier function* to *push* it _strictly_ *above 0*.
+
+  We define that barrier function as
+  $
+    v(x) = e^(-alpha r^2) - e^(-alpha R^2),
+  $
+  where $B_y (R)$ is the ball obtained from the interior sphere condition and $r = ||x - y||.$
+
+  *Notice* that its *outward derivative *is* strictly smaller *than* zero*: $ (d v) / (d nu) = (d v) / (d r) < 0. $
+
+  *Ellipticity* guarantees that *$L v$* is 
+
+]
+
+
+
+
+== Hopf's Maximum Principle
+
 #callout3[
-  Hopf's Lemma shows the Maximum Principle survives for general elliptic
+  *So how do we use it?* Hopf's Lemma shows the Maximum Principle survives for general elliptic
   operators — so we still get uniqueness and a priori bounds for free. But
-  existence is a different story: without an explicit fundamental solution or
-  Poisson kernel, we have no constructive way to build solutions on even a small
+  existence is a different story: Without an explicit fundamental solution or
+  Poisson kernel, we have no constructive way to build solutions on _even_ a small
   ball anymore.
 
-  *Classical technique has run out of fuel* — not because the Maximum Principle
+  The bottom line is that at this point, *Classical technique has "run out of fuel"* — not because the Maximum Principle
   failed, but because nothing is left to constructively build a solution with.
   This is what forces the shift to *_weak solutions_*.
 ]
 
+
+= Weak Solutions -- Allowing more general solutions
 #callout1[
   In order to find more solutions, one needs to be "less strict about the
   niceness" of the functions that solve a PDE at hand. Modern PDE Theory
@@ -523,13 +655,11 @@ We now try to show that the set is *bounded from above.*
   This part of the theory is called *_Regularity Theory_*.
 ]
 
-= Generalized Solutions
-
-== Distributions
-
 === Fundamental Lemma of Calculus of Variations
 
+== Mollifiers
 
+== Distributions -- Part II
 
 == Weak Derivatives
 
