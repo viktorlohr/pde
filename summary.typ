@@ -1,4 +1,5 @@
 #import "template.typ": *
+#import "@preview/cetz:0.3.4"
 
 #let Laplace = $Delta$
 #let Gradient = $nabla$
@@ -603,7 +604,7 @@ $
 
 
 #callout[
-  Rough proof idea: The *Weak Maximum Principle* gives us *$(partial u)/(partial nu) (x_0) >= 0$* almost for free. But we need a *barrier function* to *push* it _strictly_ *above 0*.
+  Proof idea: The *Weak Maximum Principle* gives us *$(partial u)/(partial nu) (x_0) >= 0$* almost for free. But we need a *_barrier function_* to *push* it _strictly_ *above 0*.
 
   We define that barrier function as
   $
@@ -611,9 +612,67 @@ $
   $
   where $B_y (R)$ is the ball obtained from the interior sphere condition and $r = ||x - y||.$
 
-  *Notice* that its *outward derivative *is* strictly smaller *than* zero*: $ (d v) / (d nu) = (d v) / (d r) < 0. $
+  Notice that the *barrier's outward derivative *is* strictly smaller *than* zero*: $ (d v) / (d nu) = (d v) / (d r) < 0. $
 
-  *Ellipticity* guarantees that *$L v$* is 
+  *Ellipticity* and *Boundedness *of $L$'s Coefficients *guarantee* that $alpha$ can be chosen so large that *$L v >= 0$* *on* an *_Annulus_* near $x_0$. It curves upwards and points downwards to $x_0:$
+
+  #import "@preview/cetz:0.3.4"
+
+  #figure(
+    cetz.canvas({
+      import cetz.draw: *
+
+      // shaded excised core [0, rho]  (drawn first, as background)
+      rect((-0.4, -2.1), (2, 3.4), fill: luma(238), stroke: none)
+
+      // baseline: value = 0
+      line((-0.4, 0), (7.1, 0), stroke: (dash: "dashed", paint: gray))
+      content((7.4, 0), text(fill: gray)[$0$])
+
+      // the wall / boundary at r = R
+      line((6, -2.1), (6, 3.4), stroke: (dash: "dashed"))
+      content((6, 3.75), [$partial Omega$ (wall)])
+
+      // outward normal at x_0
+      line((6, 0), (6.7, 0), mark: (end: ">"))
+      content((6.95, 0.22), [$nu$])
+
+      // rho divider + region labels
+      line((2, -2.1), (2, 3.2), stroke: (dash: "dotted", paint: gray))
+      content((0.8, 3.0), text(size: 8pt, fill: gray)[core: $L v < 0$\ (excised)])
+      content((4.0, 3.0), text(size: 8pt, fill: gray)[annulus: $L v >= 0$])
+
+      // barrier v (blue): dome, v>0 inside, v(R)=0, steep in the middle,
+      // flattening (concave up) toward the rim
+      bezier((0, 2.8), (6, 0), (1.2, 2.7), (4.6, 0.15), stroke: (paint: blue, thickness: 1.4pt))
+      content((0.75, 2.3), text(fill: blue)[$v$ (barrier)])
+
+      // tangent of v at x_0: small but strictly negative slope
+      line((5.2, 0.12), (6.7, -0.12), stroke: (paint: blue, dash: "dashed"))
+      content((6.55, -0.4), text(size: 8pt, fill: blue)[$v'(R) < 0$])
+
+      // u - u(x_0) (red): <= 0 everywhere, rises to 0 at x_0
+      bezier((1.3, -1.3), (6, 0), (3.2, -1.45), (5.0, -0.7), stroke: (paint: red, thickness: 1.4pt))
+      content((2.3, -1.15), text(fill: red)[$u - u(x_0)$])
+
+      // tangent of u at x_0: strictly positive slope  (the conclusion)
+      line((5.3, -0.5), (6.7, 0.48), stroke: (paint: red, dash: "dashed"))
+      content((6.45, 0.68), text(size: 8pt, fill: red)[$partial_nu u > 0$])
+
+      // axis points
+      circle((0, 0), radius: 0.05, fill: black)
+      content((0, -0.38), [$y$])
+      content((2, -0.38), text(fill: gray)[$rho$])
+      circle((6, 0), radius: 0.06, fill: black)
+      content((6, -0.4), [$x_0$])
+      content((3.4, -1.95), [$r = ||x - y||$])
+    }),
+  )
+
+
+  This *allows* us to *squeeze* a tiny portion *$epsilon v$* of it *on top of $u$.*
+
+  The derivative of the sum $u + epsilon v$ is still not negative. *In order to cancel* the negative derivative of $epsilon v$, *$u$ has *to have* positive deriviative!*
 
 ]
 
@@ -621,6 +680,8 @@ $
 
 
 == Hopf's Maximum Principle
+
+Assume that $L$ has the three properties stated at the start of the chapter. Assume that *$L u >= 0$* on $Omega.$ If $u$ attains a maximum in $Omega$, then it must be constant already.
 
 #callout3[
   *So how do we use it?* Hopf's Lemma shows the Maximum Principle survives for general elliptic
