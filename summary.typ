@@ -681,7 +681,20 @@ $
 
 == Hopf's Maximum Principle
 
-Assume that $L$ has the three properties stated at the start of the chapter. Assume that *$L u >= 0$* on $Omega.$ If $u$ attains a maximum in $Omega$, then it must be constant already.
+Assume that $L$ has the three properties stated at the start of the chapter. Assume that *$L u >= 0$* on $Omega.$ If $u$ attains a maximum inside $Omega$, then it must be constant already.
+
+#callout[
+  *Proof idea*: Define
+  $
+    Omega^- := {x in Omega | u(x) < M}.
+  $
+
+  Then *hit $partial Omega^-$ with Hopf's Lemma.*
+  (Grow a ball onto it to satisfy interior ball condition)
+
+  The Contradiction comes from the basic fact that at an interior maximum, the derivative must be zero of course -- but Hopf would imply otherwise.
+
+]
 
 #callout3[
   *So how do we use it?* Hopf's Lemma shows the Maximum Principle survives for general elliptic
@@ -730,13 +743,110 @@ Assume that $L$ has the three properties stated at the start of the chapter. Ass
 
 == Divergence Form
 
-#callout3[
-  Though we are considering _Second-Order_ Elliptic Operators, Integration By
-  Parts using _Divergence-Form_ allows us to look for solutions having only
-  _one_ Weak Derivative.
 
-  (Regularity Theory will give us the second derivative back later.)
+
+
+#callout[
+  We can actually write the general linear operator L
+  in a way that $u$ makes integration by parts straightforward. If the coefficent matrix *$A$* is *symmetric* and if there are *no first order terms*, it makes the *operator * formally *self-adjoint*, which produces
+
+  $
+    integral L u phi = integral u L phi
+  $
 ]
+
+Consider
+
+$ partial_i (a_(i j) partial_j u). $
+
+The product rule implies
+
+$
+  partial a_(i j) partial_j u + partial_(i j) u
+$
+
+The left term only of first order. Thus, it can be absorbed into the first order term in the general representation (just yielding a different coefficent $tilde(b)$)
+
+
+Let's assume that this $tilde(b)$ is zero. Then our operator looks like this (carrying along the conventional minus sign as always):
+
+$
+  L u = - partial_(i) (a_(i j) partial_j ) + c u
+$
+
+Let $phi$ be a test function. Integrating by parts twice yields :
+$
+  integral L u phi = integral u L phi.
+$
+
+#callout[
+  Note that this only holds if $A$ is symmetric!
+]
+
+This can be used to solve problems in weak formulation again.
+
+== Dirichlet Principle
+
+#callout[
+  We want to now show that *finding solutions* is the *same* thing is *minimizing* some energy functional.
+]
+
+Define the energy functional
+$
+  S(u) = A(u,u) + l(u),
+$
+
+where
+$
+  A(u,v) := integral a^(i j) partial_i u partial_j v + c u v
+$
+and
+$
+  l(u) = -2 integral f u.
+$
+
+
+#callout[
+  To *motivate* this *definition*: Let's say we are given the weak formulation of a PDE:
+  $
+    integral L u v= integral f v,
+  $
+  where *$v$* is an arbitrary *test function.*
+
+  Lets say $v$ is a test function. When we test $L u$ against $v$. Using *partial integration*, we get (Remember, L is in *divergence form!*)
+  $
+    integral L v & = - integral partial_j (a^(i j) partial_i u) v + c u v \
+                 & = integral a^(i j) partial_i u partial_j v + c u v = A(u,v).
+  $
+  This is *_exactly_ $A(u,v).$*
+
+  So both terms in the energy functional are motivated by a linear elliptic PDE that shall be solved. Why the factor $-2$ is necessary, we will see in a minute.
+]
+
+Assume that $u$ minimizes $S$. Let $eta$ be any test function and define
+$
+  Phi(t) = S(u + t eta).
+$
+
+#callout[
+  If $u$ minimizes $S$, then *$Phi$ must have a minimum at $t = 0.$* Therefore we want to evaluate $Phi'$
+]
+
+$
+  Phi'(t) = 
+$
+
+#callout[
+  A critical point of $S$ is a weak solution! That is exactly what Dirichlet's Principle is.
+]
+
+
+
+
+
+
+=== Euler-Lagrange Equation
+
 
 == Trace Theorem
 
