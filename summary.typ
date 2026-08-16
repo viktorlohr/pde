@@ -798,7 +798,7 @@ $
 
 where
 $
-  A(u,v) := integral a^(i j) partial_i u partial_j v + c u v
+  A(u,eta) := integral a^(i j) partial_i u partial_j eta + c u eta
 $
 and
 $
@@ -809,18 +809,18 @@ $
 #callout[
   To *motivate* this *definition*: Let's say we are given the weak formulation of a PDE:
   $
-    integral L u v= integral f v,
+    integral L u eta= integral f eta,
   $
-  where *$v$* is an arbitrary *test function.*
+  where *$eta$* is an arbitrary *test function.*
 
-  Lets say $v$ is a test function. When we test $L u$ against $v$. Using *partial integration*, we get (Remember, L is in *divergence form!*)
+  Lets say $eta$ is a test function. When we test $L u$ against $eta$. Using *partial integration*, we get (Remember, L is in *divergence form!*)
   $
-    integral L v & = - integral partial_j (a^(i j) partial_i u) v + c u v \
-                 & = integral a^(i j) partial_i u partial_j v + c u v = A(u,v).
+    integral L eta & = - integral partial_j (a^(i j) partial_i u) eta + c u eta \
+                   & = integral a^(i j) partial_i u partial_j eta + c u eta = A(u,eta).
   $
-  This is *_exactly_ $A(u,v).$*
+  This is *_exactly_ $A(u,eta).$*
 
-  So both terms in the energy functional are motivated by a linear elliptic PDE that shall be solved. Why the factor $-2$ is necessary, we will see in a minute.
+  So both terms in the energy functional are motivated by a linear elliptic PDE that shall be soletaed. Why the factor $-2$ is necessary, we will see in a minute.
 ]
 
 Assume that $u$ minimizes $S$. Let $eta$ be any test function and define
@@ -832,20 +832,48 @@ $
   If $u$ minimizes $S$, then *$Phi$ must have a minimum at $t = 0.$* Therefore we want to evaluate $Phi'$
 ]
 
+Let's unpack $Phi$ first. Since $A$ is a symmetric bilinear form, we get
 $
-  Phi'(t) = 
+  A(u + t eta) = A(u,u) + 2t A(u, eta) + t^2 A(eta, eta).
+$
+
+So
+$
+  partial_t A(u+ t eta)_(|t = 0) = 2 A(u, eta).
 $
 
 #callout[
-  A critical point of $S$ is a weak solution! That is exactly what Dirichlet's Principle is.
+  This is why the factor $2$ is needed in the definition above. The $2$ obtained from differntiating and it will cancel, leaving the weak formulation of the problem.
 ]
 
+Similarily, inspecting $l$ and using linearity, we get
+$
+  partial_t l(u + t eta)_(|t = 0) = l(eta).
+$
+Putting these together yields
+$
+  Phi'(t) = 2 A (u, eta ) + l (eta)
+$
 
+Setting this zero gives us the so called _Euler-Lagrange Equation_:
+$
+             A(u, eta) & = 1/2 l( eta) \
+  <=> integral L u eta & = integral f eta
+$
 
+#callout[
+  The *Euler–Lagrange Equation* *_is_* exactly the *weak formulation* of the PDE.
+]
 
+#callout[
+  Remember that we first assumed that $u$ is a critical point! So:
 
+  A *critical point of $S$ *is a* weak solution to $ L u = f. $*
 
-=== Euler-Lagrange Equation
+  That is exactly what Dirichlet's Principle is. What is left *to do* is *showing* that a *minimzer* actually *exists*. This is what we will do now
+]
+
+===
 
 
 == Trace Theorem
