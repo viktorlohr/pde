@@ -16,6 +16,13 @@
 
 = What is an _elliptic_ PDE?
 
+#callout1[
+  *Roughly speaking:* a second-order PDE is *elliptic* if its highest-order
+  part behaves like the *Laplacian* -- the *coefficient matrix* $A$ is
+  *positive definite*, so there is *no preferred direction* of propagation
+  (unlike hyperbolic *wave*-type or parabolic *heat*-type equations).
+]
+
 = Basic Tools for solving PDEs
 == Integration By Parts
 #callout[*Integration By Parts* plays a fundamental role in modern PDE theory. It allows us to *find* otherwise *"hidden" (weaker) solutions*. It allows us to "*move the Laplacian over*" to another function, *enabling countless proofs*. Therefore, we revise the reason why it works in the first place -- the Divergence Theorem --right at the beginning of this summary.]
@@ -83,8 +90,12 @@ of $u$ in the direction of $nu$.
 
   This is called #align(center)[*The Fundamental Lemma Of The Calculus Of Variations*]
 
-  What exactly a "Variation" and how its proven will be *postponed* to the later chapters.
+  The proof for continuous functions is straight-forward. By continuity, if there is a point where $(f-g)(x) > 0$, then the difference must also be positive in the vicinity. Put a bump function on that neighborhood $=>$ $integral (f-g) > 0.$ Contradiction.
+
+  What exactly a "Variation" and how its proven for general functions be *postponed* to the later chapters.
 ]
+
+
 
 A _test function_ is a "very nice" function. It is smooth and compactly supported, formally $phi in C^infty_c.$
 
@@ -342,6 +353,9 @@ $
   more arbitrary settings *without* constructing *explicit* *solutions*.
 ]
 
+
+
+
 = Harmonic Functions -- Inspecting $Laplace u = 0$ further
 
 #callout1[
@@ -355,7 +369,7 @@ $
   A function *$u$ satisfies* the Mean Value Property (*MVP*) *if* *locally*, it *equals* the *avarage* of its integral *over* a *ball* *as well as* the avarage of its integral over the *surface* of a ball.
 ]
 
-Let *$u in C^2(Omega)$*, where $Omega subset R^n$ is *open*. Then for $x in Omega$ and any Ball $B subset.eq Omega$, it holds that
+Let *$u in C^2(Omega)$*, where $Omega subset RR^n$ is *open*. Then for $x in Omega$ and any Ball $B subset.eq Omega$, it holds that
 $
   u(x) = 1/(|B|) integral_B u(y) d y.
 $
@@ -487,10 +501,10 @@ Let $u_1 <= u_2 <= ...$ be a *monotonically increasing* sequence of *harmonic* f
 #callout[
   Remember, we *want* to find a *harmonic* *function* for a Dirichlet Problem. *Why?*  *Because* harmonic functions *solve* the *Laplace* Equation!
 
-  Perron's Method achieves this by taking the *supremum* *over* *functions that stay below harmonic functions* if they alredy do so on the boundary. These are called _subharmonic_ functions.
+  Perron's Method achieves this by taking the *supremum* *over* *functions that stay below harmonic functions* if they already do so on the boundary. These are called _subharmonic_ functions.
 ]
 
-A function $u in C^0(Omega)$ is *_subharmonic_* if for every ball $B subset.double Omega$ and *every harmonic $h$* $in C^0 (overline(B))$ holds
+A function *$u in C^0(Omega)$ *is *_subharmonic_* if for every ball $B subset.double Omega$ and *every harmonic $h$* $in C^0 (overline(B))$ holds
 $
   u <= h "on" partial B => u <= h "in" B
 $
@@ -498,6 +512,7 @@ $
 #callout[
   Note that the definition is *stated locally* for balls.   *Otherwise* we would need to assume there already is a harmonic function defined on the whole domain in the first place, i.e. we *would have* found a *solution* to the Laplace Equation *already*.
 ]
+
 
 #callout2[
   Remember that we already know that *harmonic functions exist on* every *ball*. (Green's Function via mirror image!)
@@ -525,14 +540,32 @@ We now try to show that the set is *bounded from above.*
 
 
 === Supremum of Subsolutions is harmonic
-// TODO
-
+#callout[
+  *Idea:* take a sequence of subsolutions *approaching* the supremum, apply
+  *harmonic replacement* on small balls (swap each function for its harmonic
+  extension there -- still a subsolution!) and use *Harnack's Convergence
+  Theorem* to conclude the *limit* is *harmonic*.
+]
 
 == Barriers
+#callout[
+  A *barrier* at a boundary point $x_0$ is a *subharmonic* function that
+  *vanishes* at $x_0$ but stays *strictly negative* elsewhere on $partial Omega$. Its role: it lets us *force* Perron's solution to *actually attain* the *boundary values*, not just stay below them.
+]
 
 == Regular Points
+#callout[
+  A boundary point is *_regular_* *if and only if* a *barrier* exists there.
+  This turns the *global* question "is $partial Omega$ nice enough?" into a
+  *pointwise, local* condition.
+]
 
 == Lebesgue-Spine
+#callout2[
+  The *Lebesgue Spine* is the classical *counterexample*: a thin, needle-like
+  boundary point where *no barrier exists* -- showing that *not every*
+  boundary point is regular, even for "reasonable" looking domains.
+]
 
 
 
@@ -703,7 +736,7 @@ Assume that $L$ has the three properties stated at the start of the chapter. Ass
   Poisson kernel, we have no constructive way to build solutions on _even_ a small
   ball anymore.
 
-  The bottom line is that at this point, *Classical technique has "run out of fuel"* — not because the Maximum Principle
+  The bottom line is that at this point, *classical technique has "run out of fuel"* — not because the Maximum Principle
   failed, but because nothing is left to constructively build a solution with.
   This is what forces the shift to *_weak solutions_*.
 ]
@@ -730,16 +763,53 @@ Assume that $L$ has the three properties stated at the start of the chapter. Ass
 ]
 
 === Fundamental Lemma of Calculus of Variations
+#callout2[
+  Same *Fundamental Lemma* as before: two functions agreeing against *every
+  test function* are already *equal*. This is the tool that lets us define
+  everything below -- mollifiers, distributions, weak derivatives -- *without
+  losing information*.
+]
 
 == Mollifiers
+#callout[
+  A *mollifier* $rho_epsilon$ is a *smooth, compactly supported bump* with
+  *total mass 1* that *shrinks* to a Dirac Distribution as $epsilon -> 0$.
+  *Convolving* with it *smooths out* any function -- this is *how* we
+  *approximate* rough (e.g. $L^2$) functions by *smooth* ones.
+]
 
 == Distributions -- Part II
+#callout[
+  We revisit *Distributions*, but now equipped with *Sobolev Spaces*: instead
+  of asking whether a Distribution stems from *some* locally integrable
+  function, we ask whether it stems from one with *finite energy* --
+  i.e. lies in $L^2$ together with its *weak derivatives*.
+]
 
 == Weak Derivatives
+#callout[
+  $v$ *is* the *weak derivative* $partial_i u$ *if* it *satisfies* Integration
+  By Parts *against every test function*:
+  $ integral v phi = - integral u partial_i phi. $
+  This *extends differentiation* to functions that *aren't classically
+  differentiable*.
+]
 
 == Sobolev Spaces
+#callout[
+  The *Sobolev Space* $H^k$ collects all $L^2$ functions whose *weak
+  derivatives* up to *order $k$* *also lie* in $L^2$. Equipped with the
+  natural inner product, it is a *Hilbert Space* -- exactly the setting
+  *Lax-Milgram* needs.
+]
 
 == Weak Solutions
+#callout[
+  $u$ is a *weak solution* of $L u = f$ *if* it satisfies the equation *only
+  after* Integration By Parts against test functions, i.e.
+  $ integral L u phi = integral f phi $
+  for all $phi$ -- *without* requiring $u$ to be *twice differentiable*.
+]
 
 == Divergence Form
 
@@ -786,8 +856,22 @@ $
 This can be used to solve problems in weak formulation again.
 
 == Trace Theorem
+#callout[
+  Functions in $H^1$ are *only defined "up to a null set"*, so *plugging in
+  boundary values naively makes no sense* -- $partial Omega$ *itself* has
+  measure zero! The *Trace Theorem* fixes this: it *extends* the classical
+  restriction $u |-> u|_(partial Omega)$ to a *bounded, linear* operator on
+  all of $H^1$.
+]
 
 == Existence via Lax–Milgram
+#callout[
+  *Lax-Milgram* generalizes *Riesz-Representation* to *non-symmetric* bilinear
+  forms: *if* $A$ is *bounded* and *coercive*, then *for every* bounded linear
+  functional $l$, there *exists a unique* $u$ with $A(u, eta) = l(eta)$ for
+  all $eta$. Applied to our weak formulation, this *gives existence and
+  uniqueness of weak solutions* -- *without* any explicit formula.
+]
 
 
 = Variational Approaches
@@ -903,17 +987,55 @@ $
 
 
 == Convex Variational Problems
+#callout[
+  *Uniform ellipticity* made $S$ *strictly convex*, which is *exactly* what
+  guaranteed the *minimizer* was *unique*. More *generally*, the Direct Method
+  works for *any* *convex, coercive, lower semi-continuous* functional --
+  Dirichlet's Principle is just the *quadratic* special case.
+]
 
 == Finite Element Method
+#callout2[
+  The *practical* payoff: instead of minimizing $S$ over the full (infinite
+  dimensional) *Sobolev Space*, restrict to a *finite dimensional* subspace of
+  *piecewise-linear* functions on a mesh. This turns the *PDE* into a *finite
+  linear system* -- ready to be solved *numerically*.
+]
 
 
 = Sobolev Embeddings
 
+#callout1[
+  *Motivation:* Functions in $H^k$ are only known to have *weak derivatives*
+  -- but *how "nice" are they actually?* Sobolev Embeddings *trade
+  derivatives for classical regularity* (continuity, Hölder continuity, even
+  membership in other $L^p$ spaces), *depending on how* $k$ *compares to the
+  dimension* $n$.
+]
+
 == Gagliardo-Nirenberg-Sobolev Inequality
+#callout[
+  *If* $k < n/p$ (*low* regularity relative to *dimension*), the inequality
+  *bounds* $u$ in a *higher* $L^q$ norm by its $H^k$ (or $W^(k,p)$) norm --
+  gaining *integrability*, not yet continuity.
+]
 
 == Morrey Inequality
+#callout[
+  *If* $k > n/p$ (*enough* regularity relative to *dimension*), Morrey's
+  Inequality upgrades this further: $u$ is actually *Hölder continuous*. This
+  is the *borderline* case where *weak derivatives* start implying *classical*
+  smoothness.
+]
 
 == Rellich-Kondrachov
+#callout[
+  On a *bounded* domain, the embedding $H^k arrow.hook L^q$ is not just
+  *bounded* but *compact* -- *bounded sequences* in $H^k$ have a
+  *subsequence* *converging strongly* in $L^q$. This *compactness* is exactly
+  what the *Direct Method* needs to extract a *convergent* minimizing
+  sequence.
+]
 
 
 = Regularity Theory
@@ -921,6 +1043,15 @@ $
 == Linear
 
 === Cacciopoli
+#callout[
+  *Cacciopoli's Inequality* *bounds the energy* (derivative) of a weak
+  solution *on a smaller ball* $Omega'$ *by* the *$L^2$ norm of $u$ itself* on
+  the larger ball -- *no* derivatives *needed on the right-hand side!* This is
+  what *supplies* the "*uniform bound*" that *Nirenberg's Difference Quotients*
+  need below.
+]
+
+
 
 === Nirenberg Difference Quotients
 
@@ -983,7 +1114,22 @@ $
 
 
 == Non-Linear
+#callout[
+  In the non-linear scenario, the coefficients suddenly contain a $D u$. This breaks everything in the above chatper.  There is no continuity. The difference-quotients cannot be controlled.
 
+  The coefficents are merely assumed to be bounded and measurable now. Also the corresponding matrix shall be uniformly elliptic!
+]
 === De Giorgi-Nash
+#callout[
+  Shows that a weak solution is Hölder continuous
+]
 
 === Moser Iteration
+#callout[
+  - Consider $u^q$ (same is in Gagliardo-Nirenber proof!)
+    and derive an estimate
+  - Use Cacciopoli to gain $xi = n/(n-2) > 1$ in integrability per step
+  - Iterate to push integrability to $L^infty$
+  - Harnack inequality bounds the oscillation which yields Hölder continuity.
+]
+
