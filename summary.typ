@@ -327,9 +327,40 @@ $
 
 == An Alternative Method: \ The Fourier Transform
 
-#callout1[
-  The Fourier Transform yields an alternative way to derive the constants for
-  the fundamental solutions.
+For $u in cal(S)(RR^n)$ (the *Schwartz space*), define the *Fourier Transform*
+$ hat(u)(xi) := integral_(RR^n) u(x) e^(-i xi dot x) d x. $
+
+#callout[
+  *Why Schwartz space?* The Fourier Transform of an *arbitrary* Distribution isn't defined -- we *need* test functions that *themselves* stay well-behaved *under* the Transform. *Schwartz functions* $cal(S)$ -- smooth and *rapidly decreasing* together with *all* their derivatives -- are *exactly closed* under $hat(dot).$ Distributions that act *continuously* on $cal(S)$ are called *_Tempered Distributions_* $cal(S)'$, and *this* is the *right space* to Fourier-Transform Distributions in:
+  $ hat(T)(phi) := T(hat(phi)), quad phi in cal(S). $
+  *Not* every Distribution is tempered -- only those that *don't grow too wildly* at infinity qualify.
+]
+
+The key identity: *differentiation turns into multiplication*.
+$ hat(partial_j u)(xi) = i xi_j hat(u)(xi) quad => quad hat(Delta u)(xi) = -||xi||^2 hat(u)(xi). $
+
+#callout[
+  *Sketch:* Integrate by parts once -- the *boundary terms vanish* since Schwartz functions *decay* -- and the derivative *lands* on $e^(-i xi dot x)$, *pulling out* a factor $i xi_j.$
+]
+
+Now apply this to the *Poisson Equation* $-Delta u = f.$ Taking the Fourier Transform of *both sides* turns the *differential* equation into an *algebraic* one:
+$ ||xi||^2 hat(u)(xi) = hat(f)(xi) quad => quad hat(u)(xi) = (hat(f)(xi)) / (||xi||^2). $
+
+#callout[
+  *This* is the *whole point*: the Fourier Transform turns *differentiation* into *multiplication by* $||xi||^2$ -- so *solving* the PDE becomes *dividing* by it.
+]
+
+By the *Convolution Theorem*, $hat(u) = hat(Phi) hat(f)$ corresponds to $u = Phi * f$ in physical space. Comparing, we *read off*
+$ hat(Phi)(xi) = 1/(||xi||^2). $
+
+#callout[
+  *Inverting* this Fourier Transform *must reproduce* -- up to the constant we *already* pinned down by hand -- *exactly* our *Fundamental Solution*
+  $ Phi(r) = cases(-1/(|S_1|) ln r &"if" n=2, 1/(|S_(n-1)|(n-2)) r^(2-n) quad &"if" n>=3). $
+  This gives us an *independent, purely algebraic* derivation of $Phi$ -- *no* punctured-domain limit *needed*.
+]
+
+#callout2[
+  *Note* that $1/||xi||^2$ is *singular* and *not integrable* near $xi = 0$, so it is *not* a Schwartz function's transform in the classical sense -- its inverse Fourier Transform only *makes sense* as a *Tempered Distribution*. This is *precisely why* the detour through $cal(S)'$ was *necessary*, and *not* a technicality we could have skipped.
 ]
 
 
