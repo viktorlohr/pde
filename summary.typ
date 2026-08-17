@@ -785,7 +785,14 @@ $
 
 This can be used to solve problems in weak formulation again.
 
-== Dirichlet Principle
+== Trace Theorem
+
+== Existence via Lax–Milgram
+
+
+= Variational Approaches
+
+== Dirichlet Principle -- Minimzing Energy $<=>$ Solving PDE
 
 #callout[
   We want to now show that *finding solutions* is the *same* thing is *minimizing* some energy functional.
@@ -815,8 +822,8 @@ $
 
   Lets say $eta$ is a test function. When we test $L u$ against $eta$. Using *partial integration*, we get (Remember, L is in *divergence form!*)
   $
-    integral L eta & = - integral partial_j (a^(i j) partial_i u) eta + c u eta \
-                   & = integral a^(i j) partial_i u partial_j eta + c u eta = A(u,eta).
+    integral L u eta & = - integral partial_i (a^(i j) partial_j u) eta + c u eta \
+                     & = integral a^(i j) partial_i u partial_j eta + c u eta = A(u,eta).
   $
   This is *_exactly_ $A(u,eta).$*
 
@@ -873,27 +880,27 @@ $
   That is exactly what Dirichlet's Principle is. What is left *to do* is *showing* that a *minimzer* actually *exists*. This is what we will do now
 ]
 
-===
+== Direct Method Of Variations -- Finding a Minimizer
+
+=== Energy is bounded below
+Uniform ellipticity and boundedness of $l$ give us
+$
+  S(u) = A(u,u) + l(u) >= lambda ||u||^2 + ||l|| ||u||.
+$
 
 
-== Trace Theorem
 
-== Existence via Lax–Milgram
+#callout[
 
+  The whole idea is:
+  Poincaré turns uniform ellipticity of $A$ into coercivity of $S$. Then:
 
-= Variational Approaches
+  *coercive* + *convex* + *parallelogram* *=>* minimizing *sequence* is *Cauchy*.
 
-== Dirichlet Principle
-
-#callout2[
-  Lax–Milgram already gave us existence and it did not even require symmetry —
-  so why bother with an energy functional? Because Variational Approaches are
-  not restricted to linear problems!
+  Since Hilbert spaces are complete, it converges.
 ]
 
-== Euler–Lagrange Equation
 
-== Direct Method Of Variations
 
 == Convex Variational Problems
 
@@ -916,6 +923,64 @@ $
 === Cacciopoli
 
 === Nirenberg Difference Quotients
+
+#callout[
+  Important Lemma: *If* $w in L^2$ *difference quotients* are *uniformly bounded*, then $w$ has a *weak derivative!*
+  Sketch:
+  - move the difference quotient over to test function vie *discrete integration by parts*
+  - since *test functions* _do_ have a derivative, there *exists* a *limit* as $h->0$.
+  - *Riesz-Representation* now implies that there exists a representative $v$ for the functional
+    $
+      eta |-> - integral w partial_i eta
+    $
+    This works, because the functional is bounded. (*because* of the *uniform bound!*)
+  - This *matches* the *definition* of weak derivative:
+  $
+    integral v eta = - integral w partial_i eta
+  $
+
+  Note that this *only works for **$Omega' subset.double Omega.$* We need to be able to choose an *$ h < "dist"(Omega', partial Omega)! $*
+]
+
+#callout[
+  Let's say we have a solution *$u in H^1$*. We can use the above lemma to *actually* show its *in $H^2$*. So has one more derivative than what is currently known. We only need to *find* a *uniform bound for $w=D u$*.
+
+  Again, this only works on the _interior_ with $Omega' subset.double Omega.$
+]
+
+#callout[
+  *If* the *data* (coefficient functions and $f$ "other side of equation") *allows* it (they are still differentiable), *then* one can use Nirenberg's *Difference-Quotients* *iteratively*:
+  - Find *Solution in $H^1$*
+  - Use difference quotients to show its *actually* in *$H^2$*
+  - _*Differentiate*_ the *equation* $->$ *$D u$ will solve* the new equation!
+  - $D u$ is currently in $H^1$ -- *same situation* as in the beginning
+  - *Repeat* until you cannot differentiate the equation anymore.
+
+  For $C^infty$ data, this means, the process does not stop.
+  $
+    H^1 -> H^2 -> H^3 -> ...
+  $
+  So *$u$* is *actually smooth!*
+  $
+    u in inter.big_k H^k_"loc" arrow.hook C^infty.
+  $
+]
+
+#callout[
+  *All* that we have done so far was look at the *interior*. The difference quotient method required $Omega' subset.double Omega.$ To get it to work on the boundary, do the following:
+  - use a chart to *flatten* the *boundary* locally
+  - this *makes "room"* *for every difference quotient* *except one* normal to the boundary.
+  - Use Nirenberg's Lemma for all the difference quotients except that one
+  - *Solve* the *PDE* *only for* the *missing one:*
+    $
+      a_(i i) partial_(i i) u = ...
+    $
+
+    Ellipticity allows to divide through $a_(i i)$, which gives us a second derivative of u!
+
+    (Note that we can write $partial_(i i) u$ in the sense of distributions always, even if it would not have an associated function.)
+]
+
 
 == Non-Linear
 
