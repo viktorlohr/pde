@@ -960,7 +960,7 @@ $
   $
     H^1 -> H^2 -> H^3 -> ...
   $
-  So *$u$* is *actually smooth!*
+  So *$u$* is *actually smooth* by Sobolev Embedding:
   $
     u in inter.big_k H^k_"loc" arrow.hook C^infty.
   $
